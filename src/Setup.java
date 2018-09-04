@@ -12,7 +12,10 @@ public class Setup {
         numPlayers = input.nextInt();
         createTerritories();
 
-        System.out.print(territories.get("Iceland").getContinent());
+//        System.out.print(territories.get("Iceland").getContinent());
+//        territories.get("Japan").printAdjacentTerritories();
+
+        territories.get("Great Britain").listTerritoryInfo();
     }
 
     private void createTerritories(){
