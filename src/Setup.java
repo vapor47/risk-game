@@ -3,21 +3,57 @@ import java.util.Scanner;
 
 public class Setup {
 
-    private int numPlayers;
+    private int numPlayers = 0;
     public final HashMap<String,Territory> territories = new HashMap();
+    private Player[] playerList;
 
     Setup(){
         Scanner input = new Scanner(System.in);
         System.out.print("Welcome to Risk!\nHow many people are playing(2-6): ");
         numPlayers = input.nextInt();
+        while(numPlayers < 2 || numPlayers > 6) {
+            System.out.print("Invalid option! Please enter a number from 2-6: ");
+            numPlayers = input.nextInt();
+        }
         createTerritories();
-
-//        System.out.print(territories.get("Iceland").getContinent());
-//        territories.get("Japan").printAdjacentTerritories();
+        giveStartArmies(numPlayers);
+        //createPlayers();
+        if(numPlayers == 2){
+            // special rules
+        }
+        else{
+            // normal rules
+        }
 
         territories.get("Great Britain").listTerritoryInfo();
     }
-
+    private void createPlayers(int numPlayers){
+        playerList = new Player[numPlayers];
+        for(int i = 0; i < numPlayers; i++){
+//            playerList[i] = Player();
+        }
+    }
+    private void giveStartArmies(int numPlayers){
+        switch (numPlayers){
+            case 2:
+                // 40 infantry
+                break;
+            case 3:
+                // 35 infantry
+                break;
+            case 4:
+                // 30 infantry
+                break;
+            case 5:
+                // 25 infantry
+                break;
+            case 6:
+                // 20 infantry
+                break;
+            default:
+                break;
+        }
+    }
     private void createTerritories(){
         // North America
         territories.put("Alaska", new Territory("Alaska", "North America",
