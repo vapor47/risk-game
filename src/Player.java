@@ -8,18 +8,24 @@ public class Player
     private int territories[] = new int[42]; //Keeps track of the terrirtories that the player controls
     private boolean continents[] = new boolean[6]; //Keeps track of any continents that have been captured
     
+    private String playerName;
+    
     public Card hand[] = new Card[6]; //The players currnet cards
     
     private byte territoryCount;
     private byte continentCount;
     private byte cardCount; //The current number of cards the pplayer holds
     
-    public void viewHand()
+    public void viewHand() //Prints the current cards in the players hand
     {
-    
+        String printFormat = "%s%n%-11s%s%n%-11s%s%n%n"; //The format that will be used to print the card information
+        
+        System.out.println("Cards Currently In Hand:");
+        for(int i = 0; i < cardCount; i++)
+            System.out.printf(printFormat, ("Card" + (i+1)), "Territory:", hand[i].getTerritory(), "Army:", hand[i].getType());
     }
     
-    private void updateCardValue()
+    private void updateCardValue() //used to calculate the amount of troops awarded for cards turned in
     {
         if(cardValue == 0)
             cardValue = 4;
@@ -31,7 +37,7 @@ public class Player
            cardValue+=5;
     }
     
-    public boolean validPlay(Card cardA, Card cardB, Card cardC)
+    public boolean validPlay(Card cardA, Card cardB, Card cardC) //checks weather selected cards are a valid set
     {
         if(cardA.getType() == cardB.getType())
         {
@@ -58,7 +64,7 @@ public class Player
     public void playHand()
     {
         if(cardCount >=3 )
-             
+        {}
     }
     
     
