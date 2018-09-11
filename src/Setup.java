@@ -155,7 +155,7 @@ public class Setup {
     // Types = INFANTRY, CAVALRY, ARTILLERY, WILD
     // 41 cards with territories + 2 wild cards = 43 cards
     private void createCards() {        
-        // North America
+        // North America: 9
         deck.addCards(new Card(Type.INFANTRY, "Alaska"));
         deck.addCards(new Card(Type.CAVALRY, "Alberta"));
         deck.addCards(new Card(Type.ARTILLERY, "Central America"));
@@ -166,13 +166,13 @@ public class Setup {
         deck.addCards(new Card(Type.INFANTRY, "Quebec"));
         deck.addCards(new Card(Type.ARTILLERY, "Western United States"));
 
-        // South America
+        // South America: 4
         deck.addCards(new Card(Type.INFANTRY, "Argentina"));
         deck.addCards(new Card(Type.ARTILLERY, "Brazil"));
         deck.addCards(new Card(Type.INFANTRY, "Peru"));
         deck.addCards(new Card(Type.INFANTRY, "Venezuela"));
 
-        // Europe
+        // Europe: 7
         deck.addCards(new Card(Type.ARTILLERY, "Great Britain"));
         deck.addCards(new Card(Type.INFANTRY, "Iceland"));
         deck.addCards(new Card(Type.ARTILLERY, "Northern Europe"));
@@ -181,7 +181,7 @@ public class Setup {
         deck.addCards(new Card(Type.INFANTRY, "Ukraine"));
         deck.addCards(new Card(Type.ARTILLERY, "Western Europe"));
 
-        // Africa
+        // Africa: 6
         deck.addCards(new Card(Type.INFANTRY, "Congo"));
         deck.addCards(new Card(Type.INFANTRY, "East Africa"));
         deck.addCards(new Card(Type.INFANTRY, "Egypt"));
@@ -189,7 +189,7 @@ public class Setup {
         deck.addCards(new Card(Type.CAVALRY, "North Africa"));
         deck.addCards(new Card(Type.ARTILLERY, "South Africa"));
 
-        // Asia
+        // Asia: 11
         deck.addCards(new Card(Type.CAVALRY, "Afghanistan"));
         deck.addCards(new Card(Type.INFANTRY, "China"));
         deck.addCards(new Card(Type.CAVALRY, "India"));
@@ -202,10 +202,14 @@ public class Setup {
         deck.addCards(new Card(Type.CAVALRY, "Ural"));
         deck.addCards(new Card(Type.CAVALRY, "Yakutsk"));
 
-        // Australia
+        // Australia: 4
         deck.addCards(new Card(Type.ARTILLERY, "Eastern Australia"));
         deck.addCards(new Card(Type.ARTILLERY, "Indonesia"));
         deck.addCards(new Card(Type.INFANTRY, "New Guinea"));
         deck.addCards(new Card(Type.ARTILLERY, "Western Australia"));
+
+        // WILD CARDS: 2
+        deck.addCards(new Card(Type.WILD, ""));
+        deck.addCards(new Card(Type.WILD, ""));
     }
 }
