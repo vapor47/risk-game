@@ -18,6 +18,7 @@ public class Setup {
             numPlayers = input.nextInt();
         }
         createTerritories();
+        createCards();
         giveStartArmies(numPlayers);
         //createPlayers();
         if(numPlayers == 2){
@@ -161,7 +162,7 @@ public class Setup {
 
     // Creates all the cards & place into deck object
     // Types = INFANTRY, CAVALRY, ARTILLERY, WILD
-    // 41 cards with territories + 2 wild cards = 43 cards
+    // 42 cards with territories + 2 wild cards = 44 cards
     private void createCards() {        
         // North America: 9
         deck.addCards(new Card(Type.INFANTRY, "Alaska"));
@@ -197,12 +198,13 @@ public class Setup {
         deck.addCards(new Card(Type.CAVALRY, "North Africa"));
         deck.addCards(new Card(Type.ARTILLERY, "South Africa"));
 
-        // Asia: 11
+        // Asia: 12
         deck.addCards(new Card(Type.CAVALRY, "Afghanistan"));
         deck.addCards(new Card(Type.INFANTRY, "China"));
         deck.addCards(new Card(Type.CAVALRY, "India"));
         deck.addCards(new Card(Type.CAVALRY, "Irkutsk"));
         deck.addCards(new Card(Type.ARTILLERY, "Japan"));
+        deck.addCards(new Card(Type.INFANTRY, "Kamchatka"));        
         deck.addCards(new Card(Type.INFANTRY, "Middle East"));
         deck.addCards(new Card(Type.INFANTRY, "Mongolia"));
         deck.addCards(new Card(Type.INFANTRY, "Siam"));
