@@ -12,13 +12,24 @@ public class Player
     
     private byte territoryCount;
     private byte continentCount;
-    private byte cardCount; //The current number of cards the pplayer holds
-    
+    private byte cardCount; //The current number of cards the player holds
+    private int placeableInfantry;
+
+    Player(){
+        territoryCount = 0;
+        continentCount = 0;
+        cardCount = 0;
+        placeableInfantry = 0;
+    }
+
     public void viewHand()
     {
     
     }
-    
+
+    public void updatePlaceableInfantry(int infantry){
+        placeableInfantry += infantry;
+    }
     private void updateCardValue()
     {
         if(cardValue == 0)
@@ -48,6 +59,7 @@ public class Player
         
         return false;
     }
+
     private void useCards()
     {
         Scanner input = new Scanner(System.in);

@@ -1,11 +1,10 @@
 import java.util.HashMap;
 import java.util.Scanner;
-import java.util.Random;
 
 public class Setup {
 
-    private int numPlayers = 0;
-    public final HashMap<String,Territory> territories = new HashMap();
+    private int numPlayers;
+    private final HashMap<String,Territory> territories = new HashMap();
     private Deck deck = new Deck(); // Creates a deck object 
     private Player[] playerList;
 
@@ -19,16 +18,16 @@ public class Setup {
         }
         createTerritories();
         createCards();
-        giveStartArmies(numPlayers);
-        //createPlayers();
+        createPlayers(numPlayers);
+        giveStartingInfantry(numPlayers);
+
+        chooseStartingPlayer(numPlayers);
         if(numPlayers == 2){
             // special rules
         }
         else{
             // normal rules
         }
-        System.out.println(chooseStartingPlayer(numPlayers));
-        territories.get("Great Britain").listTerritoryInfo();
     }
 
     // returns number from 0 to (numPlayers - 1)
@@ -38,29 +37,32 @@ public class Setup {
     private void createPlayers(int numPlayers){
         playerList = new Player[numPlayers];
         for(int i = 0; i < numPlayers; i++){
-//            playerList[i] = Player();
+            playerList[i] = new Player();
         }
     }
-    private void giveStartArmies(int numPlayers){
+    private void giveStartingInfantry(int numPlayers){
+        int numInfantry = 0;
         switch (numPlayers){
             case 2:
-                // 40 infantry
+                numInfantry = 40;
                 break;
             case 3:
-                // 35 infantry
+                numInfantry = 35;
                 break;
             case 4:
-                // 30 infantry
+                numInfantry = 30;
                 break;
             case 5:
-                // 25 infantry
+                numInfantry = 25;
                 break;
             case 6:
-                // 20 infantry
+                numInfantry = 20;
                 break;
             default:
                 break;
         }
+        for(Player x : playerList)
+            x.updatePlaceableInfantry(numInfantry);
     }
     private void createTerritories(){
         // North America
