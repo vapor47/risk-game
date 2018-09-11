@@ -17,6 +17,7 @@ public class Setup {
             numPlayers = input.nextInt();
         }
         createTerritories();
+        createCards();
         giveStartArmies(numPlayers);
         //createPlayers();
         if(numPlayers == 2){
