@@ -1,5 +1,6 @@
 import java.util.HashMap;
 import java.util.Scanner;
+import java.util.Random;
 
 public class Setup {
 
@@ -24,8 +25,13 @@ public class Setup {
         else{
             // normal rules
         }
-
+        System.out.println(chooseStartingPlayer(numPlayers));
         territories.get("Great Britain").listTerritoryInfo();
+    }
+
+    // returns number from 0 to (numPlayers - 1)
+    private int chooseStartingPlayer(int numPlayers){
+        return (int)(Math.random()*numPlayers);
     }
     private void createPlayers(int numPlayers){
         playerList = new Player[numPlayers];
@@ -126,6 +132,8 @@ public class Setup {
                 new String[]{"Kamchatka","Mongolia","Siberia","Yakutsk"}));
         territories.put("Japan", new Territory("Japan", "Asia",
                 new String[]{"Kamchatka","Mongolia"}));
+        territories.put("Kamchatka", new Territory("Kamchatka", "Asia",
+                new String[]{"Alaska","Irkutsk","Japan","Mongolia","Yakutsk"}));
         territories.put("Middle East", new Territory("Middle East", "Asia",
                 new String[]{"Afghanistan","East Africa","Egypt","India","Southern Europe","Ukraine"}));
         territories.put("Mongolia", new Territory("Mongolia", "Asia",
