@@ -14,10 +14,6 @@ public class Player
     
     private byte territoryCount;
     private byte continentCount;
-    private byte cardCount; //The current number of cards the pplayer holds
-    
-    private byte territoryCount;
-    private byte continentCount;
     private byte cardCount; //The current number of cards the player holds
     private int placeableInfantry;
     
