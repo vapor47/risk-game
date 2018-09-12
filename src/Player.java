@@ -98,4 +98,14 @@ public class Player
     {
         
     }
+    
+    public voide clameTerritory()
+    {
+    
+    }
+    
+    public void attack()
+    {
+    
+    }
 }
