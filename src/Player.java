@@ -16,6 +16,11 @@ public class Player
     private byte continentCount;
     private byte cardCount; //The current number of cards the pplayer holds
     
+    private byte territoryCount;
+    private byte continentCount;
+    private byte cardCount; //The current number of cards the player holds
+    private int placeableInfantry;
+    
     public void viewHand() //Prints the current cards in the players hand
     {
         String printFormat = "%s%n%-11s%s%n%-11s%s%n%n"; //The format that will be used to print the card information
