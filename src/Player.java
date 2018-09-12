@@ -54,17 +54,43 @@ public class Player
         
         return false;
     }
-    private void useCards()
+    private void useCards() //Function will spend the cards
     {
-        Scanner input = new Scanner(System.in);
-        System.out.println("");
-        
+        updateCardValue();
+        /*add to the bumber of troops here*/
     }
     
     public void playHand()
     {
-        if(cardCount >=3 )
-        {}
+        if(cardCount >=3 ) 
+        {
+            Scanner input = new Scanner(System.in);
+            
+            System.out.println("Select your cards:");
+            viewHand();
+            
+            Card play[] = new Card[3];
+            
+            for(int i = 0, card = -1; i < 3 && card != 0;) //grabs the card number from the user and then determines if the selected cards are playable
+            {
+                card = input.nextInt();
+                if(card <= cardCount && card >=1) 
+                    play[i++] = hand[card-1];
+                else
+                {
+                    System.out.println("Please give a valid card number");
+                    viewHand();
+                    System.out.println("0 for exit");
+                }
+                
+                if(i == 2 && validPlay(play[0], play[1], play[2]))
+                {
+                    useCards();
+                }
+            }
+        }
+        else
+            System.out.println("You dont have enough cards to play your hand");
     }
     
     
