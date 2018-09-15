@@ -5,7 +5,9 @@ public class Setup {
 
     private int numPlayers;
     private final HashMap<String,Territory> territories = new HashMap();
+
     private Deck deck = new Deck(); // Creates a deck object 
+
     private Player[] playerList;
 
     Setup(){
