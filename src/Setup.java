@@ -4,20 +4,66 @@ import java.util.Scanner;
 public class Setup {
 
     private int numPlayers;
-    public final HashMap<String,Territory> territories = new HashMap();
+    private final HashMap<String,Territory> territories = new HashMap();
+    private Deck Deck = new Deck(); // Creates a deck object 
+    private Player[] playerList;
 
     Setup(){
         Scanner input = new Scanner(System.in);
         System.out.print("Welcome to Risk!\nHow many people are playing(2-6): ");
         numPlayers = input.nextInt();
+        while(numPlayers < 2 || numPlayers > 6) {
+            System.out.print("Invalid option! Please enter a number from 2-6: ");
+            numPlayers = input.nextInt();
+        }
         createTerritories();
+        createCards();
+        createPlayers(numPlayers);
+        giveStartingInfantry(numPlayers);
 
-//        System.out.print(territories.get("Iceland").getContinent());
-//        territories.get("Japan").printAdjacentTerritories();
-
-        territories.get("Great Britain").listTerritoryInfo();
+        chooseStartingPlayer(numPlayers);
+        if(numPlayers == 2){
+            // special rules
+        }
+        else{
+            // normal rules
+        }
     }
 
+    // returns number from 0 to (numPlayers - 1)
+    private int chooseStartingPlayer(int numPlayers){
+        return (int)(Math.random()*numPlayers);
+    }
+    private void createPlayers(int numPlayers){
+        playerList = new Player[numPlayers];
+        for(int i = 0; i < numPlayers; i++){
+            playerList[i] = new Player();
+        }
+    }
+    private void giveStartingInfantry(int numPlayers){
+        int numInfantry = 0;
+        switch (numPlayers){
+            case 2:
+                numInfantry = 40;
+                break;
+            case 3:
+                numInfantry = 35;
+                break;
+            case 4:
+                numInfantry = 30;
+                break;
+            case 5:
+                numInfantry = 25;
+                break;
+            case 6:
+                numInfantry = 20;
+                break;
+            default:
+                break;
+        }
+        for(Player x : playerList)
+            x.updatePlaceableInfantry(numInfantry);
+    }
     private void createTerritories(){
         // North America
         territories.put("Alaska", new Territory("Alaska", "North America",
@@ -90,6 +136,8 @@ public class Setup {
                 new String[]{"Kamchatka","Mongolia","Siberia","Yakutsk"}));
         territories.put("Japan", new Territory("Japan", "Asia",
                 new String[]{"Kamchatka","Mongolia"}));
+        territories.put("Kamchatka", new Territory("Kamchatka", "Asia",
+                new String[]{"Alaska","Irkutsk","Japan","Mongolia","Yakutsk"}));
         territories.put("Middle East", new Territory("Middle East", "Asia",
                 new String[]{"Afghanistan","East Africa","Egypt","India","Southern Europe","Ukraine"}));
         territories.put("Mongolia", new Territory("Mongolia", "Asia",
@@ -112,5 +160,68 @@ public class Setup {
                 new String[]{"Eastern Australia","Indonesia","Western Australia"}));
         territories.put("Western Australia", new Territory("Western Australia", "Australia",
                 new String[]{"Eastern Australia","Indonesia","New Guinea"}));
+    }
+
+    // Creates all the cards & place into deck object
+    // Types = INFANTRY, CAVALRY, ARTILLERY, WILD
+    // 42 cards with territories + 2 wild cards = 44 cards
+    private void createCards() {        
+        // North America: 9
+        deck.addCards(new Card(Type.INFANTRY, "Alaska"));
+        deck.addCards(new Card(Type.CAVALRY, "Alberta"));
+        deck.addCards(new Card(Type.ARTILLERY, "Central America"));
+        deck.addCards(new Card(Type.ARTILLERY, "Eastern United States"));
+        deck.addCards(new Card(Type.CAVALRY, "Greenland"));
+        deck.addCards(new Card(Type.ARTILLERY, "North West Territory"));
+        deck.addCards(new Card(Type.CAVALRY, "Ontario"));
+        deck.addCards(new Card(Type.INFANTRY, "Quebec"));
+        deck.addCards(new Card(Type.ARTILLERY, "Western United States"));
+
+        // South America: 4
+        deck.addCards(new Card(Type.INFANTRY, "Argentina"));
+        deck.addCards(new Card(Type.ARTILLERY, "Brazil"));
+        deck.addCards(new Card(Type.INFANTRY, "Peru"));
+        deck.addCards(new Card(Type.INFANTRY, "Venezuela"));
+
+        // Europe: 7
+        deck.addCards(new Card(Type.ARTILLERY, "Great Britain"));
+        deck.addCards(new Card(Type.INFANTRY, "Iceland"));
+        deck.addCards(new Card(Type.ARTILLERY, "Northern Europe"));
+        deck.addCards(new Card(Type.CAVALRY, "Scandinavia"));
+        deck.addCards(new Card(Type.ARTILLERY, "Southern Europe"));
+        deck.addCards(new Card(Type.INFANTRY, "Ukraine"));
+        deck.addCards(new Card(Type.ARTILLERY, "Western Europe"));
+
+        // Africa: 6
+        deck.addCards(new Card(Type.INFANTRY, "Congo"));
+        deck.addCards(new Card(Type.INFANTRY, "East Africa"));
+        deck.addCards(new Card(Type.INFANTRY, "Egypt"));
+        deck.addCards(new Card(Type.CAVALRY, "Madagascar"));
+        deck.addCards(new Card(Type.CAVALRY, "North Africa"));
+        deck.addCards(new Card(Type.ARTILLERY, "South Africa"));
+
+        // Asia: 12
+        deck.addCards(new Card(Type.CAVALRY, "Afghanistan"));
+        deck.addCards(new Card(Type.INFANTRY, "China"));
+        deck.addCards(new Card(Type.CAVALRY, "India"));
+        deck.addCards(new Card(Type.CAVALRY, "Irkutsk"));
+        deck.addCards(new Card(Type.ARTILLERY, "Japan"));
+        deck.addCards(new Card(Type.INFANTRY, "Kamchatka"));        
+        deck.addCards(new Card(Type.INFANTRY, "Middle East"));
+        deck.addCards(new Card(Type.INFANTRY, "Mongolia"));
+        deck.addCards(new Card(Type.INFANTRY, "Siam"));
+        deck.addCards(new Card(Type.CAVALRY, "Siberia"));
+        deck.addCards(new Card(Type.CAVALRY, "Ural"));
+        deck.addCards(new Card(Type.CAVALRY, "Yakutsk"));
+
+        // Australia: 4
+        deck.addCards(new Card(Type.ARTILLERY, "Eastern Australia"));
+        deck.addCards(new Card(Type.ARTILLERY, "Indonesia"));
+        deck.addCards(new Card(Type.INFANTRY, "New Guinea"));
+        deck.addCards(new Card(Type.ARTILLERY, "Western Australia"));
+
+        // WILD CARDS: 2
+        deck.addCards(new Card(Type.WILD, ""));
+        deck.addCards(new Card(Type.WILD, ""));
     }
 }

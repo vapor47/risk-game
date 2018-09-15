@@ -9,6 +9,7 @@ public class Main {
             /*
             cycle through player turns
              */
+            return;
         }
     }
 }
