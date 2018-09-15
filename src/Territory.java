@@ -32,7 +32,15 @@ public class Territory {
     public String getTerritoryName(){return name;}
     public String getContinent(){return continent;}
     public int getNumArmies(){return numArmies;}
+<<<<<<< HEAD
     public Player getOwner(){return owner;}
+=======
+    public void removeArmy(){numArmies--;}
+    public void removeArmy(int oldArmies){numArmies-=oldArmies;}
+    public void addArmy(int newArmies){numArmies+=newArmies;}
+    public String getOwner(){return owner;}
+    public void setOwner(String owner){this.owner = owner;}
+>>>>>>> abec9266660738c4c2bd529281be344daf98cc80
     public String[] getAdjacentTerritories(){return adjacentTerritories;}
     public void printAdjacentTerritories(){
         for (String x : adjacentTerritories) {
