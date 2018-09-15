@@ -1,9 +1,10 @@
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class Setup {
 
-    private int numPlayers;
+    public int numPlayers;
     private final HashMap<String,Territory> territories = new HashMap();
     private Deck deck = new Deck(); // Creates a deck object 
     private Player[] playerList;
@@ -21,25 +22,55 @@ public class Setup {
         createPlayers(numPlayers);
         giveStartingInfantry(numPlayers);
 
-        chooseStartingPlayer(numPlayers);
+        chooseRandomPlayer(numPlayers);
         if(numPlayers == 2){
-            // special rules
+            Player neutral = new Player("Neutral");
+            twoPlayerStart();
         }
         else{
             // normal rules
         }
+        int count = 0;
+        for(Map.Entry<String, Territory> x: territories.entrySet()){
+            System.out.print(x.getValue().getTerritoryName() + " || ");
+            System.out.println(x.getValue().getOwner().getPlayerName());
+        }
+
+    }
+    /* special rules
+            give both players 14 random territories and place 1 infantry on them
+                same for neutral
+            then:
+                go back and forth between both players
+                    1. place 2 infantry on any 1 or 2 territories
+                        either 1 & 1, or 2 infantry on 1 territory
+                    2. place 1 infantry on any neutral territory
+    */
+    private void twoPlayerStart(){
+        // set infantry on all territories to 1
+//        for(int i = 0; i < 14; i++){
+//            // give player 0 and 1 random territory
+//        }
+        int i = 0;
+        for(Map.Entry<String, Territory> x: territories.entrySet()){
+            x.getValue().incrementArmies(1);
+            if(i < 28) { // 14 territories for each player
+                x.getValue().setOwner(playerList[i++ % 2]);
+            }
+        }
     }
 
     // returns number from 0 to (numPlayers - 1)
-    private int chooseStartingPlayer(int numPlayers){
+    private int chooseRandomPlayer(int numPlayers){
         return (int)(Math.random()*numPlayers);
     }
     private void createPlayers(int numPlayers){
         playerList = new Player[numPlayers];
         for(int i = 0; i < numPlayers; i++){
-            playerList[i] = new Player();
+            playerList[i] = new Player("Player " + (i+1));
         }
     }
+
     private void giveStartingInfantry(int numPlayers){
         int numInfantry = 0;
         switch (numPlayers){

@@ -14,12 +14,18 @@ public class Player
     private byte continentCount;
     private byte cardCount; //The current number of cards the player holds
     private int placeableInfantry;
+    private String playerName;
 
-    Player(){
+    Player(String name){
         territoryCount = 0;
         continentCount = 0;
         cardCount = 0;
         placeableInfantry = 0;
+        playerName = name;
+    }
+
+    public String getPlayerName(){
+        return playerName;
     }
 
     public void viewHand()
