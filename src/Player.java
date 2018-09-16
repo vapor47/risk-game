@@ -17,7 +17,6 @@ public class Player
     private byte continentCount;
     private byte cardCount; //The current number of cards the player holds
     private int placeableInfantry;
-    private String playerName;
 
     Player(String name){
         territoryCount = 0;
