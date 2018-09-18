@@ -26,15 +26,21 @@ public class Player
         playerName = name;
     }
 
-    public String getPlayerName(){
+    int getPlaceableInfantry(){return placeableInfantry;}
+    void printOwnedTerritories(){
+        for(String territory : territories){
+            System.out.println(territory);
+        }
+    }
+    public String getPlayerName() {
         return playerName;
     }
-
-    public String getName()
-    {
+    public String getName() {
             return playerName;
     }
-
+    public void updatePlaceableInfantry(int infantry) {
+        placeableInfantry += infantry;
+    }
     public void viewHand() //Prints the current cards in the players hand
     {
         String printFormat = "%s%n%-11s%s%n%-11s%s%n%n"; //The format that will be used to print the card information
@@ -127,7 +133,7 @@ public class Player
 
     public void claimTerritory(Territory t)
     {
-        t.setOwner(playerName);
+        t.setOwner(Main.playerMap.get(playerName));
         territories[++territoryCount] = t.getTerritoryName();
     }
 
@@ -180,8 +186,8 @@ public class Player
         for(armiesMoving = input.nextInt(); armiesMoving > (from.getNumArmies()-1) || armiesMoving < 1; armiesMoving = input.nextInt())
             System.out.printf("Please give a valid number of movable armies (1 - %d)%n", from.getNumArmies()-1);
         
-        from.removeArmy(armiesMoving);
-        to.addArmy(armiesMoving);
+        from.decrementArmies(armiesMoving);
+        to.incrementArmies(armiesMoving);
     }
 
     public void attack(Territory Attacker, Territory Defender, Player DefendingPlayer)
@@ -234,9 +240,9 @@ public class Player
         for(int i = 0; Defender.getNumArmies() > 0 && i < size; i++)
         {
             if(attackerTroops[i] > defenderTroops[i])
-                Defender.removeArmy();
+                Defender.decrementArmies(1);
             else
-                Attacker.removeArmy();
+                Attacker.decrementArmies(1);
         }
         if(Defender.getNumArmies() == 0)
         {
