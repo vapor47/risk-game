@@ -62,12 +62,12 @@ public class Player
 
     private int CardTerritoryValue(int cardIndex[])//returns a number of troops if the card is the same as a territory you own
     {
-        int newInfantry = 0;
         for(int i = 0; i < 3; i++)
         {
             if(territories.hasTerriotory(hand[cardIndex[i]].getTerritory()))
                 return 2;
         }
+        return 0;
     }
 
     public boolean validPlay(Card cardA, Card cardB, Card cardC) //checks weather selected cards are a valid set
@@ -80,14 +80,14 @@ public class Player
         
         return false;
     }
-
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     private void useCards(int cardIndex[]) //Function will calculate number of infantry from cards
     {
         updateCardValue();
         placeableInfantry += cardValue;
         //placeableInfantry += territoryValue(cardIndex);
     }
-
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public void playHand()
     {
         if(cardCount >=3 ) 
@@ -118,23 +118,23 @@ public class Player
             System.out.println("You dont have enough cards to play your hand");
     }
     
-
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public void calculateInfantry()
     {
         
     }
-
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public void claimTerritory(Territory t)
     {
         t.setOwner(Main.playerMap.get(playerName));
         territories.addTerritory(t.getContinent(),t.getTerritoryName());
     }
-
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public void loseTerritory(Territory t)
     {
         territories.removeTerritory(t.getContinent(),t.getTerritoryName());
     }
-
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     private static int[] orderedRolls(int arraySize)
     {
         Die die = new Die();
@@ -159,7 +159,7 @@ public class Player
 
         return arr;
     }
-
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public void moveInArmies(Territory from, Territory to)
     {
         Scanner input = new Scanner(System.in);
@@ -172,7 +172,7 @@ public class Player
         from.decrementArmies(armiesMoving);
         to.incrementArmies(armiesMoving);
     }
-
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public void attack(Territory Attacker, Territory Defender, Player DefendingPlayer)
     {   
         Scanner input = new Scanner(System.in);
