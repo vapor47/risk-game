@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_risk-game" default="compile.module.risk-game">
+  <dirname property="module.risk-game.basedir" file="${ant.file.module_risk-game}"/>
+  
+  <property name="module.jdk.home.risk-game" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.risk-game" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.risk-game" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.risk-game" value="-encoding UTF-8 -source 10 -target 10 ${compiler.args}"/>
+  
+  <property name="risk-game.output.dir" value="${module.risk-game.basedir}/out/production/risk-game"/>
+  <property name="risk-game.testoutput.dir" value="${module.risk-game.basedir}/out/test/risk-game"/>
+  
+  <path id="risk-game.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="risk-game.module.production.classpath">
+    <path refid="${module.jdk.classpath.risk-game}"/>
+  </path>
+  
+  <path id="risk-game.runtime.production.module.classpath">
+    <pathelement location="${risk-game.output.dir}"/>
+  </path>
+  
+  <path id="risk-game.module.classpath">
+    <path refid="${module.jdk.classpath.risk-game}"/>
+    <pathelement location="${risk-game.output.dir}"/>
+  </path>
+  
+  <path id="risk-game.runtime.module.classpath">
+    <pathelement location="${risk-game.testoutput.dir}"/>
+    <pathelement location="${risk-game.output.dir}"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.risk-game">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.risk-game">
+    <patternset refid="excluded.from.module.risk-game"/>
+  </patternset>
+  
+  <path id="risk-game.module.sourcepath">
+    <dirset dir="${module.risk-game.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.risk-game" depends="compile.module.risk-game.production,compile.module.risk-game.tests" description="Compile module risk-game"/>
+  
+  <target name="compile.module.risk-game.production" depends="register.custom.compilers" description="Compile module risk-game; production classes">
+    <mkdir dir="${risk-game.output.dir}"/>
+    <javac2 destdir="${risk-game.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.risk-game}/javac">
+      <compilerarg line="${compiler.args.risk-game}"/>
+      <bootclasspath refid="risk-game.module.bootclasspath"/>
+      <classpath refid="risk-game.module.production.classpath"/>
+      <src refid="risk-game.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.risk-game"/>
+    </javac2>
+    
+    <copy todir="${risk-game.output.dir}">
+      <fileset dir="${module.risk-game.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.risk-game.tests" depends="register.custom.compilers,compile.module.risk-game.production" description="compile module risk-game; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.risk-game" description="cleanup module">
+    <delete dir="${risk-game.output.dir}"/>
+    <delete dir="${risk-game.testoutput.dir}"/>
+  </target>
+</project>
