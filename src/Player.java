@@ -186,8 +186,8 @@ public class Player
         for(armiesMoving = input.nextInt(); armiesMoving > (from.getNumArmies()-1) || armiesMoving < 1; armiesMoving = input.nextInt())
             System.out.printf("Please give a valid number of movable armies (1 - %d)%n", from.getNumArmies()-1);
         
-        from.removeArmy(armiesMoving);
-        to.addArmy(armiesMoving);
+        from.decrementArmies(armiesMoving);
+        to.incrementArmies(armiesMoving);
     }
 
     public void attack(Territory Attacker, Territory Defender, Player DefendingPlayer)
@@ -240,9 +240,9 @@ public class Player
         for(int i = 0; Defender.getNumArmies() > 0 && i < size; i++)
         {
             if(attackerTroops[i] > defenderTroops[i])
-                Defender.removeArmy();
+                Defender.decrementArmies(1);
             else
-                Attacker.removeArmy();
+                Attacker.decrementArmies(1);
         }
         if(Defender.getNumArmies() == 0)
         {

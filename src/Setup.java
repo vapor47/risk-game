@@ -64,9 +64,10 @@ public class Setup {
 
         // Each player goes around placing 1 army onto an unclaimed territory (42 total)
         for(int i = 0; i < 42; i++){
+            currPlayerName = Main.playerList.get(currPlayerIndex);
             do {
-                System.out.print("Claim a territory: ");
-                chosenTerritory = input.next();
+                System.out.print("\n" + currPlayerName + ", claim a territory: ");
+                chosenTerritory = input.nextLine();
                 if(!territories.containsKey(chosenTerritory)) {
                     if(chosenTerritory.equals("list-unclaimed"))
                         listUnclaimedTerritories();
@@ -76,6 +77,8 @@ public class Setup {
                     }
                 } else { // claim territory for current player
                     Main.playerMap.get(currPlayerName).claimTerritory(territories.get(chosenTerritory));
+                    territories.get(chosenTerritory).incrementArmies(1);
+                    Main.playerMap.get(currPlayerName).updatePlaceableInfantry(-1);
                 }
             } while(!territories.containsKey(chosenTerritory));
             // move to next player
@@ -86,8 +89,8 @@ public class Setup {
         int armiesLeft = Main.playerMap.get(currPlayerName).getPlaceableInfantry();
         for(int i = 0; i < armiesLeft; i++){
             do {
-                System.out.print("Choose a territory: ");
-                chosenTerritory = input.next();
+                System.out.print("\n" + currPlayerName + ", choose a territory: ");
+                chosenTerritory = input.nextLine();
 
                 // checks to see if player is owner of the territory
                 if(Main.playerMap.get(currPlayerName) != territories.get(chosenTerritory).getOwner()) {
