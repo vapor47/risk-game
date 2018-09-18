@@ -52,7 +52,7 @@ public class TerritoryList
 		
 	}
 	
-	private continenents[] = new Continent[6]
+	private Continent[] = new Continent[6];
 	private int getContinentIndex(string c)
 		{
 			int index
@@ -82,28 +82,28 @@ public class TerritoryList
 		
 	public TerritoryList()
 	{
-		continenents[0] = new Continent("North America", 9);
-		continenents[0] = new Continent("South America", 2);
-		continenents[0] = new Continent("Europe", 5);
-		continenents[0] = new Continent("Africa", 3);
-		continenents[0] = new Continent("Asia", 7);
-		continenents[0] = new Continent("Australia", 2);
+		Continent[0] = new Continent("North America", 9);
+		Continent[1] = new Continent("South America", 2);
+		Continent[2] = new Continent("Europe", 5);
+		Continent[3] = new Continent("Africa", 3);
+		Continent[4] = new Continent("Asia", 7);
+		Continent[5] = new Continent("Australia", 2);
 	}
 	
 	public void addTerritory(String c, String t)
 	{
-		continenents(getContinentIndex(c)).add(t);
+		this.Continent[getContinentIndex(c)].add(t);
 	}
 	public void removeTerritory(String c, String t)
 	{
-		continenents(getContinentIndex(c)).remove(t);
+		this.Continent[getContinentIndex(c)].remove(t);
 	}
-	public void numTerritoriesCaptured
+	public void numTerritoriesCaptured()
 	{
 		int capt = 0;
 		for(int i = 0; i < 6; i++)
 		{
-			if(continenents[i].full)
+			if(Continent[i].full)
 				capt++;
 		}
 		return capt;
