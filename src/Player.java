@@ -26,15 +26,21 @@ public class Player
         playerName = name;
     }
 
-    public String getPlayerName(){
+    int getPlaceableInfantry(){return placeableInfantry;}
+    void printOwnedTerritories(){
+        for(String territory : territories){
+            System.out.println(territory);
+        }
+    }
+    public String getPlayerName() {
         return playerName;
     }
-
-    public String getName()
-    {
+    public String getName() {
             return playerName;
     }
-
+    public void updatePlaceableInfantry(int infantry) {
+        placeableInfantry += infantry;
+    }
     public void viewHand() //Prints the current cards in the players hand
     {
         String printFormat = "%s%n%-11s%s%n%-11s%s%n%n"; //The format that will be used to print the card information
@@ -127,7 +133,7 @@ public class Player
 
     public void claimTerritory(Territory t)
     {
-        t.setOwner(playerName);
+        t.setOwner(Main.playerMap.get(playerName));
         territories[++territoryCount] = t.getTerritoryName();
     }
 

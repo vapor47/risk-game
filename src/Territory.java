@@ -13,12 +13,12 @@ public class Territory {
         this.adjacentTerritories = adjacentTerritories;
     }
 
-    Territory(String name, String continent, int numArmies, String owner, String[] adjacentTerritories){
-        this.name = name;
-        this.continent = continent;
-        this.numArmies = numArmies;
-        this.adjacentTerritories = adjacentTerritories;
-    }
+//    Territory(String name, String continent, int numArmies, String owner, String[] adjacentTerritories){
+//        this.name = name;
+//        this.continent = continent;
+//        this.numArmies = numArmies;
+//        this.adjacentTerritories = adjacentTerritories;
+//    }
 
     public void incrementArmies(int increment){
         numArmies += increment;
@@ -29,10 +29,10 @@ public class Territory {
     public void setOwner(Player owner){
         this.owner = owner;
     }
-    public String getTerritoryName(){return name;}
-    public String getContinent(){return continent;}
-    public int getNumArmies(){return numArmies;}
-    public Player getOwner(){return owner;}
+    String getTerritoryName(){return name;}
+    String getContinent(){return continent;}
+    int getNumArmies(){return numArmies;}
+    Player getOwner(){return owner;}
     public String[] getAdjacentTerritories(){return adjacentTerritories;}
     public void printAdjacentTerritories(){
         for (String x : adjacentTerritories) {
