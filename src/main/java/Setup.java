@@ -80,7 +80,7 @@ public class Setup {
                     territories.get(chosenTerritory).incrementArmies(1);
                     Main.playerMap.get(currPlayerName).updatePlaceableInfantry(-1);
                 }
-            } while(!territories.containsKey(chosenTerritory));
+            } while(!territories.containsKey(chosenTerritory) || !territories.get(chosenTerritory).getOwner().getPlayerName().equals("Neutral"));
             // move to next player
             currPlayerIndex = setPrevPlayer(currPlayerIndex);
         }
