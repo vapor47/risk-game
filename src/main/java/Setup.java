@@ -68,11 +68,11 @@ public class Setup {
             do {
                 System.out.print("\n" + currPlayerName + ", claim a territory: ");
                 chosenTerritory = input.nextLine();
-                if(!territories.containsKey(chosenTerritory)) {
+                if(!territories.containsKey(chosenTerritory) || !territories.get(chosenTerritory).getOwner().getPlayerName().equals("Neutral")) {
                     if(chosenTerritory.equals("list-unclaimed"))
                         listUnclaimedTerritories();
                     else {
-                        System.out.println("That is an invalid territory name.\n" +
+                        System.out.println("That is an invalid option.\n" +
                                 "For a list of unclaimed territories, type 'list-unclaimed'");
                     }
                 } else { // claim territory for current player
