@@ -6,7 +6,7 @@ public class Setup {
     private int numPlayers;
     private final Map<String,Territory> territories = new HashMap();
     private Deck deck = new Deck(); // Creates a deck object
-    private int startingPlayer = chooseRandomPlayer(numPlayers);
+    private startingPlayer = chooseRandomPlayer(numPlayers);
 
     Setup(){
         Scanner input = new Scanner(System.in);
@@ -15,7 +15,7 @@ public class Setup {
         while(numPlayers < 2 || numPlayers > 6) {
             System.out.print("Invalid option! Please enter a number from 2-6: ");
             numPlayers = input.nextInt();
-        }
+        }       
         createTerritories();
         createCards();
         createPlayers(numPlayers);
@@ -142,6 +142,7 @@ public class Setup {
             Main.playerMap.put(name, new Player(name));
         }
     }
+
 
     private void giveStartingInfantry(int numPlayers){
         int numInfantry = 0;

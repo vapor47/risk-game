@@ -11,7 +11,7 @@ public class Player
     
     private String playerName;
     
-    public Card hand[] = new Card[6]; //The players currnet cards
+    public Card hand[] = new Card[11]; //The players currnet cards
     
     private byte territoryCount;
     private byte continentCount;
