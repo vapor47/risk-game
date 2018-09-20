@@ -1,5 +1,3 @@
-package risk;
-
 public class TerritoryList
 {   
     public class Continent
@@ -15,6 +13,16 @@ public class TerritoryList
                     pos = 0;
                     territories = new String[tNum];
                     territories[0] = "";
+            }
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            public String[] getTer()
+            {
+                return territories;
+            }
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            public String getCont()
+            {
+                return name;
             }
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             public boolean full()
@@ -158,8 +166,36 @@ public class TerritoryList
         }
         return v;
     }
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public void printConts()
+    {
+        String ters[];
+        for(int i = 0, j = 1; i < 6; i++)
+        {
+            ters = continents[i].getTer();
+            if(continents[i].getPos() > 0)
+            {
+                System.out.printf("%s:%n", continents[i].getCont());
+                for(int k = 0; k < continents[i].getPos(); k++)
+                {
+                    System.out.printf("%d: %s", j, ters[i]);
+                }
+            }
+        }
+    }
 		
 }
+
+
+
+
+
+
+
+
+
+
+
 
 
 

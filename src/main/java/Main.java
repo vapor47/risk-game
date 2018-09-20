@@ -1,4 +1,3 @@
-
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,16 +22,16 @@ public class Main {
         
         Player currentPlayer = playerMap.get(playerList.get(playerIndex));
         
+        int placeableInfantry;
         while(isPlaying){ //until only 1 player occupies territories(except for neutral in 2 player games)
             //----------------CALCULATE ARMIES & PLACING INFANTRY------------------//            
             System.out.printf("\nIt is Player %d's turn: \n", playerIndex + 1);
-            currentPlayer.playHand();
-            currentPlayer.calculateInfantry();            
-            
-            if (currentPlayer.getPlaceableInfantry() > 0) {       
-                System.out.printf("- Place your remaining armies on your territories\n", currentPlayer.getPlaceableInfantry());
-                while (currentPlayer.getPlaceableInfantry() > 0) {
-                    System.out.println("- Remaining armies: " + currentPlayer.getPlaceableInfantry());
+                        
+            placeableInfantry = currentPlayer.playHand();
+            if (placeableInfantry > 0) {       
+                System.out.printf("- Place your remaining armies on your territories\n", placeableInfantry);
+                while (placeableInfantry > 0) {
+                    System.out.println("- Remaining armies: " + placeableInfantry);
                     System.out.println("- Choose which territory you would like to fortify: \n");                    
                     for(Map.Entry<String, Territory> x: territories.entrySet()){  //Prints out Player's territory and the num of troops on them
                         if (x.getValue().getOwner() == currentPlayer) {
@@ -52,15 +51,16 @@ public class Main {
                         int troopsToMove = sc.nextInt();
                         sc.nextLine();
                             
-                        while (troopsToMove > currentPlayer.getPlaceableInfantry() || troopsToMove < 0) {
+                        while (troopsToMove > placeableInfantry || troopsToMove < 0) {
                             System.out.println("Invalid number of troops to move.");
                             System.out.printf("How many troops would you like to move to %s? ", territoryName);
                             troopsToMove = sc.nextInt();
                             sc.nextLine();
                         }                          
                             
-                        currentPlayer.foritfy(territories.get(territoryName), troopsToMove);
+                        currentPlayer.placeInfantry(territoryName, troopsToMove);
                         System.out.printf("- Added %d armies to %s\n", troopsToMove, territoryName);
+                        placeableInfantry -= troopsToMove;
                     }
                 }
             }
