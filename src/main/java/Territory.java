@@ -13,12 +13,14 @@ public class Territory {
         this.adjacentTerritories = adjacentTerritories;
     }
 
-//    Territory(String name, String continent, int numArmies, String owner, String[] adjacentTerritories){
-//        this.name = name;
-//        this.continent = continent;
-//        this.numArmies = numArmies;
-//        this.adjacentTerritories = adjacentTerritories;
-//    }
+    // Testing purposes
+    Territory(String name, String continent, int numArmies, Player owner, String[] adjacentTerritories){
+        this.name = name;
+        this.continent = continent;
+        this.numArmies = numArmies;
+        this.adjacentTerritories = adjacentTerritories;
+        this.owner = owner;
+    }
 
     public void incrementArmies(int increment){
         numArmies += increment;
