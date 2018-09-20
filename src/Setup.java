@@ -6,7 +6,7 @@ public class Setup {
     private int numPlayers;
     private final Map<String,Territory> territories = new HashMap();
     private Deck deck = new Deck(); // Creates a deck object
-    private startingPlayer = chooseRandomPlayer(numPlayers);
+    private int startingPlayer = chooseRandomPlayer(numPlayers);
 
     Setup(){
         Scanner input = new Scanner(System.in);
@@ -35,6 +35,10 @@ public class Setup {
             System.out.println(x.getValue().getOwner().getPlayerName());
         }
 
+    }
+
+    public void getStartingPlayerIndex() {
+        return startingPlayer;
     }
     /* Two Player Set-up
             give both players 14 random territories and place 1 infantry on them
