@@ -221,7 +221,7 @@ public class Player
         }
         
         int attackerRolls = 0;
-        System.out.printf("Attacker %s, How many troops would you like to use? (1 - %d)%n", Attacker.getOwner(), max);
+        System.out.printf("Attacker %s, How many troops would you like to use? (1 - %d)%n", Attacker.getOwner().getName(), max);
         for(attackerRolls = input.nextInt(); attackerRolls > max || attackerRolls < 1; attackerRolls = input.nextInt())
             System.out.printf("Please select a valid number of troops (1 - %d)", max);
         
@@ -232,7 +232,7 @@ public class Player
             max = 2;
         
         int defenderRolls = 0;
-        System.out.printf("Defender %s, How many troops would you like to use? (1 - %d)%n", Defender.getOwner(), max);
+        System.out.printf("Defender %s, How many troops would you like to use? (1 - %d)%n", Defender.getOwner().getName(), max);
         for(defenderRolls = input.nextInt(); defenderRolls > max || defenderRolls < 1; defenderRolls = input.nextInt())
              System.out.printf("Please select a valid number of troops (1 - %d)", max);
         
@@ -253,10 +253,10 @@ public class Player
                 Attacker.decrementArmies(1);
         }
         if(Defender.getNumArmies() == 0)
-        {
+        {            
+            System.out.printf("Congratulations %s, you have conquered %s!%n", Attacker.getOwner().getName(), Defender.getOwner().getName());
             claimTerritory(Defender);
             DefendingPlayer.loseTerritory(Defender.getTerritoryName());
-            System.out.printf("Congratulations player %s, you have conquered %s!%n", Attacker.getOwner(), Defender.getOwner());
             moveInArmies(Attacker, Defender);
         }
     }
