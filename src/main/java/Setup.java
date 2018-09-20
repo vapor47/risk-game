@@ -40,6 +40,10 @@ public class Setup {
     public int getStartingPlayerIndex() {
         return startingPlayer;
     }
+
+    public int getNumPlayers() {
+        return numPlayers;
+    }
     /* Two Player Set-up
             give both players 14 random territories and place 1 infantry on them
                 same for neutral
