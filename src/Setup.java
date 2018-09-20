@@ -40,10 +40,6 @@ public class Setup {
     public int getStartingPlayerIndex() {
         return startingPlayer;
     }
-
-    public int getNumPlayers() {
-        return numPlayers;
-    }
     /* Two Player Set-up
             give both players 14 random territories and place 1 infantry on them
                 same for neutral
@@ -76,11 +72,11 @@ public class Setup {
             do {
                 System.out.print("\n" + currPlayerName + ", claim a territory: ");
                 chosenTerritory = input.nextLine();
-                if(!territories.containsKey(chosenTerritory) || !territories.get(chosenTerritory).getOwner().getPlayerName().equals("Neutral")) {
+                if(!territories.containsKey(chosenTerritory)) {
                     if(chosenTerritory.equals("list-unclaimed"))
                         listUnclaimedTerritories();
                     else {
-                        System.out.println("That is an invalid option.\n" +
+                        System.out.println("That is an invalid territory name.\n" +
                                 "For a list of unclaimed territories, type 'list-unclaimed'");
                     }
                 } else { // claim territory for current player
@@ -88,7 +84,7 @@ public class Setup {
                     territories.get(chosenTerritory).incrementArmies(1);
                     Main.playerMap.get(currPlayerName).updatePlaceableInfantry(-1);
                 }
-            } while(!territories.containsKey(chosenTerritory) || !territories.get(chosenTerritory).getOwner().getPlayerName().equals("Neutral"));
+            } while(!territories.containsKey(chosenTerritory));
             // move to next player
             currPlayerIndex = setPrevPlayer(currPlayerIndex);
         }

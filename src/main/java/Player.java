@@ -11,7 +11,7 @@ public class Player
     
     private String playerName;
     
-    public Card hand[] = new Card[6]; //The players currnet cards
+    public Card hand[] = new Card[11]; //The players currnet cards
     
     private byte territoryCount;
     private byte continentCount;
@@ -34,6 +34,9 @@ public class Player
     }
     public String getPlayerName() {
         return playerName;
+    }
+    public String getName() {
+            return playerName;
     }
     public void updatePlaceableInfantry(int infantry) {
         placeableInfantry += infantry;
@@ -82,6 +85,9 @@ public class Player
         else if(cardA.getType() != cardC.getType() && cardB.getType() != cardC.getType())
             return true;
         
+        else if(cardA.getType() == Type.WILD || cardB.getType() == Type.WILD || cardC.getType() == Type.WILD)
+            return true;
+
         return false;
     }
 
@@ -126,6 +132,11 @@ public class Player
     public void calculateInfantry()
     {
         
+    }
+
+    public void foritfy(Territory territory, int numTroops) {
+        territory.incrementArmies(numTroops);
+        placeableInfantry -= numTroops;
     }
 
     public void claimTerritory(Territory t)
