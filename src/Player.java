@@ -1,28 +1,44 @@
 import java.util.Scanner;
 import java.util.Arrays;
+import risk.TerritoryList;
 
 public class Player 
 {
     private static int cardValue = 0; //keeps track of all cards traded in
     private static Deck deck; //The deck of cards shared among players
     //Note: I dont know what kind of value we are using for territories here, int is just a place holder
-    private String territories[] = new String[42]; //Keeps track of the terrirtories that the player controls
-    private boolean continents[] = new boolean[6]; //Keeps track of any continents that have been captured
+    TerritoryList territories = new TerritoryList();
     
     private String playerName;
     
     public Card hand[] = new Card[6]; //The players currnet cards
-    
-    private byte territoryCount;
-    private byte continentCount;
+   
     private byte cardCount; //The current number of cards the player holds
     private int placeableInfantry;
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public String getName()
+    
+    Player(String name)
     {
-            return playerName;
+        cardCount = 0;
+        placeableInfantry = 0;
+        playerName = name;
     }
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    int getPlaceableInfantry()
+    {
+        return placeableInfantry;
+    }
+    void printOwnedTerritories()
+    {
+        
+    }
+    public String getPlayerName() 
+    {
+        return playerName;
+    }
+    public void updatePlaceableInfantry(int infantry) 
+    {
+        placeableInfantry += infantry;
+    }
     public void viewHand() //Prints the current cards in the players hand
     {
         String printFormat = "%s%n%-11s%s%n%-11s%s%n%n"; //The format that will be used to print the card information
@@ -31,7 +47,7 @@ public class Player
         for(int i = 0; i < cardCount; i++)
             System.out.printf(printFormat, ("Card" + (i+1)), "Territory:", hand[i].getTerritory(), "Army:", hand[i].getType());
     }
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     private void updateCardValue() //used to calculate the amount of troops awarded for cards turned in
     {
         if(cardValue == 0)
@@ -43,22 +59,17 @@ public class Player
         else
            cardValue+=5;
     }
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    private int territoryValue(int cardIndex[])//returns a number of troops if the card is the same as a territory you own
+
+    private int CardTerritoryValue(int cardIndex[])//returns a number of troops if the card is the same as a territory you own
     {
-        int newInfantry = 0;
-        int someValue = 1;
-        for(int i = 0; i < territoryCount; territoryCount++)
+        for(int i = 0; i < 3; i++)
         {
-            for(int j = 0; j < 3; j++)
-            {
-                if(hand[cardIndex[j]].getTerritory().equals(territories[i]))
-                    newInfantry += someValue;
-            }
+            if(territories.hasTerriotory(hand[cardIndex[i]].getTerritory()))
+                return 2;
         }
-        return newInfantry;
+        return 0;
     }
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     public boolean validPlay(Card cardA, Card cardB, Card cardC) //checks weather selected cards are a valid set
     {
         if(cardA.getType() == cardB.getType() && cardA.getType() == cardC.getType())
@@ -69,14 +80,18 @@ public class Player
         
         return false;
     }
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     private void useCards(int cardIndex[]) //Function will calculate number of infantry from cards
     {
+        Scanner input = new Scanner(System.in); 
+        int v = CardTerritoryValue(cardIndex);
+        String t;
+        for(t = input.next(), )
         updateCardValue();
-        placeableInfantry += cardValue;
-        placeableInfantry += territoryValue(cardIndex);
+        placeInfantry( ,v);
+        
     }
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public void playHand()
     {
         if(cardCount >=3 ) 
@@ -107,33 +122,23 @@ public class Player
             System.out.println("You dont have enough cards to play your hand");
     }
     
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public void calculateInfantry()
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    private void placeInfantry(String t, int inf)
     {
-        
+        Main.territoryMap.get(t).incrementArmies(inf);
     }
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public void claimTerritory(Territory t)
     {
-        t.setOwner(playerName);
-        territories[++territoryCount] = t.getTerritoryName();
+        Main.territoryMap.get(t.getOwner()).setOwner(Main.playerMap.get(playerName));
+        territories.addTerritory(t.getContinent(),t.getTerritoryName());
     }
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public void loseTerritory(String t)
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public void loseTerritory(Territory t)
     {
-        for(int i = 0; i < (territoryCount-1); i++)
-        {
-            if(t.equals(territories[i]))
-            {
-                while(i < territoryCount)
-                {
-                    territories[i] = territories[i+1];
-                }
-            }
-        }
-        territories[territoryCount--] = null;
+        territories.removeTerritory(t.getContinent(),t.getTerritoryName());
     }
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     private static int[] orderedRolls(int arraySize)
     {
         Die die = new Die();
@@ -158,7 +163,7 @@ public class Player
 
         return arr;
     }
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public void moveInArmies(Territory from, Territory to)
     {
         Scanner input = new Scanner(System.in);
@@ -168,11 +173,11 @@ public class Player
         for(armiesMoving = input.nextInt(); armiesMoving > (from.getNumArmies()-1) || armiesMoving < 1; armiesMoving = input.nextInt())
             System.out.printf("Please give a valid number of movable armies (1 - %d)%n", from.getNumArmies()-1);
         
-        from.removeArmy(armiesMoving);
-        to.addArmy(armiesMoving);
+        Main.territoryMap.get(from.getTerritoryName()).decrementArmies(armiesMoving);
+        Main.territoryMap.get(to.getTerritoryName()).incrementArmies(armiesMoving);
     }
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public void attack(Territory Attacker, Territory Defender, Player DefendingPlayer)
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public void attack(Territory Attacker, Territory Defender)
     {   
         Scanner input = new Scanner(System.in);
         
@@ -222,14 +227,14 @@ public class Player
         for(int i = 0; Defender.getNumArmies() > 0 && i < size; i++)
         {
             if(attackerTroops[i] > defenderTroops[i])
-                Defender.removeArmy();
+                Main.territoryMap.get(Defender.getTerritoryName()).decrementArmies(1);
             else
-                Attacker.removeArmy();
+                Main.territoryMap.get(Attacker.getTerritoryName()).decrementArmies(1);
         }
         if(Defender.getNumArmies() == 0)
         {
             claimTerritory(Defender);
-            DefendingPlayer.loseTerritory(Defender.getTerritoryName());
+            Main.playerMap.get(Defender.getOwner()).loseTerritory(Defender);
             System.out.printf("Congratulations player %s, you have conquered %s!%n", Attacker.getOwner(), Defender.getOwner());
             moveInArmies(Attacker, Defender);
         }
