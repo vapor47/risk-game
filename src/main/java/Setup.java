@@ -37,7 +37,7 @@ public class Setup {
 
     }
 
-    public void getStartingPlayerIndex() {
+    public int getStartingPlayerIndex() {
         return startingPlayer;
     }
     /* Two Player Set-up
