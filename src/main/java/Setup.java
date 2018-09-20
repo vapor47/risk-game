@@ -15,7 +15,7 @@ public class Setup {
         while(numPlayers < 2 || numPlayers > 6) {
             System.out.print("Invalid option! Please enter a number from 2-6: ");
             numPlayers = input.nextInt();
-        }
+        }       
         createTerritories();
         createCards();
         createPlayers(numPlayers);
@@ -35,6 +35,10 @@ public class Setup {
             System.out.println(x.getValue().getOwner().getPlayerName());
         }
 
+    }
+
+    public void getStartingPlayerIndex() {
+        return startingPlayer;
     }
     /* Two Player Set-up
             give both players 14 random territories and place 1 infantry on them
@@ -142,6 +146,7 @@ public class Setup {
             Main.playerMap.put(name, new Player(name));
         }
     }
+
 
     private void giveStartingInfantry(int numPlayers){
         int numInfantry = 0;
