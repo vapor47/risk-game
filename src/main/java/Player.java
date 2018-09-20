@@ -134,6 +134,11 @@ public class Player
         
     }
 
+    public void foritfy(Territory territory, int numTroops) {
+        territory.incrementArmies(numTroops);
+        placeableInfantry -= numTroops;
+    }
+
     public void claimTerritory(Territory t)
     {
         t.setOwner(Main.playerMap.get(playerName));
