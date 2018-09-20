@@ -72,11 +72,11 @@ public class Setup {
             do {
                 System.out.print("\n" + currPlayerName + ", claim a territory: ");
                 chosenTerritory = input.nextLine();
-                if(!territories.containsKey(chosenTerritory)) {
+                if(!territories.containsKey(chosenTerritory) || !territories.get(chosenTerritory).getOwner().getPlayerName().equals("Neutral")) {
                     if(chosenTerritory.equals("list-unclaimed"))
                         listUnclaimedTerritories();
                     else {
-                        System.out.println("That is an invalid territory name.\n" +
+                        System.out.println("That is an invalid option.\n" +
                                 "For a list of unclaimed territories, type 'list-unclaimed'");
                     }
                 } else { // claim territory for current player
@@ -84,7 +84,7 @@ public class Setup {
                     territories.get(chosenTerritory).incrementArmies(1);
                     Main.playerMap.get(currPlayerName).updatePlaceableInfantry(-1);
                 }
-            } while(!territories.containsKey(chosenTerritory));
+            } while(!territories.containsKey(chosenTerritory) || !territories.get(chosenTerritory).getOwner().getPlayerName().equals("Neutral"));
             // move to next player
             currPlayerIndex = setPrevPlayer(currPlayerIndex);
         }
