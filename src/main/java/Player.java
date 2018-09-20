@@ -142,7 +142,7 @@ public class Player
     public void claimTerritory(Territory t)
     {
         t.setOwner(Main.playerMap.get(playerName));
-        territories[++territoryCount] = t.getTerritoryName();
+        territories[territoryCount++] = t.getTerritoryName();
     }
 
     public void loseTerritory(String t)

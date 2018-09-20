@@ -3,7 +3,8 @@ public class Card {
     private String cardTerritory;
     
     public Card() {
-        
+        cardType = null;
+        cardTerritory = "";
     }
     
     public Card(Type cardType, String territoryName) {
