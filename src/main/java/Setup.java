@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -10,6 +11,8 @@ public class Setup {
 
     Setup(){
         Scanner input = new Scanner(System.in);
+
+
         System.out.print("Welcome to Risk!\nHow many people are playing(2-6): ");
         numPlayers = input.nextInt();
         while(numPlayers < 2 || numPlayers > 6) {
@@ -54,13 +57,26 @@ public class Setup {
                     2. place 1 infantry on any neutral territory
     */
     private void twoPlayerStart(Player neutral){
-        for(Map.Entry<String, Territory> x: territories.entrySet()){
-            x.getValue().incrementArmies(1);
-            int randVal = (int)(Math.random() * 2);
-            if(randVal == 2)
-                x.getValue().setOwner(neutral);
-//            else
-//                x.getValue().setOwner(playerList[randVal]);
+        /*
+            Get array of territories(Map) keys
+            Get a random key and assign it to a player and move to next player - repeat 28 times(14 territories for each player)
+            Other territories are neutral by default
+         */
+        ArrayList<String> keys = new ArrayList<String>(territories.keySet());
+        int currPlayerIndex = 0;
+        for(int i = 42; i > 14; i--){ // runs 28 times
+            int index = (int)(Math.random()*i);
+            String key = keys.get(index);
+            territories.get(key).incrementArmies(1);
+            territories.get(key).setOwner(Main.playerMap.get(Main.playerList.get(currPlayerIndex)));
+            Main.playerMap.get(Main.playerList.get(currPlayerIndex)).updatePlaceableInfantry(-1);
+
+            currPlayerIndex = (currPlayerIndex + 1) % 2; // goes from 0-1
+            keys.remove(index);
+        }
+        // set remaining Neutral territories armies to 1
+        for(String territoryName : keys){
+            territories.get(territoryName).incrementArmies(1);
         }
     }
 

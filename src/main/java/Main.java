@@ -16,7 +16,7 @@ public class Main {
 
     public static void main(String[] args){        
         Scanner sc = new Scanner(System.in);        
-        Setup setup = new Setup();        
+        Setup setup = new Setup();
         int playerIndex = setup.getStartingPlayerIndex();
         boolean isPlaying = true;        
         String territoryName;
