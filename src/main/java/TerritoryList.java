@@ -1,20 +1,29 @@
-//package risk;
-
 public class TerritoryList
 {   
     public class Continent
     {
-            private String name;
+            private final String name;
             private String territories[];
             private int pos;
-            int value;
+            private final int value;
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            public Continent(String Name, int tNum, int value)
+            public Continent(String Name, int tNum, int val)
             {
                     name = Name;
                     pos = 0;
                     territories = new String[tNum];
                     territories[0] = "";
+                    value = val;
+            }
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            public String[] getTer()
+            {
+                return territories;
+            }
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            public String getCont()
+            {
+                return name;
             }
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             public boolean full()
@@ -158,12 +167,25 @@ public class TerritoryList
         }
         return v;
     }
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public void printConts()
+    {
+        String ters[];
+        for(int i = 0, j = 1; i < 6; i++)
+        {
+            ters = continents[i].getTer();
+            if(continents[i].getPos() > 0)
+            {
+                System.out.printf("%s:%n", continents[i].getCont());
+                for(int k = 0; k < continents[i].getPos(); k++)
+                {
+                    System.out.printf("%d: %s", j, ters[i]);
+                }
+            }
+        }
+    }
 		
 }
-
-
-
-
 
 
 
