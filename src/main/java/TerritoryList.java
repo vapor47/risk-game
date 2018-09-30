@@ -2,17 +2,18 @@ public class TerritoryList
 {   
     public class Continent
     {
-            private String name;
+            private final String name;
             private String territories[];
             private int pos;
-            int value;
+            private final int value;
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            public Continent(String Name, int tNum, int value)
+            public Continent(String Name, int tNum, int val)
             {
                     name = Name;
                     pos = 0;
                     territories = new String[tNum];
                     territories[0] = "";
+                    value = val;
             }
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             public String[] getTer()
@@ -185,21 +186,6 @@ public class TerritoryList
     }
 		
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
