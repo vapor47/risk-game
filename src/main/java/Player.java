@@ -7,6 +7,8 @@ public class Player
     //Note: I dont know what kind of value we are using for territories here, int is just a place holder
     TerritoryList territories = new TerritoryList();
     
+    private boolean claimCheck = false; 
+    
     private String playerName;
     
     public Card hand[] = new Card[6]; //The players currnet cards
@@ -58,6 +60,18 @@ public class Player
            cardValue+=5;
     }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public int calculateInfantry()
+    {
+        int inf = playHand();
+        int bonus = 0;
+        if((territories.getTerritoryCount() / 3) < 3)
+            bonus = 3;
+        else
+            bonus = territories.getTerritoryCount() / 3;
+        inf+= bonus;
+        return inf;       
+    }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public boolean validPlay(Card cardA, Card cardB, Card cardC) //checks weather selected cards are a valid set
     {
         if(cardA.getType() == cardB.getType() && cardA.getType() == cardC.getType())
@@ -97,6 +111,25 @@ public class Player
         }
         updateCardValue();
     }
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    private void discard(int cardIndex[])
+    {
+        for(int i = 0; i < cardCount; i++)
+        {
+            deck.discard(hand[cardIndex[i]]);
+            hand[cardIndex[i]] = null;
+        }
+        Card replacement[] = new Card[cardCount - 3];
+        for(int i = 0, j = 0; i <  cardCount; i++)
+        {
+            if(hand[i] != null)
+            {
+                replacement[j] = hand[i];
+            } 
+        }
+        hand = replacement;
+        cardCount-=3;
+    }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////    
     private void printSpecialCards(int specialCards[], int numSpecial)
     {
@@ -128,6 +161,7 @@ public class Player
                     return 0;
             }
             useCards(cardIndex);
+            discard(cardIndex);
             return cardValue;
         }
         
@@ -190,6 +224,16 @@ public class Player
         Main.territories.get(to.getTerritoryName()).incrementArmies(armiesMoving);
     }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public void drawCards()
+    {
+        if(claimCheck)
+        {
+            hand[cardCount++] = deck.draw();
+            System.out.printf("Player %s has drawn a card, Territory: %s, Army: %s%n", playerName,hand[cardCount-1].getTerritory(), hand[cardCount-1].getType());
+            claimCheck = false;
+        }
+    }
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public void attack(Territory Attacker, Territory Defender)
     {   
         Scanner input = new Scanner(System.in);
@@ -250,6 +294,7 @@ public class Player
             Main.playerMap.get(Defender.getOwner()).loseTerritory(Defender);
             System.out.printf("Congratulations player %s, you have conquered %s!%n", Attacker.getOwner(), Defender.getOwner());
             moveInArmies(Attacker, Defender);
+            claimCheck = true;
         }
     }
 }

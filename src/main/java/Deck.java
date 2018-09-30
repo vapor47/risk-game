@@ -5,14 +5,15 @@ public class Deck {
     private int numCardsInMainDeck, numCardsDiscarded;
     private int numNormalCards = 42;
     private int numWildCards = 2; 
-    //private ArrayList<Card> mainDeck = new ArrayList<Card>(CARDS_IN_DECK);
-    private ArrayList<Card> mainDeck = new ArrayList<Card>();
-    private ArrayList<Card> discardPile = new ArrayList<Card>();
+    private ArrayList<Card> mainDeck;
+    private ArrayList<Card> discardPile;
     
     public Deck() {
         numCardsInMainDeck = 0;
         numCardsDiscarded = 0;
-    }
+        mainDeck = new ArrayList<Card>();
+        discardPile = new ArrayList<Card>();
+    }   
     
     //.......Functions........//
     public void addCards(Card newCard) {
@@ -25,12 +26,15 @@ public class Deck {
         if (mainDeck.size() <= 0) {
             refillDeck();   //Refill using discard pile if Deck empty
         }
-        
-        System.out.println("Deck size is: " + mainDeck.size());
+
+        if (mainDeck.size() == 0 && discardPile.size() == 0) {
+            System.out.println("No cards to draw");
+            return null;
+        }
+               
         int randomDraw = (int)(Math.random() * numCardsInMainDeck); //Random number from 0 to numCards in deck
         Card cardDrawn = mainDeck.get(randomDraw);
-        mainDeck.remove(cardDrawn);
-        System.out.println("Deck size is now: " + mainDeck.size());        
+        mainDeck.remove(cardDrawn);        
         
         numCardsInMainDeck--;             
         
