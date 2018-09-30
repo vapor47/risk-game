@@ -18,7 +18,7 @@ public class Main {
     
     public static void main(String[] args){        
         Scanner sc = new Scanner(System.in);        
-        Setup setup = new Setup();        
+        Setup setup = new Setup();
         int playerIndex = setup.getStartingPlayerIndex();
         boolean isPlaying = true;        
         String territoryName;
@@ -61,7 +61,7 @@ public class Main {
                             sc.nextLine();
                         }                          
                             
-                        currentPlayer.foritfy(territories.get(territoryName), troopsToMove);
+                        territories.get(territoryName).incrementArmies(troopsToMove);
                         System.out.printf("- Added %d armies to %s\n", troopsToMove, territoryName);
                     }
                 }
@@ -173,7 +173,7 @@ public class Main {
                 } while(!validTerritoryTo);                
                 System.out.println();
                 
-                currentPlayer.attack(territories.get(attackingTerritory), territories.get(defendingTerritory), territories.get(defendingTerritory).getOwner());
+                currentPlayer.attack(territories.get(attackingTerritory), territories.get(defendingTerritory));
                 //TODO: Continue with attack phase                                    
                 
             }// End if for attacking

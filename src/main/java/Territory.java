@@ -13,7 +13,7 @@ public class Territory {
         this.adjacentTerritories = adjacentTerritories;
     }
 
-    // Testing purposes
+    // For testing purposes
     Territory(String name, String continent, int numArmies, Player owner, String[] adjacentTerritories){
         this.name = name;
         this.continent = continent;
@@ -40,10 +40,16 @@ public class Territory {
         for (String x : adjacentTerritories) {
             System.out.print(x + " | ");
         }
+        System.out.println("\n------------------------------------");
     }
     public void listTerritoryInfo(){
+//        cleaner format testing
+//        System.out.println("-----------------------------------------------------------------------------------------------");
+//        System.out.printf("%13s %24s %15s %15s %22s\n","Name","Continent","Owner","# of Armies","Adjacent Territories");
+//        System.out.printf("%13s %24s %15s %15d\n", name, continent, owner.getPlayerName(), numArmies);
+//        System.out.println("-----------------------------------------------------------------------------------------------\n");
         System.out.println(getTerritoryName()+":");
-        System.out.println("\tOwner: " + getOwner());
+        System.out.println("\tOwner: " + getOwner().getPlayerName());
         System.out.println("\tNumber of armies: " + getNumArmies());
         System.out.println("\tContinent: " + getContinent());
         System.out.print("\tAdjacent territories: ");
@@ -55,5 +61,8 @@ public class Territory {
                                                                              Northern Europe
                                                                               Scandinavia
                                                                               Western Europe
+
+
+    Eastern United States   North America /max player length/
      */
 }
