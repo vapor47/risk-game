@@ -59,7 +59,7 @@ public class Main {
                             sc.nextLine();
                         }                          
                             
-                        currentPlayer.foritfy(territories.get(territoryName), troopsToMove);
+                        territories.get(territoryName).incrementArmies(troopsToMove);
                         System.out.printf("- Added %d armies to %s\n", troopsToMove, territoryName);
                     }
                 }
