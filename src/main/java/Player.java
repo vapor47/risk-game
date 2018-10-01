@@ -47,7 +47,7 @@ public class Player
         
         System.out.println("Cards Currently In Hand:");
         for(int i = 0; i < cardCount; i++)
-            System.out.printf(printFormat, ("Card" + (i+1)), "Territory:", hand[i].getTerritory(), "Army:", hand[i].getType());
+            System.out.printf(printFormat, ("Card " + (i+1)), "Territory:", hand[i].getTerritory(), "Army:", hand[i].getType());
     }
 
     private void updateCardValue() //used to calculate the amount of troops awarded for cards turned in
@@ -105,7 +105,7 @@ public class Player
         if(numSpecial > 0)
         {
             int tIndex;
-            System.out.printf("Chose which territory you would like to place two extra armies on(1=%d)%n", numSpecial);
+            System.out.printf("Chose which territory you would like to place two extra armies on(1-%d)%n", numSpecial);
             printSpecialCards(specialCards, numSpecial);
             for(tIndex = input.nextInt(); tIndex <= 0 || tIndex > numSpecial; tIndex = input.nextInt())
             {
@@ -121,7 +121,7 @@ public class Player
     {
         for(int i = 0; i < cardCount; i++)
         {
-            deck.discard(hand[cardIndex[i]]);
+            Main.deck.discard(hand[cardIndex[i]]);
             hand[cardIndex[i]] = null;
         }
         Card replacement[] = new Card[cardCount - 3];
@@ -183,7 +183,7 @@ public class Player
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public void claimTerritory(Territory t)
     {
-        Main.territories.get(t.getOwner()).setOwner(Main.playerMap.get(playerName));
+        t.setOwner(this);
         territories.addTerritory(t.getContinent(),t.getTerritoryName());
     }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -235,7 +235,7 @@ public class Player
         if(claimCheck)
         {
             hand[cardCount++] = Main.deck.draw();
-            System.out.printf("Player %s has drawn a card, Territory: %s, Army: %s%n", playerName,hand[cardCount-1].getTerritory(), hand[cardCount-1].getType());
+            System.out.printf("%s has drawn a card, Territory: %s, Army: %s%n", playerName,hand[cardCount-1].getTerritory(), hand[cardCount-1].getType());
             claimCheck = false;
         }
     }
@@ -263,7 +263,7 @@ public class Player
         }
         
         int attackerRolls = 0;
-        System.out.printf("Attacker %s, How many troops would you like to use? (1 - %d)%n", Attacker.getOwner().getName(), max);
+        System.out.printf("Attacker %s, How many troops would you like to use? (1 - %d)%n", Attacker.getOwner().getPlayerName(), max);
         for(attackerRolls = input.nextInt(); attackerRolls > max || attackerRolls < 1; attackerRolls = input.nextInt())
             System.out.printf("Please select a valid number of troops (1 - %d)", max);
         
@@ -274,7 +274,7 @@ public class Player
             max = 2;
         
         int defenderRolls = 0;
-        System.out.printf("Defender %s, How many troops would you like to use? (1 - %d)%n", Defender.getOwner().getName(), max);
+        System.out.printf("Defender %s, How many troops would you like to use? (1 - %d)%n", Defender.getOwner().getPlayerName(), max);
         for(defenderRolls = input.nextInt(); defenderRolls > max || defenderRolls < 1; defenderRolls = input.nextInt())
              System.out.printf("Please select a valid number of troops (1 - %d)", max);
         
@@ -297,8 +297,8 @@ public class Player
         if(Defender.getNumArmies() == 0)
         {
             claimTerritory(Defender);
-            Main.playerMap.get(Defender.getOwner().getName()).loseTerritory(Defender);
-            System.out.printf("Congratulations player %s, you have conquered %s!%n", Attacker.getOwner(), Defender.getOwner());
+            Main.playerMap.get(Defender.getOwner().getPlayerName()).loseTerritory(Defender);
+            System.out.printf("Congratulations player %s, you have conquered %s!%n", Attacker.getOwner().getPlayerName(), Defender.getTerritoryName());
             moveInArmies(Attacker, Defender);
             claimCheck = true;
         }
