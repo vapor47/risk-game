@@ -2,16 +2,15 @@ import java.util.Scanner;
 import java.util.Arrays;
 public class Player 
 {
-    private static int cardValue = 0; //keeps track of all cards traded in
-    private static Deck deck; //The deck of cards shared among players
-    //Note: I dont know what kind of value we are using for territories here, int is just a place holder
+    private static int cardValue = 0; //keeps track of all cards traded in    
+
     TerritoryList territories = new TerritoryList();
     
     private boolean claimCheck = false; 
     
     private String playerName;
     
-    public Card hand[] = new Card[6]; //The players currnet cards
+    public Card hand[] = new Card[11]; //The players currnet cards
    
     private byte cardCount; //The current number of cards the player holds
     private int placeableInfantry;
@@ -27,14 +26,17 @@ public class Player
     {
         territories.printConts();
     }
+
     public String getPlayerName() 
     {
         return playerName;
     }
+
     public int getPlaceableInfantry()
     {
         return placeableInfantry;
     }
+
     public void updatePlaceableInfantry(int infantry) 
     {
         placeableInfantry += infantry;
@@ -45,7 +47,7 @@ public class Player
         
         System.out.println("Cards Currently In Hand:");
         for(int i = 0; i < cardCount; i++)
-            System.out.printf(printFormat, ("Card" + (i+1)), "Territory:", hand[i].getTerritory(), "Army:", hand[i].getType());
+            System.out.printf(printFormat, ("Card " + (i+1)), "Territory:", hand[i].getTerritory(), "Army:", hand[i].getType());
     }
 
     private void updateCardValue() //used to calculate the amount of troops awarded for cards turned in
@@ -79,7 +81,10 @@ public class Player
                  
         else if(cardA.getType() != cardC.getType() && cardB.getType() != cardC.getType())
             return true;
-        
+
+        else if(cardA.getType() == Type.WILD || cardB.getType() == Type.WILD || cardC.getType() == Type.WILD)
+            return true;
+
         return false;
     }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -91,7 +96,7 @@ public class Player
         int specialCards[] = new int[3];
         for(int i = 0; i < 3; i++)
         {
-            if(territories.hasTerriotory(hand[cardIndex[i]].getTerritory()))
+            if(territories.hasTerritory(hand[cardIndex[i]].getTerritory()))
             {
                 specialCards[numSpecial] = cardIndex[i];
                 numSpecial++;
@@ -100,7 +105,7 @@ public class Player
         if(numSpecial > 0)
         {
             int tIndex;
-            System.out.printf("Chose which terrirtory you would like to place two extra armies on(1=%d)%n", numSpecial);
+            System.out.printf("Chose which territory you would like to place two extra armies on(1-%d)%n", numSpecial);
             printSpecialCards(specialCards, numSpecial);
             for(tIndex = input.nextInt(); tIndex <= 0 || tIndex > numSpecial; tIndex = input.nextInt())
             {
@@ -116,7 +121,7 @@ public class Player
     {
         for(int i = 0; i < cardCount; i++)
         {
-            deck.discard(hand[cardIndex[i]]);
+            Main.deck.discard(hand[cardIndex[i]]);
             hand[cardIndex[i]] = null;
         }
         Card replacement[] = new Card[cardCount - 3];
@@ -124,7 +129,7 @@ public class Player
         {
             if(hand[i] != null)
             {
-                replacement[j] = hand[i];
+                replacement[j++] = hand[i];
             } 
         }
         hand = replacement;
@@ -134,7 +139,7 @@ public class Player
     private void printSpecialCards(int specialCards[], int numSpecial)
     {
         for(int i = 0; i < numSpecial; i++)
-            System.out.printf("Card %d: %s%n", i, hand[i].getTerritory());
+            System.out.printf("Card %d: %s%n", i + 1, hand[i].getTerritory());
     }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public int playHand()
@@ -173,11 +178,12 @@ public class Player
     public void placeInfantry(String t, int inf)
     {
         Main.territories.get(t).incrementArmies(inf);
+        placeableInfantry -= inf;
     }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public void claimTerritory(Territory t)
     {
-        Main.territories.get(t.getOwner()).setOwner(Main.playerMap.get(playerName));
+        t.setOwner(this);
         territories.addTerritory(t.getContinent(),t.getTerritoryName());
     }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -228,8 +234,8 @@ public class Player
     {
         if(claimCheck)
         {
-            hand[cardCount++] = deck.draw();
-            System.out.printf("Player %s has drawn a card, Territory: %s, Army: %s%n", playerName,hand[cardCount-1].getTerritory(), hand[cardCount-1].getType());
+            hand[cardCount++] = Main.deck.draw();
+            System.out.printf("%s has drawn a card, Territory: %s, Army: %s%n", playerName,hand[cardCount-1].getTerritory(), hand[cardCount-1].getType());
             claimCheck = false;
         }
     }
@@ -257,7 +263,7 @@ public class Player
         }
         
         int attackerRolls = 0;
-        System.out.printf("Attacker %s, How many troops would you like to use? (1 - %d)%n", Attacker.getOwner(), max);
+        System.out.printf("Attacker %s, How many troops would you like to use? (1 - %d)%n", Attacker.getOwner().getPlayerName(), max);
         for(attackerRolls = input.nextInt(); attackerRolls > max || attackerRolls < 1; attackerRolls = input.nextInt())
             System.out.printf("Please select a valid number of troops (1 - %d)", max);
         
@@ -268,7 +274,7 @@ public class Player
             max = 2;
         
         int defenderRolls = 0;
-        System.out.printf("Defender %s, How many troops would you like to use? (1 - %d)%n", Defender.getOwner(), max);
+        System.out.printf("Defender %s, How many troops would you like to use? (1 - %d)%n", Defender.getOwner().getPlayerName(), max);
         for(defenderRolls = input.nextInt(); defenderRolls > max || defenderRolls < 1; defenderRolls = input.nextInt())
              System.out.printf("Please select a valid number of troops (1 - %d)", max);
         
@@ -291,8 +297,8 @@ public class Player
         if(Defender.getNumArmies() == 0)
         {
             claimTerritory(Defender);
-            Main.playerMap.get(Defender.getOwner()).loseTerritory(Defender);
-            System.out.printf("Congratulations player %s, you have conquered %s!%n", Attacker.getOwner(), Defender.getOwner());
+            Main.playerMap.get(Defender.getOwner().getPlayerName()).loseTerritory(Defender);
+            System.out.printf("Congratulations player %s, you have conquered %s!%n", Attacker.getOwner().getPlayerName(), Defender.getTerritoryName());
             moveInArmies(Attacker, Defender);
             claimCheck = true;
         }
