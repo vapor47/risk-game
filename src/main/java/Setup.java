@@ -33,7 +33,7 @@ public class Setup {
         //prints map of territories as well as owners
         Main.formattedMessage("Current Map"); 
         for(Map.Entry<String, Territory> x: Main.territories.entrySet()){
-            System.out.print(Risk_Game.padRight(x.getValue().getTerritoryName(), 25) + " || ");    
+            System.out.print(Main.padRight(x.getValue().getTerritoryName(), 25) + " || ");    
             System.out.println(x.getValue().getOwner().getPlayerName());
         }
 
@@ -125,7 +125,7 @@ public class Setup {
         // Now each player places 1 additional army onto any territory they occupy until everyone runs out
         int armiesLeft = Main.playerMap.get(currPlayerName).getPlaceableInfantry();
         for(int i = 0; i < armiesLeft; i++){
-            currPlayerName = Risk_Game.playerList.get(currPlayerIndex);
+            currPlayerName = Main.playerList.get(currPlayerIndex);
             do {
                 System.out.print("\n" + currPlayerName + ", choose a territory: ");
                 chosenTerritory = input.nextLine();
@@ -141,7 +141,7 @@ public class Setup {
                 } else { // increment territory infantry for current player
                     Main.territories.get(chosenTerritory).incrementArmies(1);
                 }
-            } while(!Main.territories.containsKey(chosenTerritory) || !Risk_Game.territories.get(chosenTerritory).getOwner().getPlayerName().equals(currPlayerName));
+            } while(!Main.territories.containsKey(chosenTerritory) || !Main.territories.get(chosenTerritory).getOwner().getPlayerName().equals(currPlayerName));
             currPlayerIndex = setPrevPlayer(currPlayerIndex);
         }
     }
