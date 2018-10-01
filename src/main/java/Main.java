@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Risk_Game {
+public class Main {
     // Key = Player name; Value = Player object
     // Does not include neutral in 2 player games    
     static Map<String, Player> playerMap = new HashMap<String, Player>();
