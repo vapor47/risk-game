@@ -83,66 +83,66 @@ public class TerritoryList
     private int territoryCount = 0;
     private Continent continents[] = new Continent[6];
     private int getContinentIndex(String c)
-            {
-                    int index=-1;
-                    switch(c)
-                    {
-                            case "North America":
-                                    index = 0;
-                                    break;
-                            case "South America":
-                                    index = 1;
-                                    break;
-                            case "Europe":
-                                    index = 2;
-                                    break;
-                            case "Africa":
-                                    index = 3;
-                                    break;
-                            case "Asia":
-                                    index = 4;
-                                    break;
-                            case "Australia":
-                                    index = 5;
-                                    break;
-                    }
-                    return index;
-            }
+    {
+        int index=-1;
+        switch(c)
+        {
+            case "North America":
+                    index = 0;
+                    break;
+            case "South America":
+                    index = 1;
+                    break;
+            case "Europe":
+                    index = 2;
+                    break;
+            case "Africa":
+                    index = 3;
+                    break;
+            case "Asia":
+                    index = 4;
+                    break;
+            case "Australia":
+                    index = 5;
+                    break;
+        }
+        return index;
+    }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public TerritoryList()
     {
-            continents[0] = new Continent("North America", 9, 5);
-            continents[1] = new Continent("South America", 4, 2);
-            continents[2] = new Continent("Europe", 7, 5);
-            continents[3] = new Continent("Africa", 6, 3);
-            continents[4] = new Continent("Asia", 12, 7);
-            continents[5] = new Continent("Australia", 4, 2);
+        continents[0] = new Continent("North America", 9, 5);
+        continents[1] = new Continent("South America", 4, 2);
+        continents[2] = new Continent("Europe", 7, 5);
+        continents[3] = new Continent("Africa", 6, 3);
+        continents[4] = new Continent("Asia", 12, 7);
+        continents[5] = new Continent("Australia", 4, 2);
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public void addTerritory(String c, String t)
     {
-            continents[getContinentIndex(c)].add(t);
-            territoryCount++;
+        continents[getContinentIndex(c)].add(t);
+        territoryCount++;
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public void removeTerritory(String c, String t)
     {
-            continents[getContinentIndex(c)].remove(t);
-            territoryCount--;
+        continents[getContinentIndex(c)].remove(t);
+        territoryCount--;
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public int numTerritoriesCaptured()
     {
-            int capt = 0;
-            for(int i = 0; i < 6; i++)
-            {
-                    if(continents[i].full())
-                            capt++;
-            }
-            return capt;
+        int capt = 0;
+        for(int i = 0; i < 6; i++)
+        {
+            if(continents[i].full())
+               capt++;
+        }
+        return capt;
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public boolean hasTerriotory(String t)
+    public boolean hasTerritory(String t)
     {
         for(int i = 0; i < 6; i++)
         {
