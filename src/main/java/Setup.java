@@ -6,7 +6,7 @@ import java.util.Scanner;
 public class Setup {
     private int numPlayers;
     private int startingPlayer;
-
+    // testing code coverage
     Setup(){
         Scanner input = new Scanner(System.in);
 
@@ -29,14 +29,12 @@ public class Setup {
         else{
             normalStart(startingPlayer);
         }
-        
         //prints map of territories as well as owners
         Main.formattedMessage("Current Map"); 
         for(Map.Entry<String, Territory> x: Main.territories.entrySet()){
-            System.out.print(Main.padRight(x.getValue().getTerritoryName(), 25) + " || ");    
+            System.out.print(Main.padRight(x.getValue().getTerritoryName(), 25) + " || ");
             System.out.println(x.getValue().getOwner().getPlayerName());
         }
-
     }
 
     public int getStartingPlayerIndex() {
@@ -47,11 +45,11 @@ public class Setup {
         return numPlayers;
     }
     /* Two Player Set-up
-            give both players 14 random territories and place 1 infantry on them
+            give both players 14 random Main.territories and place 1 infantry on them
                 same for neutral
             then:
                 go back and forth between both players
-                    1. place 2 infantry on any 1 or 2 territories
+                    1. place 2 infantry on any 1 or 2 Main.territories
                         either 1 & 1, or 2 infantry on 1 territory
                     2. place 1 infantry on any neutral territory
     */
@@ -69,9 +67,9 @@ public class Setup {
         */
 
         /*
-            Get array of territories(Map) keys
-            Get a random key and assign it to a player and move to next player - repeat 28 times(14 territories for each player)
-            Other territories are neutral by default
+            Get array of Main.territories(Map) keys
+            Get a random key and assign it to a player and move to next player - repeat 28 times(14 Main.territories for each player)
+            Other Main.territories are neutral by default
          */
         ArrayList<String> keys = new ArrayList<String>(Main.territories.keySet());
         int currPlayerIndex = 0;
@@ -85,7 +83,7 @@ public class Setup {
             currPlayerIndex = (currPlayerIndex + 1) % 2; // goes from 0-1
             keys.remove(index);
         }
-        // set remaining Neutral territories armies to 1
+        // set remaining Neutral Main.territories armies to 1
         for(String territoryName : keys){
             Main.territories.get(territoryName).incrementArmies(1);
         }
