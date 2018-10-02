@@ -6,7 +6,7 @@ import java.util.Scanner;
 public class Setup {
     private int numPlayers;
     private int startingPlayer;
-    // testing code coverage.
+    // testing code coverage
     Setup(){
         Scanner input = new Scanner(System.in);
 
