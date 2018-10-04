@@ -62,6 +62,12 @@ public class TerritoryTest {
 
     @Test
     public void getOwner() {
+        Player expected = new Player("Test Player");
+        Territory test = new Territory("Test Name","Test Continent", 7,
+                expected, new String[]{"Adjacent Territory"});
+
+        final Player actual = test.getOwner();
+        Assert.assertEquals(actual, expected);
     }
 
     @Test

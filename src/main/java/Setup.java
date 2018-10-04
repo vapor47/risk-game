@@ -54,18 +54,6 @@ public class Setup {
                     2. place 1 infantry on any neutral territory
     */
     private void twoPlayerStart(Player neutral){
-
-        /*
-        for(Map.Entry<String, Territory> x: Main.territories.entrySet()){
-            x.getValue().incrementArmies(1);
-            int randVal = (int)(Math.random() * 2);
-            if(randVal == 2)
-                x.getValue().setOwner(neutral);
-            else
-                x.getValue().setOwner(playerList[randVal]);
-        }
-        */
-
         /*
             Get array of Main.territories(Map) keys
             Get a random key and assign it to a player and move to next player - repeat 28 times(14 Main.territories for each player)
