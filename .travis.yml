@@ -2,7 +2,6 @@ language: java
 java: 
  - "stable"
  
-script: "mvn cobertura:cobertura"
-
-after_success:
+script:
+  - ./mvnw clean install
   - bash <(curl -s https://codecov.io/bash)
