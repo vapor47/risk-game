@@ -311,7 +311,7 @@ public class Main {
         System.out.println("\n|| Your Territories ||");        
         for(Map.Entry<String, Territory> x: territories.entrySet()) {  //Prints out Player's territory and the num of troops on them           
             if (x.getValue().getOwner() == currentPlayer) {    
-                System.out.print(padRight(x.getValue().getTerritoryName(), 25) + " || ");                          
+                System.out.print(padRight(x.getValue().getTerritoryName().toString(), 25) + " || ");
                 System.out.println(x.getValue().getNumArmies());
             }            
         }

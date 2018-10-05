@@ -1,12 +1,95 @@
+enum Continent {
+    NORTH_AMERICA("North America"),
+    SOUTH_AMERICA("South America"),
+    EUROPE("Europe"),
+    AFRICA("Africa"),
+    ASIA("Asia"),
+    AUSTRALIA("Australia");
+
+    private final String name;
+
+    Continent(String s){
+        name = s;
+    }
+}
+enum TerritoryName{
+    // North America
+    ALASKA("Alaska"),
+    ALBERTA("Alberta"),
+    CENTRAL_AMERICA("Central America"),
+    EASTERN_UNITED_STATES("Eastern United States"),
+    GREENLAND("Greenland"),
+    NORTHWEST_TERRITORY("Northwest Territory"),
+    ONTARIO("Ontario"),
+    QUEBEC("Quebec"),
+    WESTERN_UNITED_STATES("Western United States"),
+
+    // South America
+    ARGENTINA("Argentina"),
+    BRAZIL("Brazil"),
+    PERU("Peru"),
+    VENEZUELA("Venezuela"),
+
+    // Europe
+    GREAT_BRITAIN("Great Britain"),
+    ICELAND("Iceland"),
+    NORTHERN_EUROPE("Northern Europe"),
+    SCANDINAVIA("Scandinavia"),
+    SOUTHERN_EUROPE("Southern Europe"),
+    UKRAINE("Ukraine"),
+    WESTERN_EUROPE("Western Europe"),
+
+    // Africa
+    CONGO("Congo"),
+    EAST_AFRICA("East Africa"),
+    EGYPT("Egypt"),
+    MADAGASCAR("Madagascar"),
+    NORTH_AFRICA("North Africa"),
+    SOUTH_AFRICA("South Africa"),
+
+    // Asia
+    AFGHANISTAN("Afghanistan"),
+    CHINA("China"),
+    INDIA("India"),
+    IRKUTSK("Irkutsk"),
+    JAPAN("Japan"),
+    KAMCHATKA("Kamchatka"),
+    MIDDLE_EAST("Middle East"),
+    MONGOLIA("Mongolia"),
+    SIAM("Siam"),
+    SIBERIA("Siberia"),
+    URAL("Ural"),
+    YAKUTSK("Yakutsk"),
+
+    // Australia
+    EASTERN_AUSTRALIA("Eastern Australia"),
+    INDONESIA("Indonesia"),
+    NEW_GUINEA("New Guinea"),
+    WESTERN_AUSTRALIA("Western Australia");
+
+    private final String name;
+
+    TerritoryName(String s){
+        name = s;
+    }
+
+    @Override
+    public String toString() {
+        String s = name().charAt(0) + name().substring(1).toLowerCase();
+        s = s.replaceAll("_", " ");
+        return s;
+    }
+}
+
 public class Territory {
 
-    private String name;
-    private String continent;
+    private TerritoryName name;
+    private Continent continent;
     private int numArmies;
     private Player owner = new Player("Neutral");
     private String[] adjacentTerritories;
 
-    Territory(String name, String continent, String[] adjacentTerritories){
+    Territory(TerritoryName name, Continent continent, String[] adjacentTerritories){
         this.name = name;
         this.continent = continent;
         numArmies = 0;
@@ -14,7 +97,7 @@ public class Territory {
     }
 
     // For testing purposes
-    Territory(String name, String continent, int numArmies, Player owner, String[] adjacentTerritories){
+    Territory(TerritoryName name, Continent continent, int numArmies, Player owner, String[] adjacentTerritories){
         this.name = name;
         this.continent = continent;
         this.numArmies = numArmies;
@@ -31,8 +114,8 @@ public class Territory {
     public void setOwner(Player owner){
         this.owner = owner;
     }
-    String getTerritoryName(){return name;}
-    String getContinent(){return continent;}
+    TerritoryName getTerritoryName(){return name;}
+    Continent getContinent(){return continent;}
     int getNumArmies(){return numArmies;}
     Player getOwner(){return owner;}
     public String[] getAdjacentTerritories(){return adjacentTerritories;}
