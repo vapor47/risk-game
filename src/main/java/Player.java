@@ -226,6 +226,8 @@ public class Player
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public void moveInArmies(Territory from, Territory to)
     {
+    	Replay replay = new Replay();
+    	
         Scanner input = new Scanner(System.in);
         int armiesMoving;
                 
@@ -235,20 +237,26 @@ public class Player
         
         Main.territories.get(from.getTerritoryName()).decrementArmies(armiesMoving);
         Main.territories.get(to.getTerritoryName()).incrementArmies(armiesMoving);
+        
+        replay.update(Main.territories.get(to.getTerritoryName()).getNumArmies() + "troops moved from " + from.getTerritoryName() + "to" + to.getTerritoryName() + "\n");
     }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public void drawCards()
     {
+    	Replay replay = new Replay();
         if(claimCheck)
         {
             hand[cardCount++] = Main.deck.draw();
             System.out.printf("%s has drawn a card, Territory: %s, Army: %s%n", playerName,hand[cardCount-1].getTerritory(), hand[cardCount-1].getType());
+            replay.update("Card Draw: Territory: " +  hand[cardCount-1].getTerritory() + ", Army: " + hand[cardCount-1].getType());
             claimCheck = false;
         }
     }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public void attack(Territory Attacker, Territory Defender)
     {   
+    	Replay replay = new Replay();
+    	
         Scanner input = new Scanner(System.in);
         
         int max = 0;
@@ -301,12 +309,19 @@ public class Player
             else
                 Main.territories.get(Attacker.getTerritoryName()).decrementArmies(1);
         }
+        
+        replay.update("Results:\n" + 
+        Attacker.getTerritoryName() + ": " + Main.territories.get(Attacker.getTerritoryName()).getNumArmies() + "\n" + 
+        Defender.getTerritoryName() + ": " + Main.territories.get(Defender.getTerritoryName()).getNumArmies() + "\n"); 
+        ;
+        
         if(Defender.getNumArmies() == 0)
         {
             claimTerritory(Defender);
             Main.playerMap.get(Defender.getOwner().getPlayerName()).loseTerritory(Defender);
             System.out.printf("Congratulations player %s, you have conquered %s!%n", Attacker.getOwner().getPlayerName(), Defender.getTerritoryName());
             moveInArmies(Attacker, Defender);
+            replay.update(Defender.getTerritoryName() + "Has been conquered\n");
             claimCheck = true;
         }
     }

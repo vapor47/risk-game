@@ -40,7 +40,7 @@ public class TerritoryTest {
 
     @Test
     public void getTerritoryName() {
-        Territory test = new Territory("Test Name","Test Continent", 3,
+        Territory test = new Territory(TerritoryName.valueOf("Test Name"),Continent.valueOf("Test Continent"), 3,
                 new Player("Test Player"), new String[]{"Adjacent Territory"});
 
         Assert.assertEquals(test.getTerritoryName(), "Test Name");
@@ -48,7 +48,7 @@ public class TerritoryTest {
 
     @Test
     public void getContinent() {
-        Territory test = new Territory("Test Name","Test Continent", 3,
+        Territory test = new Territory(TerritoryName.valueOf("Test Name"),Continent.valueOf("Test Continent"), 3,
                 new Player("Test Player"), new String[]{"Adjacent Territory"});
 
         Assert.assertEquals(test.getContinent(), "Test Continent");

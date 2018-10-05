@@ -6,6 +6,7 @@ public class Setup {
     private int numPlayers;
     private int startingPlayerIndex;
     private static Scanner input = new Scanner(System.in);
+    Replay replay = new Replay();
     Setup(){
         numPlayers = promptNumPlayers();
         startingPlayerIndex = chooseRandomPlayer(numPlayers);
@@ -22,11 +23,14 @@ public class Setup {
             normalStart(startingPlayerIndex);
         }
         //prints map of territories as well as owners
-        Main.formattedMessage("Current Map"); 
+        Main.formattedMessage("Current Map");
+        replay.update("Initial Map");
         for(Map.Entry<String, Territory> x: Main.territories.entrySet()){
             System.out.print(Main.padRight(x.getValue().getTerritoryName().toString(), 25) + " || ");
             System.out.println(x.getValue().getOwner().getPlayerName());
+            replay.update(Main.padRight(x.getValue().getTerritoryName().toString(), 25) + " || " + x.getValue().getOwner().getPlayerName());
         }
+        replay.upload();
     }
 
     public int getStartingPlayerIndex() {

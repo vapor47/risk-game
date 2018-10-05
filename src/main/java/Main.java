@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -17,7 +18,8 @@ public class Main {
     
     static CommandManager commandManager = new CommandManager();
 
-    public static void main(String[] args){        
+    public static void main(String[] args) throws IOException{
+    	Replay replay = new Replay();
         Scanner sc = new Scanner(System.in);        
         Setup setup = new Setup();        
         int playerIndex = setup.getStartingPlayerIndex();
@@ -30,6 +32,7 @@ public class Main {
         while(isPlaying){ //until only 1 player occupies territories(except for neutral in 2 player games)
             //------------------------------------------------CALCULATE ARMIES & PLACING INFANTRY--------------------------------------------------------//                        
             formattedMessage("Player " + (playerIndex + 1) + "'s turn");
+            replay.update("Player " + playerIndex + "'s turn");
             currentPlayer.updatePlaceableInfantry(currentPlayer.calculateInfantry());                                  
             
             if (currentPlayer.getPlaceableInfantry() > 0) {       
@@ -42,6 +45,8 @@ public class Main {
                         System.out.println("- Choose which territory you would like to fortify: ");                    
                         printOwnedTerritory(currentPlayer);
                         System.out.println();
+                        
+                        replay.update("- Remaining armies: " + currentPlayer.getPlaceableInfantry());
                         
                         territoryName = sc.nextLine(); 
                         
@@ -64,6 +69,9 @@ public class Main {
                             currentPlayer.placeInfantry(territoryName, troopsToMove);
                             System.out.printf("\n- Added %d armies to %s", troopsToMove, territoryName);
                             troopsMoved = true;
+                            
+                            replay.update("n- Added " + troopsToMove + " armies to " + territoryName);
+                            
                         } //Valid, but player does not own the territory      
                         else {
                             System.out.println("Cannot place troops into enemy territory");
@@ -73,10 +81,12 @@ public class Main {
                 } //end while
             } //end if
             
+            replay.upload();
+            
             //-------------------------------------------------------------ATTACK------------------------------------------------------------------------//
-            formattedMessage("Attacking Phase");            
+            formattedMessage("Attacking Phase");
             System.out.print("\nWould you like to attack this turn?: (y/n)");
-            userInput = sc.nextLine();           
+            userInput = sc.nextLine();  
             do {
                 if (userInput.equalsIgnoreCase("y")) {                    
                     System.out.println();                
@@ -86,7 +96,7 @@ public class Main {
                     System.out.print("- Type in name of territory to display adjacent territories.\n- Press \"Enter\" to continue with attack\n");
                     printOwnedTerritory(currentPlayer);
                     territoryName = sc.nextLine(); 
-
+                    
                     do {                                                                    
                         if(territoryName.isEmpty()){
                             break;
@@ -187,11 +197,13 @@ public class Main {
                     } while(!validTerritoryTo);                
                     System.out.println();
 
+                    replay.update(attackingTerritory + "attacks" + defendingTerritory);
                     currentPlayer.attack(territories.get(attackingTerritory), territories.get(defendingTerritory));                      
                     //Continue with attack phase   
                     System.out.println("Continue Attacking? (y/n)");
                     userInput = sc.nextLine();                
                 }// End if for attacking
+                replay.upload();
             } while(userInput.equalsIgnoreCase("y"));
                        
             currentPlayer.drawCards();  //draws card if player captures territory
@@ -303,6 +315,7 @@ public class Main {
             }                
             
             currentPlayer = playerMap.get(playerList.get(playerIndex));
+            replay.upload();
             //isPlaying will be false when playerList == 1   
         } //End while                     
     } //End main

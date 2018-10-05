@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 
 public class PlayerTest {
 
-    static Territory testTerritory = new Territory("Name", "Continent", new String[]{"adjacentA", "adjacentB}"});
+    static Territory testTerritory = new Territory(TerritoryName.valueOf("Name"), Continent.valueOf("Continent"), new String[]{"adjacentA", "adjacentB}"});
     static Player testPlayer = new Player("Player Name");
     static Card[] testHand = new Card[]{ new Card(Type.INFANTRY, "Iceland"), new Card(Type.CAVALRY, "Japan"),
             new Card(Type.WILD, "Peru")};

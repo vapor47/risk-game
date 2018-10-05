@@ -1,0 +1,17 @@
+TerritoryList$Continent.class
+ClaimTerritoryCommand.class
+Deck.class
+Player.class
+Die.class
+Continent.class
+Type.class
+Command.class
+TerritoryList.class
+Setup.class
+Main.class
+Territory.class
+TerritoryName.class
+UndoableCommand.class
+Card.class
+CommandManager.class
+Replay.class
