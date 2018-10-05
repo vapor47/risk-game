@@ -184,12 +184,12 @@ public class Player
     public void claimTerritory(Territory t)
     {
         t.setOwner(this);
-        territories.addTerritory(t.getContinent(),t.getTerritoryName());
+        territories.addTerritory(t.getContinent().toString(),t.getTerritoryName().toString());
     }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public void loseTerritory(Territory t)
     {
-        territories.removeTerritory(t.getContinent(),t.getTerritoryName());
+        territories.removeTerritory(t.getContinent().toString(),t.getTerritoryName().toString());
     }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     private static int[] orderedRolls(int arraySize)

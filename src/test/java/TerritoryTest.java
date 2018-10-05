@@ -9,7 +9,7 @@ public class TerritoryTest {
     public void incrementArmies() {
         // Arrange
         final int expected = 4;
-        Territory test = new Territory("Test Name","Test Continent", new String[]{"Adjacent Territory"});
+        Territory test = new Territory(TerritoryName.SIAM,Continent.ASIA, new String[]{"Adjacent Territory"});
 
         // Act
         test.incrementArmies(4);
@@ -23,7 +23,7 @@ public class TerritoryTest {
     public void decrementArmies() {
         // Arrange
         final int expected = 5;
-        Territory test = new Territory("Test Name","Test Continent", 7,
+        Territory test = new Territory(TerritoryName.JAPAN,Continent.ASIA, 7,
                 new Player("Test Player"), new String[]{"Adjacent Territory"});
 
         // Act
@@ -50,7 +50,7 @@ public class TerritoryTest {
     public void getNumArmies() {
         // Arrange
         final int expected = 3;
-        Territory test = new Territory("Test Name","Test Continent", 3,
+        Territory test = new Territory(TerritoryName.EASTERN_AUSTRALIA,Continent.AUSTRALIA, 3,
                 new Player("Test Player"), new String[]{"Adjacent Territory"});
 
         // Act
@@ -63,7 +63,7 @@ public class TerritoryTest {
     @Test
     public void getOwner() {
         Player expected = new Player("Test Player");
-        Territory test = new Territory("Test Name","Test Continent", 7,
+        Territory test = new Territory(TerritoryName.WESTERN_AUSTRALIA,Continent.AUSTRALIA, 7,
                 expected, new String[]{"Adjacent Territory"});
 
         final Player actual = test.getOwner();

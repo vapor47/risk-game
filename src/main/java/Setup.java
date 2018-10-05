@@ -32,7 +32,7 @@ public class Setup {
         //prints map of territories as well as owners
         Main.formattedMessage("Current Map"); 
         for(Map.Entry<String, Territory> x: Main.territories.entrySet()){
-            System.out.print(Main.padRight(x.getValue().getTerritoryName(), 25) + " || ");
+            System.out.print(Main.padRight(x.getValue().getTerritoryName().toString(), 25) + " || ");
             System.out.println(x.getValue().getOwner().getPlayerName());
         }
     }
@@ -195,99 +195,99 @@ public class Setup {
     }
     private void createTerritories(){
         // North America
-        Main.territories.put("Alaska", new Territory("Alaska", "North America",
+        Main.territories.put("Alaska", new Territory(TerritoryName.ALASKA, Continent.NORTH_AMERICA,
                 new String[]{"Alberta","Kamchatka","North West Territory"}));
-        Main.territories.put("Alberta", new Territory("Alberta", "North America",
+        Main.territories.put("Alberta", new Territory(TerritoryName.ALBERTA, Continent.NORTH_AMERICA,
                 new String[]{"Alaska","North West Territory","Ontario","Western United States"}));
-        Main.territories.put("Central America", new Territory("Central America", "North America",
+        Main.territories.put("Central America", new Territory(TerritoryName.CENTRAL_AMERICA, Continent.NORTH_AMERICA,
                 new String[]{"Eastern United States","Venezuela","Western United States"}));
-        Main.territories.put("Eastern United States", new Territory("Eastern United States", "North America",
+        Main.territories.put("Eastern United States", new Territory(TerritoryName.EASTERN_UNITED_STATES, Continent.NORTH_AMERICA,
                 new String[]{"Central America","Ontario","Quebec","Western United States"}));
-        Main.territories.put("Greenland", new Territory("Greenland", "North America",
+        Main.territories.put("Greenland", new Territory(TerritoryName.GREENLAND, Continent.NORTH_AMERICA,
                 new String[]{"Iceland","North West Territory","Ontario","Quebec"}));
-        Main.territories.put("North West Territory", new Territory("North West Territory", "North America",
+        Main.territories.put("North West Territory", new Territory(TerritoryName.NORTHWEST_TERRITORY, Continent.NORTH_AMERICA,
                 new String[]{"Alaska","Alberta","Greenland","Ontario"}));
-        Main.territories.put("Ontario", new Territory("Ontario", "North America",
+        Main.territories.put("Ontario", new Territory(TerritoryName.ONTARIO, Continent.NORTH_AMERICA,
                 new String[]{"Alberta","Eastern United States","Greenland","North West Territory","Quebec","Western United States"}));
-        Main.territories.put("Quebec", new Territory("Quebec", "North America",
+        Main.territories.put("Quebec", new Territory(TerritoryName.QUEBEC, Continent.NORTH_AMERICA,
                 new String[]{"Eastern United States","Greenland","Ontario"}));
-        Main.territories.put("Western United States", new Territory("Western United States", "North America",
+        Main.territories.put("Western United States", new Territory(TerritoryName.WESTERN_UNITED_STATES, Continent.NORTH_AMERICA,
                 new String[]{"Alberta","Central America","Eastern United States","Ontario"}));
 
         // South America
-        Main.territories.put("Argentina", new Territory("Argentina", "South America",
+        Main.territories.put("Argentina", new Territory(TerritoryName.ARGENTINA, Continent.SOUTH_AMERICA,
                 new String[]{"Brazil","Peru"}));
-        Main.territories.put("Brazil", new Territory("Brazil", "South America",
+        Main.territories.put("Brazil", new Territory(TerritoryName.BRAZIL, Continent.SOUTH_AMERICA,
                 new String[]{"Argentina","North Africa","Peru","Venezuela"}));
-        Main.territories.put("Peru", new Territory("Peru", "South America",
+        Main.territories.put("Peru", new Territory(TerritoryName.PERU, Continent.SOUTH_AMERICA,
                 new String[]{"Argentina","Brazil","Venezuela"}));
-        Main.territories.put("Venezuela", new Territory("Venezuela", "South America",
+        Main.territories.put("Venezuela", new Territory(TerritoryName.VENEZUELA, Continent.SOUTH_AMERICA,
                 new String[]{"Brazil","Central America","Peru"}));
 
         // Europe
-        Main.territories.put("Great Britain", new Territory("Great Britain", "Europe",
+        Main.territories.put("Great Britain", new Territory(TerritoryName.GREAT_BRITAIN, Continent.EUROPE,
                 new String[]{"Iceland","Northern Europe","Scandinavia","Western Europe"}));
-        Main.territories.put("Iceland", new Territory("Iceland", "Europe",
+        Main.territories.put("Iceland", new Territory(TerritoryName.ICELAND, Continent.EUROPE,
                 new String[]{"Great Britain","Greenland","Scandinavia"}));
-        Main.territories.put("Northern Europe", new Territory("Northern Europe", "Europe",
+        Main.territories.put("Northern Europe", new Territory(TerritoryName.NORTHERN_EUROPE, Continent.EUROPE,
                 new String[]{"Great Britain","Scandinavia","Southern Europe","Ukraine","Western Europe"}));
-        Main.territories.put("Scandinavia", new Territory("Scandinavia", "Europe",
+        Main.territories.put("Scandinavia", new Territory(TerritoryName.SCANDINAVIA, Continent.EUROPE,
                 new String[]{"Great Britain","Iceland","Northern Europe","Ukraine"}));
-        Main.territories.put("Southern Europe", new Territory("Southern Europe", "Europe",
+        Main.territories.put("Southern Europe", new Territory(TerritoryName.SOUTHERN_EUROPE, Continent.EUROPE,
                 new String[]{"Egypt","Middle East","North Africa","Northern Europe","Ukraine","Western Europe"}));
-        Main.territories.put("Ukraine", new Territory("Ukraine", "Europe",
+        Main.territories.put("Ukraine", new Territory(TerritoryName.UKRAINE, Continent.EUROPE,
                 new String[]{"Afghanistan","Middle East","Northern Europe","Scandinavia","Southern Europe","Ural"}));
-        Main.territories.put("Western Europe", new Territory("Western Europe", "Europe",
+        Main.territories.put("Western Europe", new Territory(TerritoryName.WESTERN_EUROPE, Continent.EUROPE,
                 new String[]{"Great Britain","North Africa","Northern Europe","Southern Europe"}));
 
         // Africa
-        Main.territories.put("Congo", new Territory("Congo", "Africa",
+        Main.territories.put("Congo", new Territory(TerritoryName.CONGO, Continent.AFRICA,
                 new String[]{"East Africa","North Africa","South Africa"}));
-        Main.territories.put("East Africa", new Territory("East Africa", "Africa",
+        Main.territories.put("East Africa", new Territory(TerritoryName.EAST_AFRICA, Continent.AFRICA,
                 new String[]{"Congo","Egypt","Madagascar","Middle East","North Africa","South Africa"}));
-        Main.territories.put("Egypt", new Territory("Egypt", "Africa",
+        Main.territories.put("Egypt", new Territory(TerritoryName.EGYPT, Continent.AFRICA,
                 new String[]{"East Africa","Middle East","North Africa","Southern Europe"}));
-        Main.territories.put("Madagascar", new Territory("Madagascar", "Africa",
+        Main.territories.put("Madagascar", new Territory(TerritoryName.MADAGASCAR, Continent.AFRICA,
                 new String[]{"East Africa","South Africa"}));
-        Main.territories.put("North Africa", new Territory("North Africa", "Africa",
+        Main.territories.put("North Africa", new Territory(TerritoryName.NORTH_AFRICA, Continent.AFRICA,
                 new String[]{"Brazil","Congo","East Africa","Egypt","Southern Europe","Western Europe"}));
-        Main.territories.put("South Africa", new Territory("South Africa", "Africa",
+        Main.territories.put("South Africa", new Territory(TerritoryName.SOUTH_AFRICA, Continent.AFRICA,
                 new String[]{"Congo","East Africa","Madagascar"}));
 
         // Asia
-        Main.territories.put("Afghanistan", new Territory("Afghanistan", "Asia",
+        Main.territories.put("Afghanistan", new Territory(TerritoryName.AFGHANISTAN, Continent.ASIA,
                 new String[]{"China","India","Middle East","Ukraine","Ural"}));
-        Main.territories.put("China", new Territory("China", "Asia",
+        Main.territories.put("China", new Territory(TerritoryName.CHINA, Continent.ASIA,
                 new String[]{"Afghanistan","India","Mongolia","Siam","Siberia","Ural"}));
-        Main.territories.put("India", new Territory("India", "Asia",
+        Main.territories.put("India", new Territory(TerritoryName.INDIA, Continent.ASIA,
                 new String[]{"Afghanistan","China","Middle East","Siam"}));
-        Main.territories.put("Irkutsk", new Territory("Irkutsk", "Asia",
+        Main.territories.put("Irkutsk", new Territory(TerritoryName.IRKUTSK, Continent.ASIA,
                 new String[]{"Kamchatka","Mongolia","Siberia","Yakutsk"}));
-        Main.territories.put("Japan", new Territory("Japan", "Asia",
+        Main.territories.put("Japan", new Territory(TerritoryName.JAPAN, Continent.ASIA,
                 new String[]{"Kamchatka","Mongolia"}));
-        Main.territories.put("Kamchatka", new Territory("Kamchatka", "Asia",
+        Main.territories.put("Kamchatka", new Territory(TerritoryName.KAMCHATKA, Continent.ASIA,
                 new String[]{"Alaska","Irkutsk","Japan","Mongolia","Yakutsk"}));
-        Main.territories.put("Middle East", new Territory("Middle East", "Asia",
+        Main.territories.put("Middle East", new Territory(TerritoryName.MIDDLE_EAST, Continent.ASIA,
                 new String[]{"Afghanistan","East Africa","Egypt","India","Southern Europe","Ukraine"}));
-        Main.territories.put("Mongolia", new Territory("Mongolia", "Asia",
+        Main.territories.put("Mongolia", new Territory(TerritoryName.MONGOLIA, Continent.ASIA,
                 new String[]{"China","Irkutsk","Japan","Kamchatka","Siberia"}));
-        Main.territories.put("Siam", new Territory("Siam", "Asia",
+        Main.territories.put("Siam", new Territory(TerritoryName.SIAM, Continent.ASIA,
                 new String[]{"China","India","Indonesia"}));
-        Main.territories.put("Siberia", new Territory("Siberia", "Asia",
+        Main.territories.put("Siberia", new Territory(TerritoryName.SIBERIA, Continent.ASIA,
                 new String[]{"China","Irkutsk","Mongolia","Ural","Yakutsk"}));
-        Main.territories.put("Ural", new Territory("Ural", "Asia",
+        Main.territories.put("Ural", new Territory(TerritoryName.URAL, Continent.ASIA,
                 new String[]{"Afghanistan","China","Siberia","Ukraine"}));
-        Main.territories.put("Yakutsk", new Territory("Yakutsk", "Asia",
+        Main.territories.put("Yakutsk", new Territory(TerritoryName.YAKUTSK, Continent.ASIA,
                 new String[]{"Irkutsk","Kamchatka","Siberia"}));
 
         // Australia
-        Main.territories.put("Eastern Australia", new Territory("Eastern Australia", "Australia",
+        Main.territories.put("Eastern Australia", new Territory(TerritoryName.EASTERN_AUSTRALIA, Continent.AUSTRALIA,
                 new String[]{"New Guinea","Western Australia"}));
-        Main.territories.put("Indonesia", new Territory("Indonesia", "Australia",
+        Main.territories.put("Indonesia", new Territory(TerritoryName.INDONESIA, Continent.AUSTRALIA,
                 new String[]{"New Guinea","Siam","Western Australia"}));
-        Main.territories.put("New Guinea", new Territory("New Guinea", "Australia",
+        Main.territories.put("New Guinea", new Territory(TerritoryName.NEW_GUINEA, Continent.AUSTRALIA,
                 new String[]{"Eastern Australia","Indonesia","Western Australia"}));
-        Main.territories.put("Western Australia", new Territory("Western Australia", "Australia",
+        Main.territories.put("Western Australia", new Territory(TerritoryName.WESTERN_AUSTRALIA, Continent.AUSTRALIA,
                 new String[]{"Eastern Australia","Indonesia","New Guinea"}));
     }
 
