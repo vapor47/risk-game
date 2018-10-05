@@ -1,33 +1,25 @@
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
 public class Setup {
     private int numPlayers;
-    private int startingPlayer;
-    // testing code coverage
+    private int startingPlayerIndex;
+    private static Scanner input = new Scanner(System.in);
     Setup(){
-        Scanner input = new Scanner(System.in);
+        numPlayers = promptNumPlayers();
+        startingPlayerIndex = chooseRandomPlayer(numPlayers);
 
-        System.out.print("Welcome to Risk!\nHow many people are playing(2-6): ");
-        numPlayers = input.nextInt();
-        while(numPlayers < 2 || numPlayers > 6) {
-            System.out.print("Invalid option! Please enter a number from 2-6: ");
-            numPlayers = input.nextInt();
-        }       
-        startingPlayer = chooseRandomPlayer(numPlayers);
         createTerritories();
         createCards();
         createPlayers(numPlayers);
         giveStartingInfantry(numPlayers);
 
         if(numPlayers == 2){
-            Player neutral = new Player("Neutral");
-            twoPlayerStart(neutral);
+            twoPlayerStart();
         }
         else{
-            normalStart(startingPlayer);
+            normalStart(startingPlayerIndex);
         }
         //prints map of territories as well as owners
         Main.formattedMessage("Current Map"); 
@@ -38,12 +30,19 @@ public class Setup {
     }
 
     public int getStartingPlayerIndex() {
-        return startingPlayer;
+        return startingPlayerIndex;
     }
 
-    public int getNumPlayers() {
+    private int promptNumPlayers(){
+        System.out.print("Welcome to Risk!\nHow many people are playing(2-6): ");
+        numPlayers = input.nextInt();
+        while(numPlayers < 2 || numPlayers > 6) {
+            System.out.print("Invalid option! Please enter a number from 2-6: ");
+            numPlayers = input.nextInt();
+        }
         return numPlayers;
     }
+
     /* Two Player Set-up
             give both players 14 random Main.territories and place 1 infantry on them
                 same for neutral
@@ -53,12 +52,7 @@ public class Setup {
                         either 1 & 1, or 2 infantry on 1 territory
                     2. place 1 infantry on any neutral territory
     */
-    private void twoPlayerStart(Player neutral){
-        /*
-            Get array of Main.territories(Map) keys
-            Get a random key and assign it to a player and move to next player - repeat 28 times(14 Main.territories for each player)
-            Other Main.territories are neutral by default
-         */
+    private void twoPlayerStart(){
         ArrayList<String> keys = new ArrayList<String>(Main.territories.keySet());
         int currPlayerIndex = 0;
         for(int i = 42; i > 14; i--){ // runs 28 times
