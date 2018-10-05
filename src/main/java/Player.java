@@ -21,8 +21,15 @@ public class Player
         placeableInfantry = 0;
         playerName = name;
     }
-
-    void printOwnedTerritories()
+    
+    public TerritoryList getTerritoryList() {
+        return territories;
+    }
+    public void setTerritoryList(TerritoryList territories) {
+        this.territories = territories;        
+    } 
+            
+    public void printOwnedTerritories()
     {
         territories.printConts();
     }

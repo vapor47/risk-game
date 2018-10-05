@@ -14,6 +14,8 @@ public class Main {
     static Map<String,Territory> territories = new HashMap();
     
     static Deck deck = new Deck();
+    
+    static CommandManager commandManager = new CommandManager();
 
     public static void main(String[] args){        
         Scanner sc = new Scanner(System.in);        
