@@ -10,7 +10,7 @@ public class Player
     
     private String playerName;
     
-    public Card hand[] = new Card[11]; //The players currnet cards
+    public Card hand[] = new Card[11]; //The players current cards
    
     private byte cardCount; //The current number of cards the player holds
     private int placeableInfantry;
