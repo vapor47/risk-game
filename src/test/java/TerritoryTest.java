@@ -40,10 +40,18 @@ public class TerritoryTest {
 
     @Test
     public void getTerritoryName() {
+        Territory test = new Territory("Test Name","Test Continent", 3,
+                new Player("Test Player"), new String[]{"Adjacent Territory"});
+
+        Assert.assertEquals(test.getTerritoryName(), "Test Name");
     }
 
     @Test
     public void getContinent() {
+        Territory test = new Territory("Test Name","Test Continent", 3,
+                new Player("Test Player"), new String[]{"Adjacent Territory"});
+
+        Assert.assertEquals(test.getContinent(), "Test Continent");
     }
 
     @Test
@@ -72,13 +80,5 @@ public class TerritoryTest {
 
     @Test
     public void getAdjacentTerritories() {
-    }
-
-    @Test
-    public void printAdjacentTerritories() {
-    }
-
-    @Test
-    public void listTerritoryInfo() {
     }
 }
