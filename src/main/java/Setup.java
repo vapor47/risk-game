@@ -79,22 +79,34 @@ public class Setup {
         listUnclaimedTerritories();
 
         // Each player goes around placing 1 army onto an unclaimed territory (42 total)
-        for(int i = 0; i < 42; i++){
-            currPlayerName = Main.playerList.get(currPlayerIndex);
+        for(int i = 0; i < 42; i++){            
             do {
+                currPlayerName = Main.playerList.get(currPlayerIndex);
                 System.out.print("\n" + currPlayerName + ", claim a territory: ");
                 chosenTerritory = input.nextLine();
                 if(!Main.territories.containsKey(chosenTerritory) || !Main.territories.get(chosenTerritory).getOwner().getPlayerName().equals("Neutral")) {
                     if(chosenTerritory.equals("list-unclaimed"))
                         listUnclaimedTerritories();
+                    else if (chosenTerritory.equals("undo") && i > 0) { 
+                        Main.commandManager.undo();
+                        currPlayerIndex = setNextPlayer(currPlayerIndex);
+                        i--;
+                        continue;
+                    }
                     else {
                         System.out.println("- That is an invalid option.\n" +
                                 "- For a list of unclaimed territories, type 'list-unclaimed'");
                     }
-                } else { // claim territory for current player
+                } else { // claim territory for current player                    
+                    Player player = Main.playerMap.get(currPlayerName);
+                    player.placeInfantry(chosenTerritory, 1);                    
+                    Main.commandManager.executeCommand(new ClaimTerritoryCommand(player, Main.territories.get(chosenTerritory))); //Command manager executes cmd and places cmd in stack 
+                    
+                    /*
                     Main.playerMap.get(currPlayerName).claimTerritory(Main.territories.get(chosenTerritory));
                     Main.territories.get(chosenTerritory).incrementArmies(1);
                     Main.playerMap.get(currPlayerName).updatePlaceableInfantry(-1);
+                    */
                 }
             } while(!Main.territories.containsKey(chosenTerritory) || !Main.territories.get(chosenTerritory).getOwner().getPlayerName().equals(currPlayerName));
             // move to next player
