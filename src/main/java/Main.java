@@ -79,15 +79,21 @@ public class Main {
                 if (userInput.equalsIgnoreCase("y")) {                    
                     System.out.println();                
                     //Prints out Player's territory and the num of troops on them        
-                    do {                                                
-                        //Attack Prompt
-                        System.out.println("\nChoose:\n\t1) A territory to attack from\n\t2) An adjacent territory to attack\n"); 
-                        System.out.print("- Type in name of territory to display adjacent territories.\n- Press \"Enter\" to continue with attack\n");
-                        printOwnedTerritory(currentPlayer);
-                        territoryName = sc.nextLine(); 
+                    //Attack Prompt
+                    System.out.println("\nChoose:\n\t1) A territory to attack from\n\t2) An adjacent territory to attack\n"); 
+                    System.out.print("- Type in name of territory to display adjacent territories.\n- Press \"Enter\" to continue with attack\n");
+                    printOwnedTerritory(currentPlayer);
+                    territoryName = sc.nextLine(); 
 
+                    do {                                                                    
                         if(territoryName.isEmpty()){
                             break;
+                        }
+
+                        if(territoryName.equals("options")) {
+                            System.out.println("\nChoose:\n\t1) A territory to attack from\n\t2) An adjacent territory to attack\n"); 
+                            System.out.print("- Type in name of territory to display adjacent territories.\n- Type \"options\" to view options\n- Press \"Enter\" to continue with attack\n");
+                            printOwnedTerritory(currentPlayer);                               
                         }
 
                         //TODO: Display territories available to attack
@@ -104,6 +110,8 @@ public class Main {
                         else {
 
                         }                   
+                        territoryName = sc.nextLine();
+
                     } while (!(territoryName.isEmpty()));
 
                     //Checking if territory attacking from is valid
@@ -241,6 +249,7 @@ public class Main {
                             i++;
                         }
 
+                        //TODO: Check if territoryFrom only has 1 troop on it
                         if (hasAdjacent) {
                             territoryFrom = territoryInput;
                         } else {
