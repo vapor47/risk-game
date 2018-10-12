@@ -244,7 +244,7 @@ public class Player
         return arr;
     }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public void moveInArmies(Territory from, Territory to)
+    public int moveInArmies(Territory from, Territory to)
     {
     	Replay replay = new Replay();
     	
@@ -259,6 +259,8 @@ public class Player
         Main.territories.get(to.getTerritoryName()).incrementArmies(armiesMoving);
         
         replay.update(Main.territories.get(to.getTerritoryName()).getNumArmies() + "troops moved from " + from.getTerritoryName() + "to" + to.getTerritoryName() + "\n");
+   		
+   		return armiesMoving;
     }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public void drawCards()
