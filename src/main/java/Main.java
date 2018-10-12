@@ -50,6 +50,12 @@ public class Main {
                         
                         territoryName = sc.nextLine(); 
                         
+                        //Check if user types "undo"
+                        if (territoryName.equals("undo")) {
+                            commandManager.undo();                            
+                            continue;
+                        }
+
                         //Checks if territory is valid
                         if (!territories.containsKey(territoryName)) {
                             System.out.println("Enter in a valid territory");
@@ -65,11 +71,12 @@ public class Main {
                                 troopsToMove = sc.nextInt();
                                 sc.nextLine();
                             }
-                                                        
-                            currentPlayer.placeInfantry(territoryName, troopsToMove);
-                            System.out.printf("\n- Added %d armies to %s", troopsToMove, territoryName);
-                            troopsMoved = true;
+                                      
+                            //Executes command & fortifies the territory                            
+                            commandManager.executeCommand(new FortifyingTerritoriesCommand(currentPlayer, territoryName, troopsToMove));                            
                             
+                            System.out.printf("\n- Added %d armies to %s", troopsToMove, territoryName);
+                            troopsMoved = true;                            
                             replay.update("n- Added " + troopsToMove + " armies to " + territoryName);
                             
                         } //Valid, but player does not own the territory      
@@ -86,8 +93,17 @@ public class Main {
             //-------------------------------------------------------------ATTACK------------------------------------------------------------------------//
             formattedMessage("Attacking Phase");
             System.out.print("\nWould you like to attack this turn?: (y/n)");
-            userInput = sc.nextLine();  
-            do {
+
+            do {                
+                userInput = sc.nextLine();       
+
+                // Checks if user types "undo"
+                while (userInput.equals("undo")) {
+                        commandManager.undo();
+                        System.out.println("Continue Attacking? (y/n)");
+                        userInput = sc.nextLine();
+                }
+
                 if (userInput.equalsIgnoreCase("y")) {                    
                     System.out.println();                
                     //Prints out Player's territory and the num of troops on them        
@@ -121,7 +137,8 @@ public class Main {
                         } 
                         else {
 
-                        }                   
+                        }         
+
                         territoryName = sc.nextLine();
 
                     } while (!(territoryName.isEmpty()));
@@ -198,10 +215,10 @@ public class Main {
                     System.out.println();
 
                     replay.update(attackingTerritory + "attacks" + defendingTerritory);
-                    currentPlayer.attack(territories.get(attackingTerritory), territories.get(defendingTerritory));                      
-                    //Continue with attack phase   
+                    //Attacking command
+                    commandManager.executeCommand(new AttackCommand(territories.get(attackingTerritory), territories.get(defendingTerritory)));
+                    
                     System.out.println("Continue Attacking? (y/n)");
-                    userInput = sc.nextLine();                
                 }// End if for attacking
                 replay.upload();
             } while(userInput.equalsIgnoreCase("y"));
@@ -234,80 +251,91 @@ public class Main {
                 
             } while(!territoryName.isEmpty());
                     
-            String territoryFrom = "";
-            String territoryTo = "";  
-            
-            //until player enters valid territory fromm
-            do {                
-                System.out.print("Territory from: "); //prompts user input                                            
-                String territoryInput = sc.nextLine();
-                                                
-                if(territoryInput.equals("end")) {
-                    break;
-                }
+            // Fortifying procedure
+            do {
+                String territoryFrom = "";
+                String territoryTo = "";  
                 
-                if (!territories.containsKey(territoryInput)) {                                     //check if territory exists
-                    System.out.println("Enter in a valid territory");
-                } else if (!(territories.get(territoryInput).getOwner().equals(currentPlayer))) {   //check if player owns territory
-                    System.out.println("Cannot select enemy territory");        
-                } else {
-                    if (territories.containsKey(territoryInput)) {                                  //check if player has adjacent territories to fortify  
-                        int i = 0;  
-                        boolean hasAdjacent = false;                                            
-                        String adjacentTerritories[] = territories.get(territoryInput).getAdjacentTerritories();           
-
-                        while (i < adjacentTerritories.length && !hasAdjacent) {                   
-                            if (territories.get(adjacentTerritories[i]).getOwner().equals(currentPlayer)) { //checks if currentPlayer controls any adjacent territory
-                                hasAdjacent = true;                            
-                            }
-                            i++;
-                        }
-
-                        //TODO: Check if territoryFrom only has 1 troop on it
-                        if (hasAdjacent) {
-                            territoryFrom = territoryInput;
-                        } else {
-                            System.out.println("- You do not control any adjacent territory for this territory");
-                            System.out.println("- Choose another territory or enter 'end' to end your turn");
-                        }    
+                //until player enters valid territory fromm
+                do {                
+                    System.out.print("Territory from: "); //prompts user input                                            
+                    String territoryInput = sc.nextLine();
+                                                    
+                    if(territoryInput.equals("end")) {
+                        break;
                     }
-                }                                                                           
-                
-            } while (territoryFrom.equals(""));
-               
-            if (!territoryFrom.equals("")) {    //If territoryFrom is not empty, user entered a valid territory to fortify from, else end turn
-                //loops until player enters valid territory to
-                do {                           
-                    System.out.print("Territory To: ");   //prompts user input
-                    String territoryInput = sc.nextLine();          
-
-                    if(territoryInput.equals("list-adjacent")) {
-                        System.out.println("\n|| Adjacent territories to fortify ||");                            
-                        territories.get(territoryFrom).printAdjacentTerritories();
-                        System.out.println();
-                        continue;                                
-                    }
-
+                    
                     if (!territories.containsKey(territoryInput)) {                                     //check if territory exists
-                        System.out.println("Enter in a valid territory."
-                                + " For a list of adjacent territories, type 'list-adjacent'");
-                    } else if(!(territories.get(territoryInput).getOwner().equals(currentPlayer))) {    //check if player owns territory
-                        System.out.println("Cannot select enemy territory."
-                                + " For a list of adjacent territories, type 'list-adjacent'");
-                    } else {                                                                            //check if territory is adjacent
-                        for (String adjTerritory : territories.get(territoryFrom).getAdjacentTerritories()) { 
-                            if (territoryInput.equals(adjTerritory)) {
-                                territoryTo = territoryInput;
-                            }                                                                                   
-                        }
-                    }
+                        System.out.println("Enter in a valid territory");
+                    } else if (!(territories.get(territoryInput).getOwner().equals(currentPlayer))) {   //check if player owns territory
+                        System.out.println("Cannot select enemy territory");        
+                    } else {
+                        if (territories.containsKey(territoryInput)) {                                  //check if player has adjacent territories to fortify  
+                            int i = 0;  
+                            boolean hasAdjacent = false;                                            
+                            String adjacentTerritories[] = territories.get(territoryInput).getAdjacentTerritories();           
 
-                } while (territoryTo.equals(""));
-            
-            //fortifying the territory
-            currentPlayer.moveInArmies(territories.get(territoryFrom), territories.get(territoryTo)); 
-            }
+                            while (i < adjacentTerritories.length && !hasAdjacent) {                   
+                                if (territories.get(adjacentTerritories[i]).getOwner().equals(currentPlayer)) { //checks if currentPlayer controls any adjacent territory
+                                    hasAdjacent = true;                            
+                                }
+                                i++;
+                            }
+
+                            //TODO: Check if territoryFrom only has 1 troop on it
+                            if (hasAdjacent) {
+                                territoryFrom = territoryInput;
+                            } else {
+                                System.out.println("- You do not control any adjacent territory for this territory");
+                                System.out.println("- Choose another territory or enter 'end' to end your turn");
+                            }    
+                        }
+                    }                                                                           
+                    
+                } while (territoryFrom.equals(""));
+                   
+                if (!territoryFrom.equals("")) {    //If territoryFrom is not empty, user entered a valid territory to fortify from, else end turn
+                    //loops until player enters valid territory to
+                    do {                           
+                        System.out.print("Territory To: ");   //prompts user input
+                        String territoryInput = sc.nextLine();          
+
+                        if(territoryInput.equals("list-adjacent")) {
+                            System.out.println("\n|| Adjacent territories to fortify ||");                            
+                            territories.get(territoryFrom).printAdjacentTerritories();
+                            System.out.println();
+                            continue;                                
+                        }
+
+                        if (!territories.containsKey(territoryInput)) {                                     //check if territory exists
+                            System.out.println("Enter in a valid territory."
+                                    + " For a list of adjacent territories, type 'list-adjacent'");
+                        } else if(!(territories.get(territoryInput).getOwner().equals(currentPlayer))) {    //check if player owns territory
+                            System.out.println("Cannot select enemy territory."
+                                    + " For a list of adjacent territories, type 'list-adjacent'");
+                        } else {                                                                            //check if territory is adjacent
+                            for (String adjTerritory : territories.get(territoryFrom).getAdjacentTerritories()) { 
+                                if (territoryInput.equals(adjTerritory)) {
+                                    territoryTo = territoryInput;
+                                }                                                                                   
+                            }
+                        }
+
+                    } while (territoryTo.equals(""));
+                
+                    //fortifying the territory
+                    commandManager.executeCommand(new MoveInArmiesCommand(territories.get(territoryFrom), territories.get(territoryTo)));  
+                }
+
+                System.out.println("Press any key to end your turn (type \"undo\" to  undo action)");
+                userInput = sc.nextLine();
+                                
+                if (userInput.equals("undo")){
+                    commandManager.undo();  
+                }
                                               
+            } while(userInput.equals("undo"));   
+                                                        
             //Switches to next player
             playerIndex--;
             if (playerIndex == -1) {
@@ -316,7 +344,11 @@ public class Main {
             
             currentPlayer = playerMap.get(playerList.get(playerIndex));
             replay.upload();
-            //isPlaying will be false when playerList == 1   
+            
+            if (playerList.size() == 1) {
+                isPlaying = false;
+            }
+            
         } //End while                     
     } //End main
     
