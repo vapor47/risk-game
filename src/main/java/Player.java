@@ -24,7 +24,7 @@ public class Player
         cardCount = 0;
         placeableInfantry = 0;
         playerName = name;
-        index = Risk_Game.playerList.indexOf(playerName);
+        index = Main.playerList.indexOf(playerName);
     }
 
     public int getIndex() {
@@ -359,7 +359,7 @@ public class Player
         
        	if (defender.territories.getTerritoryCount() <= 0) {
             // Player's outta the game            
-            Risk_Game.playerList.remove(defender.getPlayerName());
+            Main.playerList.remove(defender.getPlayerName());
             defender.isActive = false;
             System.out.printf("- %s has been defeated!\n", defender.getPlayerName());
         }

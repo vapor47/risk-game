@@ -28,7 +28,7 @@ public class AttackCommand extends UndoableCommand {
     public void undo() {
         if (prevOwner.getActive() == false) {
             prevOwner.setActive(true);
-            Risk_Game.playerList.add(prevOwner.getIndex(), prevOwner.getPlayerName());  //Adds player back into list if he ded
+            Main.playerList.add(prevOwner.getIndex(), prevOwner.getPlayerName());  //Adds player back into list if he ded
         }
         
         attackingTerritory.decrementArmies(attackingTerritory.getNumArmies());

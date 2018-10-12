@@ -17,7 +17,7 @@ public class FortifyingTerritoriesCommand extends UndoableCommand {
     
     @Override
     public void undo() {
-        Territory curTerritory = Risk_Game.territories.get(territory);
+        Territory curTerritory = Main.territories.get(territory);
         curTerritory.decrementArmies(troops);   //Undo action of placing troops
         player.updatePlaceableInfantry(troops); //Returns troops to player                
     }
