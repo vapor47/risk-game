@@ -7,7 +7,7 @@ public class Player
     TerritoryList territories = new TerritoryList();
     
     //private boolean claimCheck = false; 
-    private int index
+    private int index;
     private int claimCheck = 0; 
     
     private String playerName;
