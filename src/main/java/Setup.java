@@ -93,9 +93,7 @@ public class Setup {
                         listUnclaimedTerritories();
                     else if (chosenTerritory.equals("undo") && i > 0) { 
                         Main.commandManager.undo();
-                        currPlayerIndex = setNextPlayer(currPlayerIndex);
-                        i--;
-                        continue;
+                        currPlayerIndex = setNextPlayer(currPlayerIndex);                       
                     }
                     else {
                         System.out.println("- That is an invalid option.\n" +
@@ -106,11 +104,6 @@ public class Setup {
                     player.placeInfantry(chosenTerritory, 1);                    
                     Main.commandManager.executeCommand(new ClaimTerritoryCommand(player, Main.territories.get(chosenTerritory))); //Command manager executes cmd and places cmd in stack 
                     
-                    /*
-                    Main.playerMap.get(currPlayerName).claimTerritory(Main.territories.get(chosenTerritory));
-                    Main.territories.get(chosenTerritory).incrementArmies(1);
-                    Main.playerMap.get(currPlayerName).updatePlaceableInfantry(-1);
-                    */
                 }
             } while(!Main.territories.containsKey(chosenTerritory) || !Main.territories.get(chosenTerritory).getOwner().getPlayerName().equals(currPlayerName));
             // move to next player
