@@ -336,16 +336,18 @@ public class Main {
                                               
             } while(userInput.equals("undo"));   
                                                         
-            //Switches to next player
             playerIndex--;
             if (playerIndex == -1) {
-                playerIndex = playerList.size() - 1;
-            }                
+                playerIndex = playerList.size() - 1;                
+            }
             
-            currentPlayer = playerMap.get(playerList.get(playerIndex));
-            replay.upload();
+            if (playerMap.get(playerList.get(playerIndex)).getPlayerName().equals("Neutral")) {
+                playerIndex--;
+            } 
             
-            if (playerList.size() == 1) {
+            currentPlayer = playerMap.get(playerList.get(playerIndex));    
+            
+            if (playerList.size() == 2 && playerList.contains("Neutral")) {
                 isPlaying = false;
             }
             

@@ -71,9 +71,9 @@ public class Setup {
             keys.remove(index);
         }
         // set remaining Neutral Main.territories armies to 1
-        for(String territoryName : keys){
-            Main.playerMap.get("Neutral").claimTerritory(Main.territories.get(territoryName));
+        for(String territoryName : keys){            
             Main.territories.get(territoryName).incrementArmies(1);            
+            Main.playerMap.get("Neutral").claimTerritory(Main.territories.get(territoryName));            
         }
     }
 
