@@ -11,6 +11,11 @@ enum Continent {
     Continent(String s){
         name = s;
     }
+    
+    @Override
+    public String toString() {
+        return this.name;
+    }
 }
 enum TerritoryName{
     // North America
@@ -72,20 +77,20 @@ enum TerritoryName{
     TerritoryName(String s){
         name = s;
     }
-
+    
     @Override
     public String toString() {
-        String s = name().charAt(0) + name().substring(1).toLowerCase();
-        s = s.replaceAll("_", " ");
-        return s;
+        return this.name;
     }
 }
 
 public class Territory {
 
     private TerritoryName name;
-    private Continent continent;
+    private Continent continent;    
     private int numArmies;
+    private boolean isUnderAttack;
+    private TerritoryObserver playerObserver;   // only need 1 observer per territory 
     private Player owner = new Player("Neutral");
     private String[] adjacentTerritories;
 
@@ -94,6 +99,7 @@ public class Territory {
         this.continent = continent;
         numArmies = 0;
         this.adjacentTerritories = adjacentTerritories;
+        playerObserver = owner;
     }
 
     // For testing purposes
@@ -103,6 +109,25 @@ public class Territory {
         this.numArmies = numArmies;
         this.adjacentTerritories = adjacentTerritories;
         this.owner = owner;
+        playerObserver = owner;
+    }
+    
+    public void addObserver(TerritoryObserver obs) {        
+        playerObserver = obs;
+    }
+    
+    public void removeObserver() {
+        playerObserver = null;
+    }
+    
+    public void updateUnderAttackStatus(boolean isUnderAttack) {
+        this.isUnderAttack = isUnderAttack;
+    }
+    
+    public void notifyObservers() {
+        if (isUnderAttack) {
+            playerObserver.update(isUnderAttack, name.toString());
+        }
     }
 
     public void incrementArmies(int increment){
@@ -131,7 +156,7 @@ public class Territory {
 //        System.out.printf("%13s %24s %15s %15s %22s\n","Name","Continent","Owner","# of Armies","Adjacent Territories");
 //        System.out.printf("%13s %24s %15s %15d\n", name, continent, owner.getPlayerName(), numArmies);
 //      
-    	System.out.println("-----------------------------------------------------------------------------------------------\n");
+        System.out.println("-----------------------------------------------------------------------------------------------\n");
         System.out.println(getTerritoryName()+":");
         System.out.println("\tOwner: " + getOwner().getPlayerName());
         System.out.println("\tNumber of armies: " + getNumArmies());
@@ -141,7 +166,7 @@ public class Territory {
     }
     public String getTerritoryInfo()
     {
-    	return (getTerritoryName()+":\n" + "\tOwner: " + getOwner().getPlayerName() + "\n\tNumber of armies: " + getNumArmies() + "\n\tContinent: " + getContinent() + "\n");
+        return (getTerritoryName()+":\n" + "\tOwner: " + getOwner().getPlayerName() + "\n\tNumber of armies: " + getNumArmies() + "\n\tContinent: " + getContinent() + "\n");
     }
     /* possible format for later
         Name          Continent           Owner        # of Armies        Adjacent Territories

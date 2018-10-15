@@ -1,6 +1,6 @@
 import java.util.Scanner;
 import java.util.Arrays;
-public class Player 
+public class Player implements TerritoryObserver
 {
     private static int cardValue = 0; //keeps track of all cards traded in    
 
@@ -27,6 +27,13 @@ public class Player
         index = Main.playerList.indexOf(playerName);
     }
 
+    @Override
+    public void update(boolean isUnderAttack, String territoryName) {
+        if (isUnderAttack) {
+            System.out.printf("- %s: Your territory \'%s\', is under attack!\n\n", this.getPlayerName(), territoryName);
+        } 
+    }
+    
     public int getIndex() {
         return index;
     }    
@@ -255,10 +262,10 @@ public class Player
         for(armiesMoving = input.nextInt(); armiesMoving > (from.getNumArmies()-1) || armiesMoving < 1; armiesMoving = input.nextInt())
             System.out.printf("Please give a valid number of movable armies (1 - %d)%n", from.getNumArmies()-1);
         
-        Main.territories.get(from.getTerritoryName()).decrementArmies(armiesMoving);
-        Main.territories.get(to.getTerritoryName()).incrementArmies(armiesMoving);
+        Main.territories.get(from.getTerritoryName().toString()).decrementArmies(armiesMoving);
+        Main.territories.get(to.getTerritoryName().toString()).incrementArmies(armiesMoving);
         
-        replay.update(Main.territories.get(to.getTerritoryName()).getNumArmies() + "troops moved from " + from.getTerritoryName() + "to" + to.getTerritoryName() + "\n");
+        replay.update(Main.territories.get(to.getTerritoryName().toString()).getNumArmies() + "troops moved from " + from.getTerritoryName().toString() + "to" + to.getTerritoryName().toString() + "\n");
    		
    		return armiesMoving;
     }
@@ -303,7 +310,10 @@ public class Player
                 max = 3;
                 break;
         }
-        
+
+        Defender.updateUnderAttackStatus(true);                    
+        Defender.notifyObservers();
+
         int attackerRolls = 0;
         System.out.printf("Attacker %s, How many troops would you like to use? (1 - %d)%n", Attacker.getOwner().getPlayerName(), max);
         for(attackerRolls = input.nextInt(); attackerRolls > max || attackerRolls < 1; attackerRolls = input.nextInt())
@@ -332,27 +342,29 @@ public class Player
         for(int i = 0; Defender.getNumArmies() > 0 && i < size; i++)
         {
             if(attackerTroops[i] > defenderTroops[i]) {
-                Main.territories.get(Defender.getTerritoryName()).decrementArmies(1);
+                Main.territories.get(Defender.getTerritoryName().toString()).decrementArmies(1);
             	defenderTroopsLost++;  
             }
             else {
-                Main.territories.get(Attacker.getTerritoryName()).decrementArmies(1);
+                Main.territories.get(Attacker.getTerritoryName().toString()).decrementArmies(1);
             	attackerTroopsLost++;
             }
         }
         
         replay.update("Results:\n" + 
-        Attacker.getTerritoryName() + ": " + Main.territories.get(Attacker.getTerritoryName()).getNumArmies() + "\n" + 
-        Defender.getTerritoryName() + ": " + Main.territories.get(Defender.getTerritoryName()).getNumArmies() + "\n"); 
+        Attacker.getTerritoryName().toString() + ": " + Main.territories.get(Attacker.getTerritoryName().toString()).getNumArmies() + "\n" + 
+        Defender.getTerritoryName().toString() + ": " + Main.territories.get(Defender.getTerritoryName().toString()).getNumArmies() + "\n"); 
         
         
         if(Defender.getNumArmies() == 0)
         {
             claimTerritory(Defender);
             Main.playerMap.get(Defender.getOwner().getPlayerName()).loseTerritory(Defender);
-            System.out.printf("Congratulations player %s, you have conquered %s!%n", Attacker.getOwner().getPlayerName(), Defender.getTerritoryName());
+            System.out.printf("Congratulations player %s, you have conquered %s!%n", Attacker.getOwner().getPlayerName(), Defender.getTerritoryName().toString());
+            Defender.removeObserver();
+            Defender.addObserver(Attacker.getOwner());
             moveInArmies(Attacker, Defender);
-            replay.update(Defender.getTerritoryName() + "Has been conquered\n");
+            replay.update(Defender.getTerritoryName().toString() + "Has been conquered\n");
             claimCheck++;
         }
 
@@ -366,5 +378,6 @@ public class Player
             System.out.printf("- %s has been defeated!\n", defender.getPlayerName());
         }
 
+        Defender.updateUnderAttackStatus(false);    
     }
 }
