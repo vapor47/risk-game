@@ -119,7 +119,13 @@
 <td><a class="externalLink" href="https://aws.amazon.com/sdkforjava">aws-java-sdk-s3</a></td>
 <td>1.11.422</td>
 <td>jar</td>
-<td><a class="externalLink" href="https://aws.amazon.com/apache2.0">Apache License, Version 2.0</a></td></tr></table></div><a name="Project_Dependencies_test"></a>
+<td><a class="externalLink" href="https://aws.amazon.com/apache2.0">Apache License, Version 2.0</a></td></tr>
+<tr class="a">
+<td>org.twitter4j</td>
+<td><a class="externalLink" href="http://twitter4j.org/">twitter4j-core</a></td>
+<td>4.0.7</td>
+<td>jar</td>
+<td><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0</a></td></tr></table></div><a name="Project_Dependencies_test"></a>
 <div class="section">
 <h3>test<a name="test"></a></h3>
 <p>The following is a list of test dependencies for this project. These dependencies are only required to compile and run unit tests for the application:</p>
@@ -429,13 +435,23 @@ encoded data using Jackson abstractions (streaming API, data binding, tree model
 <td>
 <p><b>Description: </b>Implementation of the JMES Path JSON Query langauge for Java.</p>
 <p><b>URL: </b><a class="externalLink" href="https://aws.amazon.com/sdkforjava">https://aws.amazon.com/sdkforjava</a></p>
-<p><b>Project License: </b><a class="externalLink" href="https://aws.amazon.com/apache2.0">Apache License, Version 2.0</a></p></td></tr></table></div></li></ul></li></ul></li></ul></div></div><a name="Licenses"></a>
+<p><b>Project License: </b><a class="externalLink" href="https://aws.amazon.com/apache2.0">Apache License, Version 2.0</a></p></td></tr></table></div></li></ul></li>
+<li>org.twitter4j:twitter4j-core:jar:4.0.7 (compile) <img id="_img35" src="./images/icon_info_sml.gif" alt="Information" onclick="toggleDependencyDetail( '_dep34', '_img35' );" style="cursor: pointer;vertical-align:text-bottom;"></img><div id="_dep34" style="display:none">
+<table border="0" class="bodyTable">
+<tr class="a">
+<th>twitter4j-core</th></tr>
+<tr class="b">
+<td>
+<p><b>Description: </b>A Java library for the Twitter API</p>
+<p><b>URL: </b><a class="externalLink" href="http://twitter4j.org/">http://twitter4j.org/</a></p>
+<p><b>Project License: </b><a class="externalLink" href="http://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0</a></p></td></tr></table></div></li></ul></li></ul></div></div><a name="Licenses"></a>
 <div class="section">
 <h2>Licenses<a name="Licenses"></a></h2>
 <p><b>Apache 2: </b>Joda-Time</p>
 <p><b>Unknown: </b>Cobertura Maven plug-in example for Java project</p>
 <p><b>Eclipse Public License 1.0: </b>JUnit</p>
 <p><b>The Apache License, Version 2.0: </b>software.amazon.ion:ion-java</p>
+<p><b>Apache License 2.0: </b>twitter4j-core</p>
 <p><b>Apache License, Version 2.0: </b>AWS Java SDK for AWS KMS, AWS Java SDK for Amazon S3, AWS SDK for Java - Core, Apache Commons Codec, Apache HttpClient, Apache HttpCore, JMES Path Query library</p>
 <p><b>New BSD License: </b>Hamcrest Core</p>
 <p><b>The Apache Software License, Version 2.0: </b>Commons Logging, Jackson-annotations, Jackson-core, Jackson-dataformat-CBOR, jackson-databind</p></div><a name="Dependency_File_Details"></a>
@@ -571,6 +587,14 @@ encoded data using Jackson abstractions (streaming API, data binding, tree model
 <td>1.5</td>
 <td>debug</td></tr>
 <tr class="a">
+<td>twitter4j-core-4.0.7.jar</td>
+<td>310.57 kB</td>
+<td>213</td>
+<td>197</td>
+<td>8</td>
+<td>1.6</td>
+<td>debug</td></tr>
+<tr class="b">
 <td>ion-java-1.0.2.jar</td>
 <td>552.16 kB</td>
 <td>353</td>
@@ -578,7 +602,7 @@ encoded data using Jackson abstractions (streaming API, data binding, tree model
 <td>8</td>
 <td>1.5</td>
 <td>debug</td></tr>
-<tr class="b">
+<tr class="a">
 <th>Total</th>
 <th>Size</th>
 <th>Entries</th>
@@ -586,23 +610,23 @@ encoded data using Jackson abstractions (streaming API, data binding, tree model
 <th>Packages</th>
 <th>JDK Rev</th>
 <th>Debug</th></tr>
-<tr class="a">
-<td>16</td>
-<td>6.46 MB</td>
-<td>5,258</td>
-<td>4,235</td>
-<td>222</td>
-<td>1.6</td>
-<td>16</td></tr>
 <tr class="b">
-<td>compile: 14</td>
-<td>compile: 6.11 MB</td>
-<td>compile: 4,883</td>
-<td>compile: 3,904</td>
-<td>compile: 189</td>
-<td>-</td>
-<td>compile: 14</td></tr>
+<td>17</td>
+<td>6.76 MB</td>
+<td>5,471</td>
+<td>4,432</td>
+<td>230</td>
+<td>1.6</td>
+<td>17</td></tr>
 <tr class="a">
+<td>compile: 15</td>
+<td>compile: 6.42 MB</td>
+<td>compile: 5,096</td>
+<td>compile: 4,101</td>
+<td>compile: 197</td>
+<td>-</td>
+<td>compile: 15</td></tr>
+<tr class="b">
 <td>test: 2</td>
 <td>test: 351.52 kB</td>
 <td>test: 375</td>
@@ -716,17 +740,22 @@ encoded data using Jackson abstractions (streaming API, data binding, tree model
 <td>-</td>
 <td>-</td></tr>
 <tr class="a">
-<td>software.amazon.ion:ion-java:jar:1.0.2</td>
+<td>org.twitter4j:twitter4j-core:jar:4.0.7</td>
 <td>-</td>
 <td>-</td>
 <td>-</td></tr>
 <tr class="b">
+<td>software.amazon.ion:ion-java:jar:1.0.2</td>
+<td>-</td>
+<td>-</td>
+<td>-</td></tr>
+<tr class="a">
 <th>Total</th>
 <th>central</th>
 <th>sonatype-nexus-snapshots</th>
 <th>apache.snapshots</th></tr>
-<tr class="a">
-<td>16 (compile: 14, test: 2)</td>
+<tr class="b">
+<td>17 (compile: 15, test: 2)</td>
 <td>0</td>
 <td>0</td>
 <td>0</td></tr></table></div>

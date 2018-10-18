@@ -10,18 +10,18 @@ digraph G {
 	nodesep=0.25;
 	ranksep=0.5;
 	// AttackCommand
-	c19 [label=<<table title="AttackCommand" border="0" cellborder="1" cellspacing="0" cellpadding="2" port="p" bgcolor="lemonChiffon" href="./AttackCommand.html">
+	c20 [label=<<table title="AttackCommand" border="0" cellborder="1" cellspacing="0" cellpadding="2" port="p" bgcolor="lemonChiffon" href="./AttackCommand.html">
 		<tr><td><table border="0" cellspacing="0" cellpadding="1">
 <tr><td align="center" balign="center"> AttackCommand </td></tr>
 		</table></td></tr>
 		</table>>, URL="./AttackCommand.html", fontname="arial", fontcolor="black", fontsize=10.0];
 	// UndoableCommand
-	c50 [label=<<table title="UndoableCommand" border="0" cellborder="1" cellspacing="0" cellpadding="2" port="p" href="./UndoableCommand.html">
+	c53 [label=<<table title="UndoableCommand" border="0" cellborder="1" cellspacing="0" cellpadding="2" port="p" href="./UndoableCommand.html">
 		<tr><td><table border="0" cellspacing="0" cellpadding="1">
 <tr><td align="center" balign="center"><font face="arial italic"> UndoableCommand </font></td></tr>
 		</table></td></tr>
 		</table>>, URL="./UndoableCommand.html", fontname="arial", fontcolor="black", fontsize=10.0];
 	//AttackCommand extends UndoableCommand
-	c50:p -> c19:p [dir=back,arrowtail=empty];
+	c53:p -> c20:p [dir=back,arrowtail=empty];
 }
 

@@ -106,23 +106,29 @@ digraph G {
 <tr><td align="center" balign="center"> TerritoryObserver </td></tr>
 		</table></td></tr>
 		</table>>, URL="./TerritoryObserver.html", fontname="arial", fontcolor="black", fontsize=10.0];
+	// Tweeter
+	c16 [label=<<table title="Tweeter" border="0" cellborder="1" cellspacing="0" cellpadding="2" port="p" href="./Tweeter.html">
+		<tr><td><table border="0" cellspacing="0" cellpadding="1">
+<tr><td align="center" balign="center"> Tweeter </td></tr>
+		</table></td></tr>
+		</table>>, URL="./Tweeter.html", fontname="arial", fontcolor="black", fontsize=10.0];
 	// UndoableCommand
-	c16 [label=<<table title="UndoableCommand" border="0" cellborder="1" cellspacing="0" cellpadding="2" port="p" href="./UndoableCommand.html">
+	c17 [label=<<table title="UndoableCommand" border="0" cellborder="1" cellspacing="0" cellpadding="2" port="p" href="./UndoableCommand.html">
 		<tr><td><table border="0" cellspacing="0" cellpadding="1">
 <tr><td align="center" balign="center"><font face="arial italic"> UndoableCommand </font></td></tr>
 		</table></td></tr>
 		</table>>, URL="./UndoableCommand.html", fontname="arial", fontcolor="black", fontsize=10.0];
 	//AttackCommand extends UndoableCommand
-	c16:p -> c0:p [dir=back,arrowtail=empty];
+	c17:p -> c0:p [dir=back,arrowtail=empty];
 	//ClaimTerritoryCommand extends UndoableCommand
-	c16:p -> c2:p [dir=back,arrowtail=empty];
+	c17:p -> c2:p [dir=back,arrowtail=empty];
 	//FortifyingTerritoriesCommand extends UndoableCommand
-	c16:p -> c6:p [dir=back,arrowtail=empty];
+	c17:p -> c6:p [dir=back,arrowtail=empty];
 	//MoveInArmiesCommand extends UndoableCommand
-	c16:p -> c8:p [dir=back,arrowtail=empty];
+	c17:p -> c8:p [dir=back,arrowtail=empty];
 	//Player implements TerritoryObserver
 	c15:p -> c9:p [dir=back,arrowtail=empty,style=dashed];
 	//UndoableCommand extends Command
-	c3:p -> c16:p [dir=back,arrowtail=empty];
+	c3:p -> c17:p [dir=back,arrowtail=empty];
 }
 
