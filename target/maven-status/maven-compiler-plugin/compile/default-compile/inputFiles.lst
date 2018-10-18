@@ -4,6 +4,7 @@ C:\Users\phill\Documents\COSC_Fall_2018\Software_Design\GroupProject\risk-game\s
 C:\Users\phill\Documents\COSC_Fall_2018\Software_Design\GroupProject\risk-game\src\main\java\MoveInArmiesCommand.java
 C:\Users\phill\Documents\COSC_Fall_2018\Software_Design\GroupProject\risk-game\src\main\java\Main.java
 C:\Users\phill\Documents\COSC_Fall_2018\Software_Design\GroupProject\risk-game\src\main\java\Territory.java
+C:\Users\phill\Documents\COSC_Fall_2018\Software_Design\GroupProject\risk-game\src\main\java\Credits.java
 C:\Users\phill\Documents\COSC_Fall_2018\Software_Design\GroupProject\risk-game\src\main\java\Die.java
 C:\Users\phill\Documents\COSC_Fall_2018\Software_Design\GroupProject\risk-game\src\main\java\Replay.java
 C:\Users\phill\Documents\COSC_Fall_2018\Software_Design\GroupProject\risk-game\src\main\java\TerritoryList.java
@@ -14,5 +15,8 @@ C:\Users\phill\Documents\COSC_Fall_2018\Software_Design\GroupProject\risk-game\s
 C:\Users\phill\Documents\COSC_Fall_2018\Software_Design\GroupProject\risk-game\src\main\java\TerritoryObserver.java
 C:\Users\phill\Documents\COSC_Fall_2018\Software_Design\GroupProject\risk-game\src\main\java\Command.java
 C:\Users\phill\Documents\COSC_Fall_2018\Software_Design\GroupProject\risk-game\src\main\java\UndoableCommand.java
+C:\Users\phill\Documents\COSC_Fall_2018\Software_Design\GroupProject\risk-game\src\main\java\PurchaseProxy.java
+C:\Users\phill\Documents\COSC_Fall_2018\Software_Design\GroupProject\risk-game\src\main\java\Bank.java
+C:\Users\phill\Documents\COSC_Fall_2018\Software_Design\GroupProject\risk-game\src\main\java\Store.java
 C:\Users\phill\Documents\COSC_Fall_2018\Software_Design\GroupProject\risk-game\src\main\java\Player.java
 C:\Users\phill\Documents\COSC_Fall_2018\Software_Design\GroupProject\risk-game\src\main\java\Setup.java
