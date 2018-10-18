@@ -10,6 +10,8 @@ public class Player implements TerritoryObserver
     private int index;
     private int claimCheck = 0; 
     
+    Credits credits = new Credits();
+    
     private String playerName;
     
     public Card hand[] = new Card[11]; //The players current cards
