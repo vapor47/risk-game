@@ -25,15 +25,20 @@
         </dependency>
          <dependency>
             <groupId>com.amazonaws</groupId>
-            <artifactId>aws-java-sdk-s3</artifactId>
+            <artifactId>aws-java-sdk-s3</artifactId>     
             <version>1.11.422</version>
-        </dependency>       
-               
+        </dependency>
+        <dependency>
+            <groupId>org.twitter4j</groupId>
+            <artifactId>twitter4j-core</artifactId>
+            <version>[4.0,)</version>
+        </dependency>
+
     </dependencies>
 
     <build>
         <sourceDirectory>src/main/java</sourceDirectory>
-        <plugins>
+        <plugins>            
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>

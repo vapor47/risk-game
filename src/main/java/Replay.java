@@ -39,7 +39,7 @@ public class Replay
                     .build();
         
             // Upload a text string as a new object.
-            s3Client.putObject(bucketName, objectName, replay);
+//            s3Client.putObject(bucketName, objectName, replay);
 		}
 		
 		catch(AmazonServiceException e) {
