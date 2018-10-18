@@ -353,7 +353,7 @@ public class Main {
             
             currentPlayer = playerMap.get(playerList.get(playerIndex));    
             
-            if (playerList.size() == 2 && playerList.contains("Neutral")) {
+            if (playerList.size() == 2 && playerList.contains("Neutral") || playerList.size() == 1) {
                 isPlaying = false;
             }
             
