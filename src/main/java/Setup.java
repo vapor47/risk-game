@@ -63,15 +63,17 @@ public class Setup {
             int index = (int)(Math.random()*i);
             String key = keys.get(index);
             Main.territories.get(key).incrementArmies(1);
-            Main.territories.get(key).setOwner(Main.playerMap.get(Main.playerList.get(currPlayerIndex)));
+            //Main.territories.get(key).setOwner(Main.playerMap.get(Main.playerList.get(currPlayerIndex)));            
+            Main.playerMap.get(Main.playerList.get(currPlayerIndex)).claimTerritory(Main.territories.get(key));
             Main.playerMap.get(Main.playerList.get(currPlayerIndex)).updatePlaceableInfantry(-1);
-
+            Main.territories.get(key).addObserver(Main.playerMap.get(Main.playerList.get(currPlayerIndex)));
             currPlayerIndex = (currPlayerIndex + 1) % 2; // goes from 0-1
             keys.remove(index);
         }
         // set remaining Neutral Main.territories armies to 1
-        for(String territoryName : keys){
-            Main.territories.get(territoryName).incrementArmies(1);
+        for(String territoryName : keys){            
+            Main.territories.get(territoryName).incrementArmies(1);            
+            Main.playerMap.get("Neutral").claimTerritory(Main.territories.get(territoryName));            
         }
     }
 
@@ -93,9 +95,7 @@ public class Setup {
                         listUnclaimedTerritories();
                     else if (chosenTerritory.equals("undo") && i > 0) { 
                         Main.commandManager.undo();
-                        currPlayerIndex = setNextPlayer(currPlayerIndex);
-                        i--;
-                        continue;
+                        currPlayerIndex = setNextPlayer(currPlayerIndex);                       
                     }
                     else {
                         System.out.println("- That is an invalid option.\n" +
@@ -105,12 +105,7 @@ public class Setup {
                     Player player = Main.playerMap.get(currPlayerName);
                     player.placeInfantry(chosenTerritory, 1);                    
                     Main.commandManager.executeCommand(new ClaimTerritoryCommand(player, Main.territories.get(chosenTerritory))); //Command manager executes cmd and places cmd in stack 
-                    
-                    /*
-                    Main.playerMap.get(currPlayerName).claimTerritory(Main.territories.get(chosenTerritory));
-                    Main.territories.get(chosenTerritory).incrementArmies(1);
-                    Main.playerMap.get(currPlayerName).updatePlaceableInfantry(-1);
-                    */
+                    Main.territories.get(chosenTerritory).addObserver(player);
                 }
             } while(!Main.territories.containsKey(chosenTerritory) || !Main.territories.get(chosenTerritory).getOwner().getPlayerName().equals(currPlayerName));
             // move to next player
@@ -176,6 +171,12 @@ public class Setup {
             String name = "Player " + (i+1);
             Main.playerList.add(name);
             Main.playerMap.put(name, new Player(name));
+        }
+        
+        if (numPlayers == 2) {
+            String neutral = "Neutral";
+            Main.playerList.add(neutral);
+            Main.playerMap.put(neutral, new Player(neutral));
         }
     }
 
