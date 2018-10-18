@@ -14,6 +14,8 @@ public class Player
    
     private byte cardCount; //The current number of cards the player holds
     private int placeableInfantry;
+
+    public int territoriesConqueredThisTurn = 0;
     
     Player(String name)
     {
@@ -192,6 +194,7 @@ public class Player
     {
         t.setOwner(this);
         territories.addTerritory(t.getContinent().toString(),t.getTerritoryName().toString());
+        territoriesConqueredThisTurn++;
     }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public void loseTerritory(Territory t)

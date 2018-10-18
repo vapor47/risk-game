@@ -7,7 +7,7 @@ import java.util.Map;
 public class Main {
     // Key = Player name; Value = Player object
     // Does not include neutral in 2 player games    
-    static Map<String, Player> playerMap = new HashMap<String, Player>();
+    static HashMap<String, Player> playerMap = new HashMap<String, Player>();
 
     // Holds Player names and maintains turn order
     static ArrayList<String> playerList = new ArrayList<String>();
@@ -307,7 +307,14 @@ public class Main {
             //fortifying the territory
             currentPlayer.moveInArmies(territories.get(territoryFrom), territories.get(territoryTo)); 
             }
-                                              
+
+            // Tweets number of territories conquered this turn
+            try {
+                Tweeter.TweetTerritoriesConquered(currentPlayer);
+            } catch (Exception e){
+                System.out.println("ERROR: Tweet didn't work");
+            }
+
             //Switches to next player
             playerIndex--;
             if (playerIndex == -1) {
@@ -317,7 +324,14 @@ public class Main {
             currentPlayer = playerMap.get(playerList.get(playerIndex));
             replay.upload();
             //isPlaying will be false when playerList == 1   
-        } //End while                     
+        } //End while
+
+        // Tweet number of territories conquered at the end of the game.
+        try {
+            Tweeter.TweetEndOfGame(playerMap);
+        } catch (Exception e){
+            System.out.println("ERROR: Tweet didn't work");
+        }
     } //End main
     
     private static void printOwnedTerritory(Player currentPlayer) {        
