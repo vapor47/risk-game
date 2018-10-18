@@ -7,8 +7,8 @@
 <area shape="rect" id="node3" href="./ClaimTerritoryCommand.html" title="&lt;TABLE&gt;" alt="" coords="167,203,347,251"/>
 <area shape="rect" id="node4_3" href="./Command.html" title="Command" alt="" coords="327,19,405,45"/>
 <area shape="rect" id="node4" href="./Command.html" title="&lt;TABLE&gt;" alt="" coords="316,8,416,56"/>
-<area shape="rect" id="node17_4" href="./UndoableCommand.html" title="UndoableCommand" alt="" coords="299,118,433,143"/>
-<area shape="rect" id="node17" href="./UndoableCommand.html" title="&lt;TABLE&gt;" alt="" coords="289,107,443,155"/>
+<area shape="rect" id="node18_4" href="./UndoableCommand.html" title="UndoableCommand" alt="" coords="299,118,433,143"/>
+<area shape="rect" id="node18" href="./UndoableCommand.html" title="&lt;TABLE&gt;" alt="" coords="289,107,443,155"/>
 <area shape="rect" id="node5_5" href="./CommandManager.html" title="CommandManager" alt="" coords="547,19,675,45"/>
 <area shape="rect" id="node5" href="./CommandManager.html" title="&lt;TABLE&gt;" alt="" coords="537,8,686,56"/>
 <area shape="rect" id="node6_6" href="./Deck.html" title="Deck" alt="" coords="721,19,771,45"/>
@@ -33,4 +33,6 @@
 <area shape="rect" id="node15" href="./TerritoryList.Continent.html" title="&lt;TABLE&gt;" alt="" coords="1515,8,1611,56"/>
 <area shape="rect" id="node16_16" href="./TerritoryObserver.html" title="TerritoryObserver" alt="" coords="913,11,1030,53"/>
 <area shape="rect" id="node16" href="./TerritoryObserver.html" title="&lt;TABLE&gt;" alt="" coords="902,5,1041,59"/>
+<area shape="rect" id="node17_17" href="./Tweeter.html" title="Tweeter" alt="" coords="1646,19,1710,45"/>
+<area shape="rect" id="node17" href="./Tweeter.html" title="&lt;TABLE&gt;" alt="" coords="1635,8,1721,56"/>
 </map>
