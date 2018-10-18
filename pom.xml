@@ -25,38 +25,20 @@
         </dependency>
          <dependency>
             <groupId>com.amazonaws</groupId>
-            <artifactId>aws-java-sdk-s3</artifactId>
-             <version>1.11.422</version>
+            <artifactId>aws-java-sdk-s3</artifactId>     
+            <version>1.11.422</version>
         </dependency>
         <dependency>
             <groupId>org.twitter4j</groupId>
             <artifactId>twitter4j-core</artifactId>
             <version>[4.0,)</version>
         </dependency>
+
     </dependencies>
 
     <build>
         <sourceDirectory>src/main/java</sourceDirectory>
-        <plugins>
-            <!--
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.0.1</version>
-                <configuration>
-                    <doclet>org.umlgraph.doclet.UmlGraphDoc</doclet>
-
-                    <docletPath>/path/to/UmlGraph.jar</docletPath>
-                    <docletArtifact>
-                        <groupId>org.umlgraph</groupId>
-                        <artifactId>doclet</artifactId>
-                        <version>5.1</version>
-                    </docletArtifact>
-                    <additionalparam>-views</additionalparam>
-                    <useStandardDocletOptions>true</useStandardDocletOptions>
-                </configuration>
-            </plugin>
-            -->
+        <plugins>            
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -78,6 +60,59 @@
                     <check />
                 </configuration>
             </plugin>
+            
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-site-plugin</artifactId>
+              <version>3.3</version>
+            </plugin>
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-project-info-reports-plugin</artifactId>
+              <version>2.7</version>
+            </plugin>                                                                                  
         </plugins>
     </build>
+  
+    
+    <reporting>
+        <plugins>
+                  
+        <!-- UML -->
+        <plugin>                                                                         
+            <groupId>org.apache.maven.plugins</groupId>                                  
+            <artifactId>maven-javadoc-plugin</artifactId>                                
+            <version>3.0.1</version>                                                       
+            <configuration>                                                              
+                <doclet>org.umlgraph.doclet.UmlGraphDoc</doclet>                         
+                <docletArtifact>                                                         
+                    <groupId>org.umlgraph</groupId>                                      
+                    <artifactId>umlgraph</artifactId>                                    
+                    <version>5.6</version>                                               
+                </docletArtifact>                                                        
+                <additionalparam>-views -all</additionalparam>                           
+                <useStandardDocletOptions>true</useStandardDocletOptions>                
+            </configuration>                                                             
+        </plugin>    
+        
+    <!-- JAVADOC creation -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>3.0.1</version>
+        <reportSets>
+          <reportSet>
+            <id>html</id>
+            <reports>
+              <report>javadoc</report>
+            </reports>
+          </reportSet>
+          
+        </reportSets>
+      </plugin>                                                 
+        
+    </plugins>        
+    </reporting>
+  
 </project>
+

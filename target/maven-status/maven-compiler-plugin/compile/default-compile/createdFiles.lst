@@ -1,3 +1,4 @@
+FortifyingTerritoriesCommand.class
 TerritoryList$Continent.class
 ClaimTerritoryCommand.class
 Deck.class
@@ -6,9 +7,12 @@ Die.class
 Continent.class
 Type.class
 Command.class
+MoveInArmiesCommand.class
 TerritoryList.class
 Setup.class
+AttackCommand.class
 Main.class
+TerritoryObserver.class
 Territory.class
 TerritoryName.class
 UndoableCommand.class
