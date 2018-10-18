@@ -1,7 +1,7 @@
 -------------------------------------------------------------------------------
 Test set: PlayerTest
 -------------------------------------------------------------------------------
-Tests run: 8, Failures: 0, Errors: 8, Skipped: 0, Time elapsed: 0.048 sec <<< FAILURE!
+Tests run: 8, Failures: 0, Errors: 8, Skipped: 0, Time elapsed: 0.054 sec <<< FAILURE!
 attack(PlayerTest)  Time elapsed: 0.006 sec  <<< ERROR!
 java.lang.ExceptionInInitializerError
 	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
@@ -34,7 +34,7 @@ java.lang.ExceptionInInitializerError
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:75)
 Caused by: java.lang.IllegalArgumentException: No enum constant TerritoryName.Name
 	at java.lang.Enum.valueOf(Enum.java:238)
-	at TerritoryName.valueOf(Territory.java:15)
+	at TerritoryName.valueOf(Territory.java:20)
 	at PlayerTest.<clinit>(PlayerTest.java:8)
 	... 28 more
 
@@ -162,7 +162,7 @@ java.lang.NoClassDefFoundError: Could not initialize class PlayerTest
 	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:115)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:75)
 
-TestPlaceInfantry(PlayerTest)  Time elapsed: 0.001 sec  <<< ERROR!
+TestPlaceInfantry(PlayerTest)  Time elapsed: 0 sec  <<< ERROR!
 java.lang.NoClassDefFoundError: Could not initialize class PlayerTest
 	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
 	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
@@ -193,7 +193,7 @@ java.lang.NoClassDefFoundError: Could not initialize class PlayerTest
 	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:115)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:75)
 
-TestUpdatePlaceableInfantry(PlayerTest)  Time elapsed: 0 sec  <<< ERROR!
+TestUpdatePlaceableInfantry(PlayerTest)  Time elapsed: 0.001 sec  <<< ERROR!
 java.lang.NoClassDefFoundError: Could not initialize class PlayerTest
 	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
 	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
@@ -224,7 +224,7 @@ java.lang.NoClassDefFoundError: Could not initialize class PlayerTest
 	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:115)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:75)
 
-playHand(PlayerTest)  Time elapsed: 0 sec  <<< ERROR!
+playHand(PlayerTest)  Time elapsed: 0.001 sec  <<< ERROR!
 java.lang.NoClassDefFoundError: Could not initialize class PlayerTest
 	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
 	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)

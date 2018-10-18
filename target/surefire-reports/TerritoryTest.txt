@@ -1,11 +1,11 @@
 -------------------------------------------------------------------------------
 Test set: TerritoryTest
 -------------------------------------------------------------------------------
-Tests run: 8, Failures: 0, Errors: 2, Skipped: 0, Time elapsed: 0 sec <<< FAILURE!
+Tests run: 8, Failures: 0, Errors: 2, Skipped: 0, Time elapsed: 0.001 sec <<< FAILURE!
 getTerritoryName(TerritoryTest)  Time elapsed: 0 sec  <<< ERROR!
 java.lang.IllegalArgumentException: No enum constant TerritoryName.Test Name
 	at java.lang.Enum.valueOf(Enum.java:238)
-	at TerritoryName.valueOf(Territory.java:15)
+	at TerritoryName.valueOf(Territory.java:20)
 	at TerritoryTest.getTerritoryName(TerritoryTest.java:43)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
@@ -37,10 +37,10 @@ java.lang.IllegalArgumentException: No enum constant TerritoryName.Test Name
 	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:115)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:75)
 
-getContinent(TerritoryTest)  Time elapsed: 0 sec  <<< ERROR!
+getContinent(TerritoryTest)  Time elapsed: 0.001 sec  <<< ERROR!
 java.lang.IllegalArgumentException: No enum constant TerritoryName.Test Name
 	at java.lang.Enum.valueOf(Enum.java:238)
-	at TerritoryName.valueOf(Territory.java:15)
+	at TerritoryName.valueOf(Territory.java:20)
 	at TerritoryTest.getContinent(TerritoryTest.java:51)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)

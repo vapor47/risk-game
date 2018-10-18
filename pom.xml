@@ -26,8 +26,9 @@
          <dependency>
             <groupId>com.amazonaws</groupId>
             <artifactId>aws-java-sdk-s3</artifactId>
-             <version>1.11.422</version>
-        </dependency>
+            <version>1.11.422</version>
+        </dependency>       
+               
     </dependencies>
 
     <build>
@@ -54,6 +55,59 @@
                     <check />
                 </configuration>
             </plugin>
+            
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-site-plugin</artifactId>
+              <version>3.3</version>
+            </plugin>
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-project-info-reports-plugin</artifactId>
+              <version>2.7</version>
+            </plugin>                                                                                  
         </plugins>
     </build>
+  
+    
+    <reporting>
+        <plugins>
+                  
+        <!-- UML -->
+        <plugin>                                                                         
+            <groupId>org.apache.maven.plugins</groupId>                                  
+            <artifactId>maven-javadoc-plugin</artifactId>                                
+            <version>3.0.1</version>                                                       
+            <configuration>                                                              
+                <doclet>org.umlgraph.doclet.UmlGraphDoc</doclet>                         
+                <docletArtifact>                                                         
+                    <groupId>org.umlgraph</groupId>                                      
+                    <artifactId>umlgraph</artifactId>                                    
+                    <version>5.6</version>                                               
+                </docletArtifact>                                                        
+                <additionalparam>-views -all</additionalparam>                           
+                <useStandardDocletOptions>true</useStandardDocletOptions>                
+            </configuration>                                                             
+        </plugin>    
+        
+    <!-- JAVADOC creation -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>3.0.1</version>
+        <reportSets>
+          <reportSet>
+            <id>html</id>
+            <reports>
+              <report>javadoc</report>
+            </reports>
+          </reportSet>
+          
+        </reportSets>
+      </plugin>                                                 
+        
+    </plugins>        
+    </reporting>
+  
 </project>
+
