@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 public class Store 
-{
+{   
 	private int serviceSelect()
 	{
 		String serviceMenu = "Please select what you want to buy(1-4)%n"
