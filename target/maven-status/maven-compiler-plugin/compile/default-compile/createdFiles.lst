@@ -1,11 +1,8 @@
-FortifyingTerritoriesCommand.class
 Tweeter.class
 Type.class
 Command.class
 MoveInArmiesCommand.class
 TerritoryList.class
-Setup.class
-Main.class
 Store.class
 TerritoryObserver.class
 TerritoryName.class
@@ -14,10 +11,8 @@ PurchaseProxy.class
 TerritoryList$Continent.class
 ClaimTerritoryCommand.class
 Deck.class
-Player.class
 Die.class
 Continent.class
-AttackCommand.class
 Territory.class
 UndoableCommand.class
 Credits.class
