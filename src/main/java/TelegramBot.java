@@ -15,7 +15,9 @@ public class TelegramBot extends TelegramLongPollingBot
 {
 	private static boolean botEnabled = false;
 	private static TelegramBot INSTANCE = null;
-
+	
+	private static String gameID;
+	
     public static TelegramBot getInstance() {
         if(INSTANCE == null) {
             INSTANCE = new TelegramBot();
@@ -106,6 +108,14 @@ public class TelegramBot extends TelegramLongPollingBot
 
 	
 	TelegramBot(){}
+
+	public static String getGameID() {
+		return gameID;
+	}
+
+	public static void setGameID(String gameID) {
+		TelegramBot.gameID = gameID;
+	}
 	
 	//TelegramBot(boolean state)
 	//{	

@@ -37,7 +37,7 @@ public class Setup {
         return startingPlayerIndex;
     }
 
-<<<<<<< HEAD
+
     private void setTelegramGameID() {
         System.out.print("Create a game ID to join through Telegram: ");
         String gameID = input.nextLine();
@@ -55,8 +55,6 @@ public class Setup {
         return userIn.equals("y");
     }
 
-=======
->>>>>>> 0930666f571cd44371bea3c54fc8b903196d5ed0
     private int promptNumPlayers(){
         System.out.print("Welcome to Risk!\nHow many people are playing(2-6): ");
         numPlayers = input.nextInt();
