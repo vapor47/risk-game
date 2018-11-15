@@ -5,6 +5,7 @@ Command.class
 MoveInArmiesCommand.class
 TerritoryList.class
 Setup.class
+TelegramBot$botInfo.class
 Main.class
 Store.class
 TerritoryObserver.class
@@ -17,6 +18,7 @@ Deck.class
 Player.class
 Die.class
 Continent.class
+TelegramBot.class
 AttackCommand.class
 Territory.class
 UndoableCommand.class

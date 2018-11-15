@@ -1,8 +1,8 @@
 -------------------------------------------------------------------------------
 Test set: TerritoryTest
 -------------------------------------------------------------------------------
-Tests run: 8, Failures: 0, Errors: 2, Skipped: 0, Time elapsed: 0.002 sec <<< FAILURE!
-getTerritoryName(TerritoryTest)  Time elapsed: 0.001 sec  <<< ERROR!
+Tests run: 8, Failures: 0, Errors: 2, Skipped: 0, Time elapsed: 0.001 sec <<< FAILURE!
+getTerritoryName(TerritoryTest)  Time elapsed: 0 sec  <<< ERROR!
 java.lang.IllegalArgumentException: No enum constant TerritoryName.Test Name
 	at java.lang.Enum.valueOf(Enum.java:238)
 	at TerritoryName.valueOf(Territory.java:20)

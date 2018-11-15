@@ -3,7 +3,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
 public class Main {
     // Key = Player name; Value = Player object
     // Does not include neutral in 2 player games    
@@ -19,6 +18,10 @@ public class Main {
     static CommandManager commandManager = new CommandManager();
 
     public static void main(String[] args) throws IOException{
+    	
+    	TelegramBot test = new TelegramBot(true);
+    	
+    	
     	Replay replay = new Replay();
         Scanner sc = new Scanner(System.in);        
         Setup setup = new Setup();        
