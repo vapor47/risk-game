@@ -37,6 +37,26 @@ public class Setup {
         return startingPlayerIndex;
     }
 
+<<<<<<< HEAD
+    private void setTelegramGameID() {
+        System.out.print("Create a game ID to join through Telegram: ");
+        String gameID = input.nextLine();
+        System.out.println("\nShare this game ID with your friendsto play on Telegram: " + gameID);
+        TelegramBot.getInstance().setGameID(gameID);
+    }
+
+    private boolean isUsingTelegram() {
+        System.out.print("Are you playing using Telegram?(y/n): ");
+        String userIn = input.next();
+        while(!(userIn.equals("y") || userIn.equals("n"))) {
+            System.out.println("Invalid option! Please try again.");
+            userIn = input.next();
+        }
+        return userIn.equals("y");
+    }
+
+=======
+>>>>>>> 0930666f571cd44371bea3c54fc8b903196d5ed0
     private int promptNumPlayers(){
         System.out.print("Welcome to Risk!\nHow many people are playing(2-6): ");
         numPlayers = input.nextInt();
