@@ -18,9 +18,7 @@ public class Setup {
         boolean usingTelegram = isUsingTelegram();
         if(usingTelegram) {
             numPlayers = 3;
-            // set game id
-            System.out.print("Create a game ID to join through Telegram: ");
-            String gameID = input.nextLine();
+            setTelegramGameID();
         } else {
             numPlayers = promptNumPlayers();
         }
@@ -52,6 +50,13 @@ public class Setup {
         return startingPlayerIndex;
     }
 
+    private void setTelegramGameID() {
+        System.out.print("Create a game ID to join through Telegram: ");
+        String gameID = input.nextLine();
+        System.out.println("\nShare this game ID with your friendsto play on Telegram: " + gameID);
+        // TODO: set gameID in telegram class
+    }
+
     private boolean isUsingTelegram() {
         System.out.print("Are you playing using Telegram?(y/n): ");
         String userIn = input.next();
@@ -61,6 +66,7 @@ public class Setup {
         }
         return userIn.equals("y");
     }
+
     private int promptNumPlayers(){
         System.out.print("Welcome to Risk!\nHow many people are playing(2-6): ");
         numPlayers = input.nextInt();
