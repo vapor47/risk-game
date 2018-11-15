@@ -8,7 +8,13 @@ public class Setup {
     private static Scanner input = new Scanner(System.in);
     Replay replay = new Replay();
     Setup(){
-        numPlayers = promptNumPlayers();
+        boolean usingTelegram = isUsingTelegram();
+        if(usingTelegram) {
+            numPlayers = 3;
+            setTelegramGameID();
+        } else {
+            numPlayers = promptNumPlayers();
+        }
         startingPlayerIndex = chooseRandomPlayer(numPlayers);
 
         createTerritories();
@@ -40,9 +46,9 @@ public class Setup {
 
     private void setTelegramGameID() {
         System.out.print("Create a game ID to join through Telegram: ");
-        String gameID = input.nextLine();
-        System.out.println("\nShare this game ID with your friendsto play on Telegram: " + gameID);
-        TelegramBot.getInstance().setGameID(gameID);
+        String gameId = input.next();
+        System.out.println("\nShare this game ID with your friends to play on Telegram: " + gameId);
+        TelegramJoinBot.getInstance().setGameId(gameId);
     }
 
     private boolean isUsingTelegram() {

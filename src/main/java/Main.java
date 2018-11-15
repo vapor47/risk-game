@@ -23,13 +23,12 @@ public class Main {
     static CommandManager commandManager = new CommandManager();
 
     public static void main(String[] args) throws IOException{
-    	
-    	TelegramBot test = null;
+
 		ApiContextInitializer.init();
 
 		TelegramBotsApi riskBot = new TelegramBotsApi();
 		try {
-			riskBot.registerBot(test = TelegramBot.getInstance());
+			riskBot.registerBot(TelegramJoinBot.getInstance());
 
 		} catch (TelegramApiException e) {
      	  e.printStackTrace();
@@ -38,7 +37,7 @@ public class Main {
     	Replay replay = new Replay();
         Scanner sc = new Scanner(System.in);        
         Setup setup = new Setup();
-        test.setPlayerName(playerMap);
+        //test.setPlayerName(playerMap);
         int playerIndex = setup.getStartingPlayerIndex();
         boolean isPlaying = true;        
         String territoryName;
