@@ -23,9 +23,8 @@ public class Main {
     	
     	
     	Replay replay = new Replay();
-        Scanner sc = new Scanner(System.in);        
-        Setup setup = new Setup();        
-        int playerIndex = setup.getStartingPlayerIndex();
+        Scanner sc = new Scanner(System.in);
+        int playerIndex = Setup.getInstance().getStartingPlayerIndex();
         boolean isPlaying = true;        
         String territoryName;
         String userInput;

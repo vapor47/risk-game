@@ -7,7 +7,14 @@ public class Setup {
     private int startingPlayerIndex;
     private static Scanner input = new Scanner(System.in);
     Replay replay = new Replay();
-    Setup(){
+
+    private static final Setup INSTANCE = new Setup();
+
+    public static Setup getInstance() {
+        return INSTANCE;
+    }
+
+    private Setup(){
         boolean usingTelegram = isUsingTelegram();
         if(usingTelegram) {
             numPlayers = 3;
