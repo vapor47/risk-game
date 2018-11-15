@@ -3,12 +3,12 @@ import java.util.Arrays;
 public class Player implements TerritoryObserver
 {
     private static int cardValue = 0; //keeps track of all cards traded in    
-
+    
     TerritoryList territories = new TerritoryList();
     
     //private boolean claimCheck = false; 
     private int index;
-    private int claimCheck = 0;
+    private int claimCheck = 0; 
     
     Credits credits = new Credits();
     
@@ -21,8 +21,6 @@ public class Player implements TerritoryObserver
 
     public int territoriesConqueredThisTurn = 0;
     private boolean isActive = false;
-
-    private String chatID;
 
     Player(String name)
     {
@@ -60,15 +58,8 @@ public class Player implements TerritoryObserver
     }
     public void setTerritoryList(TerritoryList territories) {
         this.territories = territories;        
-    }
-
-    public String getChatID() {
-        return chatID;
-    }
-    public void setChatID(String chatID) {
-        this.chatID = chatID;
-    }
-
+    } 
+            
     public void printOwnedTerritories()
     {
         territories.printConts();

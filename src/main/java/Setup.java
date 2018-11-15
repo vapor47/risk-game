@@ -6,23 +6,9 @@ public class Setup {
     private int numPlayers;
     private int startingPlayerIndex;
     private static Scanner input = new Scanner(System.in);
-    public boolean usingTelegram;
     Replay replay = new Replay();
-
-    private static final Setup INSTANCE = new Setup();
-
-    public static Setup getInstance() {
-        return INSTANCE;
-    }
-
-    private Setup(){
-        usingTelegram = isUsingTelegram();
-        if(usingTelegram) {
-            numPlayers = 3;
-            setTelegramGameID();
-        } else {
-            numPlayers = promptNumPlayers();
-        }
+    Setup(){
+        numPlayers = promptNumPlayers();
         startingPlayerIndex = chooseRandomPlayer(numPlayers);
 
         createTerritories();
@@ -49,23 +35,6 @@ public class Setup {
 
     public int getStartingPlayerIndex() {
         return startingPlayerIndex;
-    }
-
-    private void setTelegramGameID() {
-        System.out.print("Create a game ID to join through Telegram: ");
-        String gameID = input.nextLine();
-        System.out.println("\nShare this game ID with your friendsto play on Telegram: " + gameID);
-        // TODO: set gameID in telegram class
-    }
-
-    private boolean isUsingTelegram() {
-        System.out.print("Are you playing using Telegram?(y/n): ");
-        String userIn = input.next();
-        while(!(userIn == "y" || userIn == "n")) {
-            System.out.println("Invalid option! Please try again.");
-            userIn = input.next();
-        }
-        return userIn.equals("y");
     }
 
     private int promptNumPlayers(){

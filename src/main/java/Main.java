@@ -1,4 +1,9 @@
 import java.util.Scanner;
+
+import org.telegram.telegrambots.ApiContextInitializer;
+import org.telegram.telegrambots.meta.TelegramBotsApi;
+import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -6,51 +11,55 @@ import java.util.Map;
 public class Main {
     // Key = Player name; Value = Player object
     // Does not include neutral in 2 player games    
-    static HashMap<String, Player> playerMap = new HashMap<>();
+    static HashMap<String, Player> playerMap = new HashMap<String, Player>();
 
     // Holds Player names and maintains turn order
-    static ArrayList<String> playerList = new ArrayList<>();
-    static Map<String,Territory> territories = new HashMap<>();
+    static ArrayList<String> playerList = new ArrayList<String>();
+    
+    static Map<String,Territory> territories = new HashMap();
     
     static Deck deck = new Deck();
+    
     static CommandManager commandManager = new CommandManager();
-
-    private static Player currentPlayer;
 
     public static void main(String[] args) throws IOException{
     	
-    	TelegramBot test = TelegramBot.getInstance();
-    	
+    	TelegramBot test = null;
+		ApiContextInitializer.init();
+
+		TelegramBotsApi riskBot = new TelegramBotsApi();
+		try {
+			riskBot.registerBot(test = TelegramBot.getInstance());
+
+		} catch (TelegramApiException e) {
+     	  e.printStackTrace();
+		}
     	
     	Replay replay = new Replay();
-        Scanner sc = new Scanner(System.in);
-        int playerIndex = Setup.getInstance().getStartingPlayerIndex();
+        Scanner sc = new Scanner(System.in);        
+        Setup setup = new Setup();
+        test.setPlayerName(playerMap);
+        int playerIndex = setup.getStartingPlayerIndex();
         boolean isPlaying = true;        
         String territoryName;
         String userInput;
         
-        currentPlayer = playerMap.get(playerList.get(playerIndex));
+        Player currentPlayer = playerMap.get(playerList.get(playerIndex));
         
         while(isPlaying){ //until only 1 player occupies territories(except for neutral in 2 player games)
             //------------------------------------------------CALCULATE ARMIES & PLACING INFANTRY--------------------------------------------------------//                        
             formattedMessage("Player " + (playerIndex + 1) + "'s turn");
-            TelegramBot.getInstance().sendMessage("It's your turn!", currentPlayer.getChatID());
-
             replay.update("Player " + playerIndex + "'s turn");
             currentPlayer.updatePlaceableInfantry(currentPlayer.calculateInfantry());                                  
             
-            if (currentPlayer.getPlaceableInfantry() > 0) {
-                printStatus("- Place your remaining armies on your territories");
-                // System.out.printf("- Place your remaining armies on your territories\n", currentPlayer.getPlaceableInfantry());
-
+            if (currentPlayer.getPlaceableInfantry() > 0) {       
+                System.out.printf("- Place your remaining armies on your territories\n", currentPlayer.getPlaceableInfantry());
                 while (currentPlayer.getPlaceableInfantry() > 0) {                                                            
                     boolean troopsMoved = false;
                     //loops while Player still has armies to place
-                    do {
-                        printStatus("- Remaining armies: " + currentPlayer.getPlaceableInfantry());
-                        printStatus("- Choose which territory you would like to fortify: ");
-                        //System.out.println("- Remaining armies: " + currentPlayer.getPlaceableInfantry());
-                        //System.out.println("- Choose which territory you would like to fortify: ");
+                    do {                         
+                        System.out.println("- Remaining armies: " + currentPlayer.getPlaceableInfantry());
+                        System.out.println("- Choose which territory you would like to fortify: ");                    
                         printOwnedTerritory(currentPlayer);
                         System.out.println();
                         
@@ -385,14 +394,6 @@ public class Main {
                 System.out.print(padRight(x.getValue().getTerritoryName().toString(), 25) + " || ");
                 System.out.println(x.getValue().getNumArmies());
             }            
-        }
-    }
-
-    private static void printStatus(String string) {
-        if(Setup.getInstance().usingTelegram) {
-            TelegramBot.getInstance().sendMessage(string, currentPlayer.getChatID());
-        } else {
-            System.out.println(string);
         }
     }
     
