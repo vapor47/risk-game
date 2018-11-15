@@ -11,6 +11,7 @@ import org.telegram.telegrambots.meta.generics.LongPollingBot;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+
 public class TelegramBot 
 {
 	static public class botInfo extends TelegramLongPollingBot
@@ -101,3 +102,12 @@ public class TelegramBot
 	}
 
 }
+/*
+store key in prop file
+
+start: are you playing through telegram?
+recieve joingame message
+send notifications and commands
+    send string to function:
+        if playing through telegram, send string through message
+ */

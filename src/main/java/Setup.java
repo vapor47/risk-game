@@ -8,7 +8,15 @@ public class Setup {
     private static Scanner input = new Scanner(System.in);
     Replay replay = new Replay();
     Setup(){
-        numPlayers = promptNumPlayers();
+        boolean usingTelegram = isUsingTelegram();
+        if(usingTelegram) {
+            numPlayers = 3;
+            // set game id
+            System.out.print("Create a game ID to join through Telegram: ");
+            String gameID = input.nextLine();
+        } else {
+            numPlayers = promptNumPlayers();
+        }
         startingPlayerIndex = chooseRandomPlayer(numPlayers);
 
         createTerritories();
@@ -37,6 +45,15 @@ public class Setup {
         return startingPlayerIndex;
     }
 
+    private boolean isUsingTelegram() {
+        System.out.print("Are you playing using Telegram?(y/n): ");
+        String userIn = input.next();
+        while(!(userIn == "y" || userIn == "n")) {
+            System.out.println("Invalid option! Please try again.");
+            userIn = input.next();
+        }
+        return userIn.equals("y");
+    }
     private int promptNumPlayers(){
         System.out.print("Welcome to Risk!\nHow many people are playing(2-6): ");
         numPlayers = input.nextInt();
