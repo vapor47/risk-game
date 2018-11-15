@@ -3,7 +3,7 @@ import java.util.HashMap;
 public class Bank 
 	{
 		static HashMap<String, Integer> accounts = new HashMap<String, Integer>();	
-		
+
 		public void addAccount(String acctName)
 		{
 			accounts.putIfAbsent(acctName, 20);
@@ -20,5 +20,5 @@ public class Bank
 			if(amount <= current)
 				accounts.replace(acctName, (current - amount));
 		}
-		
+
 	}

@@ -1,5 +1,3 @@
-import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
-
 import java.util.Scanner;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -404,7 +402,7 @@ public class Main {
         System.out.println("-----------------------------------------------\n");
     }
     
-    private static String padRight(String s, int n) {
+    public static String padRight(String s, int n) {
         return String.format("%1$-" + n + "s", s); 
     }
 }

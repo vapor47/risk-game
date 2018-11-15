@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-public class TelegramBot {
+public class TelegramBot extends TelegramLongPollingBot{
 
     private static TelegramBot INSTANCE = null;
 
@@ -23,45 +23,42 @@ public class TelegramBot {
         return INSTANCE;
     }
 
-    TelegramBot() {
+    private TelegramBot() {
         ApiContextInitializer.init();
 
         TelegramBotsApi riskBot = new TelegramBotsApi();
         try {
-            riskBot.registerBot(new botInfo());
+            riskBot.registerBot(TelegramBot.getInstance());
 
         } catch (TelegramApiException e) {
             e.printStackTrace();
         }
     }
 
-	static public class botInfo extends TelegramLongPollingBot {
-        Map<Long, String> messages = new HashMap<Long, String>();
+    Map<Long, String> messages = new HashMap<>();
 
-        @Override
-        public String getBotToken() {
-            return "707891995:AAEPU_fBp3dcmgGOkndtc6qQ3l_cpU39I-w";
-
-        }
-
-        @Override
-        public void onUpdateReceived(Update update) {
-            // TODO Auto-generated method stub
-            SendMessage message = new SendMessage();
-            messages.put(update.getMessage().getChatId(), update.getMessage().toString());
-            message.setChatId(update.getMessage().getChatId());
-            message.setText("Message Recieved");
-            System.out.println("Im reading");
-        }
-
-        @Override
-        public String getBotUsername() {
-            // TODO Auto-generated method stub
-            return "bhbb_bot";
-        }
-
+    @Override
+    public String getBotToken() {
+        return "707891995:AAEPU_fBp3dcmgGOkndtc6qQ3l_cpU39I-w";
 
     }
+
+    @Override
+    public void onUpdateReceived(Update update) {
+        // TODO Auto-generated method stub
+        SendMessage message = new SendMessage();
+        messages.put(update.getMessage().getChatId(), update.getMessage().toString());
+        message.setChatId(update.getMessage().getChatId());
+        message.setText("Message Recieved");
+        System.out.println("Im reading");
+    }
+
+    @Override
+    public String getBotUsername() {
+        // TODO Auto-generated method stub
+        return "bhbb_bot";
+    }
+
 	
 	public void sendMessage(String message, String chatID)
 	{
@@ -71,7 +68,8 @@ public class TelegramBot {
 
         // TODO: execute
 	}
-	
+
+	/*
 	public <T> T recieveMessage(Type t)
 	{
 		T answer = null;
@@ -94,7 +92,7 @@ public class TelegramBot {
 		
 		return answer;
 	}
-
+    */
 }
 /*
 store key in prop file
