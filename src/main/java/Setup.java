@@ -6,6 +6,7 @@ public class Setup {
     private int numPlayers;
     private int startingPlayerIndex;
     private static Scanner input = new Scanner(System.in);
+    public boolean usingTelegram;
     Replay replay = new Replay();
 
     private static final Setup INSTANCE = new Setup();
@@ -15,7 +16,7 @@ public class Setup {
     }
 
     private Setup(){
-        boolean usingTelegram = isUsingTelegram();
+        usingTelegram = isUsingTelegram();
         if(usingTelegram) {
             numPlayers = 3;
             setTelegramGameID();

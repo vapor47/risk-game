@@ -1,3 +1,5 @@
+import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+
 import java.util.Scanner;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -6,20 +8,20 @@ import java.util.Map;
 public class Main {
     // Key = Player name; Value = Player object
     // Does not include neutral in 2 player games    
-    static HashMap<String, Player> playerMap = new HashMap<String, Player>();
+    static HashMap<String, Player> playerMap = new HashMap<>();
 
     // Holds Player names and maintains turn order
-    static ArrayList<String> playerList = new ArrayList<String>();
-    
-    static Map<String,Territory> territories = new HashMap();
+    static ArrayList<String> playerList = new ArrayList<>();
+    static Map<String,Territory> territories = new HashMap<>();
     
     static Deck deck = new Deck();
-    
     static CommandManager commandManager = new CommandManager();
+
+    private static Player currentPlayer;
 
     public static void main(String[] args) throws IOException{
     	
-    	TelegramBot test = new TelegramBot(true);
+    	TelegramBot test = TelegramBot.getInstance();
     	
     	
     	Replay replay = new Replay();
@@ -29,22 +31,28 @@ public class Main {
         String territoryName;
         String userInput;
         
-        Player currentPlayer = playerMap.get(playerList.get(playerIndex));
+        currentPlayer = playerMap.get(playerList.get(playerIndex));
         
         while(isPlaying){ //until only 1 player occupies territories(except for neutral in 2 player games)
             //------------------------------------------------CALCULATE ARMIES & PLACING INFANTRY--------------------------------------------------------//                        
             formattedMessage("Player " + (playerIndex + 1) + "'s turn");
+            TelegramBot.getInstance().sendMessage("It's your turn!", currentPlayer.getChatID());
+
             replay.update("Player " + playerIndex + "'s turn");
             currentPlayer.updatePlaceableInfantry(currentPlayer.calculateInfantry());                                  
             
-            if (currentPlayer.getPlaceableInfantry() > 0) {       
-                System.out.printf("- Place your remaining armies on your territories\n", currentPlayer.getPlaceableInfantry());
+            if (currentPlayer.getPlaceableInfantry() > 0) {
+                printStatus("- Place your remaining armies on your territories");
+                // System.out.printf("- Place your remaining armies on your territories\n", currentPlayer.getPlaceableInfantry());
+
                 while (currentPlayer.getPlaceableInfantry() > 0) {                                                            
                     boolean troopsMoved = false;
                     //loops while Player still has armies to place
-                    do {                         
-                        System.out.println("- Remaining armies: " + currentPlayer.getPlaceableInfantry());
-                        System.out.println("- Choose which territory you would like to fortify: ");                    
+                    do {
+                        printStatus("- Remaining armies: " + currentPlayer.getPlaceableInfantry());
+                        printStatus("- Choose which territory you would like to fortify: ");
+                        //System.out.println("- Remaining armies: " + currentPlayer.getPlaceableInfantry());
+                        //System.out.println("- Choose which territory you would like to fortify: ");
                         printOwnedTerritory(currentPlayer);
                         System.out.println();
                         
@@ -381,6 +389,14 @@ public class Main {
             }            
         }
     }
+
+    private static void printStatus(String string) {
+        if(Setup.getInstance().usingTelegram) {
+            TelegramBot.getInstance().sendMessage(string, currentPlayer.getChatID());
+        } else {
+            System.out.println(string);
+        }
+    }
     
     public static void formattedMessage(String gameMessage) {
         System.out.println("\n-----------------------------------------------");
@@ -388,7 +404,7 @@ public class Main {
         System.out.println("-----------------------------------------------\n");
     }
     
-    public static String padRight(String s, int n) {
+    private static String padRight(String s, int n) {
         return String.format("%1$-" + n + "s", s); 
     }
 }

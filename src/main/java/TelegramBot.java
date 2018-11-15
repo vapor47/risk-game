@@ -12,70 +12,64 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-public class TelegramBot 
-{
-	static public class botInfo extends TelegramLongPollingBot
-	{	
-		Map<Long, String> messages = new HashMap<Long, String>();
-		
-		@Override
-		public String getBotToken()
-		{
-			return "707891995:AAEPU_fBp3dcmgGOkndtc6qQ3l_cpU39I-w";
-			
-		}
+public class TelegramBot {
 
-		@Override
-		public void onUpdateReceived(Update update) {
-			// TODO Auto-generated method stub
-			SendMessage message = new SendMessage();
-			messages.put(update.getMessage().getChatId(), update.getMessage().toString());
-			message.setChatId(update.getMessage().getChatId());
-			message.setText("Message Recieved");
-			System.out.println("Im reading");
-		}
+    private static TelegramBot INSTANCE = null;
 
-		@Override
-		public String getBotUsername() {
-			// TODO Auto-generated method stub
-			return "bhbb_bot";
-		}
+    public static TelegramBot getInstance() {
+        if(INSTANCE == null) {
+            INSTANCE = new TelegramBot();
+        }
+        return INSTANCE;
+    }
 
-			
+    TelegramBot() {
+        ApiContextInitializer.init();
 
-			
-	}
+        TelegramBotsApi riskBot = new TelegramBotsApi();
+        try {
+            riskBot.registerBot(new botInfo());
+
+        } catch (TelegramApiException e) {
+            e.printStackTrace();
+        }
+    }
+
+	static public class botInfo extends TelegramLongPollingBot {
+        Map<Long, String> messages = new HashMap<Long, String>();
+
+        @Override
+        public String getBotToken() {
+            return "707891995:AAEPU_fBp3dcmgGOkndtc6qQ3l_cpU39I-w";
+
+        }
+
+        @Override
+        public void onUpdateReceived(Update update) {
+            // TODO Auto-generated method stub
+            SendMessage message = new SendMessage();
+            messages.put(update.getMessage().getChatId(), update.getMessage().toString());
+            message.setChatId(update.getMessage().getChatId());
+            message.setText("Message Recieved");
+            System.out.println("Im reading");
+        }
+
+        @Override
+        public String getBotUsername() {
+            // TODO Auto-generated method stub
+            return "bhbb_bot";
+        }
+
+
+    }
 	
-	
-	boolean botEnabled = false;
-	
-	
-	TelegramBot(boolean state)
+	public void sendMessage(String message, String chatID)
 	{
-		botEnabled = state;
-		if(botEnabled)
-		{
-			ApiContextInitializer.init();
-	
-			TelegramBotsApi riskBot = new TelegramBotsApi();
-			try {
-				riskBot.registerBot(new botInfo());
+        SendMessage sendMessage = new SendMessage();
+        sendMessage.setText(message);
+        sendMessage.setChatId(chatID);
 
-			} catch (TelegramApiException e) {
-         	  e.printStackTrace();
-			}
-		}
-	}
-	
-	public void sendMessage(String message)
-	{
-		if(botEnabled)
-		{
-			
-		}
-		
-		else
-			System.out.print(message);
+        // TODO: execute
 	}
 	
 	public <T> T recieveMessage(Type t)
