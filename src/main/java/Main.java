@@ -1,4 +1,5 @@
 import java.util.*;
+import java.util.concurrent.*;
 
 import org.telegram.telegrambots.ApiContextInitializer;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
@@ -22,7 +23,10 @@ public class Main {
     
     static CommandManager commandManager = new CommandManager();
 
-    public static void main(String[] args) throws IOException{
+    public static void main(String[] args) throws IOException, InterruptedException, Exception {
+        ExecutorService executor = null;
+        Future<String> future = null;                
+        int timeOut = 30;   // max wait time before game times out
 
 		ApiContextInitializer.init();
 
@@ -39,7 +43,8 @@ public class Main {
         Setup setup = new Setup();
         //test.setPlayerName(playerMap);
         int playerIndex = setup.getStartingPlayerIndex();
-        boolean isPlaying = true;        
+        boolean isPlaying = true;  
+        boolean timedOut = false;
         String territoryName;
         String userInput;
         
@@ -47,6 +52,15 @@ public class Main {
         
         while(isPlaying){ //until only 1 player occupies territories(except for neutral in 2 player games)
             //------------------------------------------------CALCULATE ARMIES & PLACING INFANTRY--------------------------------------------------------//                        
+            executor = Executors.newSingleThreadExecutor(); 
+
+            if (timedOut) {                
+                System.out.println("\n- Player timed out, Moving on to next player...");
+                System.out.println("--------Press \"enter\" twice to continue--------");       
+                String input = sc.nextLine();
+                timedOut = false;                
+            }
+
             formattedMessage("Player " + (playerIndex + 1) + "'s turn");
             replay.update("Player " + playerIndex + "'s turn");
             currentPlayer.updatePlaceableInfantry(currentPlayer.calculateInfantry());                                  
@@ -64,7 +78,12 @@ public class Main {
                         
                         replay.update("- Remaining armies: " + currentPlayer.getPlaceableInfantry());
                         
-                        territoryName = sc.nextLine(); 
+                        territoryName = timeoutPrompt(executor, future, timeOut);   
+                
+                        if (territoryName == null) {
+                            timedOut = true;                            
+                            break;                            
+                        }   
                         
                         //Check if user types "undo"
                         if (territoryName.equals("undo")) {
@@ -78,30 +97,59 @@ public class Main {
                         } //Valid & player is owner of territory
                         else if (currentPlayer == territories.get(territoryName).getOwner()) {
                             System.out.printf("How many troops would you like to move to %s? ", territoryName);
-                            int troopsToMove = sc.nextInt();
-                            sc.nextLine();
+                            userInput = timeoutPrompt(executor, future, timeOut);   
                             
-                            while (troopsToMove > currentPlayer.getPlaceableInfantry() || troopsToMove < 0) {
+                            if (userInput == null) {
+                                timedOut = true;                                
+                                break;                               
+                            }
+                            
+                            int troopsToMove = Integer.parseInt(userInput);
+                            boolean validNumTroops = troopsToMove <= currentPlayer.getPlaceableInfantry() && troopsToMove > 0;
+                            while (!validNumTroops) {
                                 System.out.println("Invalid number of troops to move.");
                                 System.out.printf("How many troops would you like to move to %s? ", territoryName);
-                                troopsToMove = sc.nextInt();
-                                sc.nextLine();
+                                userInput = timeoutPrompt(executor, future, timeOut);   
+                
+                                if (userInput == null) {
+                                    timedOut = true;                                    
+                                    break;                                    
+                                }                              
+                                troopsToMove = Integer.parseInt(userInput);
+                                validNumTroops = troopsToMove <= currentPlayer.getPlaceableInfantry() && troopsToMove > 0;
                             }
                                       
                             //Executes command & fortifies the territory                            
-                            commandManager.executeCommand(new FortifyingTerritoriesCommand(currentPlayer, territoryName, troopsToMove));                            
-                            
-                            System.out.printf("\n- Added %d armies to %s", troopsToMove, territoryName);
-                            troopsMoved = true;                            
-                            replay.update("n- Added " + troopsToMove + " armies to " + territoryName);
+                            if (validNumTroops) {
+                                commandManager.executeCommand(new FortifyingTerritoriesCommand(currentPlayer, territoryName, troopsToMove)); 
+                                System.out.printf("\n- Added %d armies to %s", troopsToMove, territoryName);
+                                replay.update("n- Added " + troopsToMove + " armies to " + territoryName);
+                                troopsMoved = true;
+                            }   
                             
                         } //Valid, but player does not own the territory      
                         else {
                             System.out.println("Cannot place troops into enemy territory");
-                        }                        
+                        }                      
+
+                        if (timedOut) {
+                            break;
+                        }
+                          
                     } while (!troopsMoved);
                     System.out.println();
+
+                    if (timedOut) {
+                        break;
+                    }
                 } //end while
+
+                if (timedOut) {
+                    playerIndex = getNextPlayer(playerIndex);            
+                    currentPlayer = playerMap.get(playerList.get(playerIndex));
+                    isPlaying = checkIfStillPlaying(isPlaying);
+                    continue;
+                }
             } //end if
             
             replay.upload();
@@ -111,23 +159,44 @@ public class Main {
             System.out.print("\nWould you like to attack this turn?: (y/n)");
 
             do {                
-                userInput = sc.nextLine();       
+                userInput = timeoutPrompt(executor, future, timeOut);        
+
+                if (userInput == null) {
+                    timedOut = true;                    
+                    break;                    
+                }    
 
                 // Checks if user types "undo"
                 while (userInput.equals("undo")) {
                         commandManager.undo();
                         System.out.println("Continue Attacking? (y/n)");
-                        userInput = sc.nextLine();
+                        // userInput = sc.nextLine();
+                        userInput = timeoutPrompt(executor, future, timeOut);   
+
+                        if (userInput == null) {
+                            timedOut = true;                        
+                            break;                      
+                         }          
                 }
 
+                if (timedOut) {
+                    break;
+                }
+
+                //Prints out Player's territory and the num of troops on them        
+                //Attack Prompt
                 if (userInput.equalsIgnoreCase("y")) {                    
-                    System.out.println();                
-                    //Prints out Player's territory and the num of troops on them        
-                    //Attack Prompt
+                    System.out.println();                                    
                     System.out.println("\nChoose:\n\t1) A territory to attack from\n\t2) An adjacent territory to attack\n"); 
                     System.out.print("- Type in name of territory to display adjacent territories.\n- Press \"Enter\" to continue with attack\n");
                     printOwnedTerritory(currentPlayer);
-                    territoryName = sc.nextLine(); 
+                    
+                    territoryName = timeoutPrompt(executor, future, timeOut);   
+
+                    if (territoryName == null) {
+                        timedOut = true;
+                        break;                        
+                    }         
                     
                     do {                                                                    
                         if(territoryName.isEmpty()){
@@ -155,16 +224,30 @@ public class Main {
 
                         }         
 
-                        territoryName = sc.nextLine();
+                        territoryName = timeoutPrompt(executor, future, timeOut);   
+
+                        if (territoryName == null) {
+                            timedOut = true;
+                            break;                        
+                        }          
 
                     } while (!(territoryName.isEmpty()));
+
+                    if (timedOut) {
+                        break;
+                    }
 
                     //Checking if territory attacking from is valid
                     String attackingTerritory;
                     boolean validTerritoryFrom = false;                
                     do {                    
                         System.out.print("- Choose territory to attack from: ");
-                        attackingTerritory = sc.nextLine();
+                        attackingTerritory = timeoutPrompt(executor, future, timeOut);   
+
+                        if (attackingTerritory == null) {
+                            timedOut = true;
+                            break;                        
+                        }     
 
                         //Checks if player types "list-owned"
                         if(attackingTerritory.equals("list-owned")) {                            
@@ -190,12 +273,21 @@ public class Main {
                         }                                   
                     } while(!validTerritoryFrom);
 
+                    if (timedOut) {
+                        break;
+                    }
+
                     //Checking if territory attacking is valid
                     String defendingTerritory;
                     boolean validTerritoryTo = false;
                     do {
                         System.out.print("- Choose territory to attack: ");
-                        defendingTerritory = sc.nextLine();
+                        defendingTerritory = timeoutPrompt(executor, future, timeOut);   
+
+                        if (defendingTerritory == null) {
+                            timedOut = true;
+                            break;                        
+                        }    
 
                         //Checks if player types "adjacent"
                         if(defendingTerritory.equals("list-adjacent")) {
@@ -230,6 +322,10 @@ public class Main {
                     } while(!validTerritoryTo);                
                     System.out.println();
 
+                    if (timedOut) {
+                        break;
+                    }
+
                     replay.update(attackingTerritory + "attacks" + defendingTerritory);
                     //Attacking command
                     commandManager.executeCommand(new AttackCommand(territories.get(attackingTerritory), territories.get(defendingTerritory)));
@@ -241,6 +337,13 @@ public class Main {
                        
             currentPlayer.drawCards();  //draws card if player captures territory
                         
+            if (timedOut) {
+                playerIndex = getNextPlayer(playerIndex);            
+                currentPlayer = playerMap.get(playerList.get(playerIndex));
+                isPlaying = checkIfStillPlaying(isPlaying);
+                continue;
+            }
+
             //---------------------------------------------------------Fortifying-------------------------------------------------------//
             //TODO: execute when currentPlayer has more than 1 territory
             formattedMessage("Fortifying Phase");
@@ -251,7 +354,12 @@ public class Main {
                 System.out.print("- Type in name of territory to display adjacent territories.\n- Press \"Enter\" to fortify\n");
                 printOwnedTerritory(currentPlayer); 
                 System.out.println();
-                territoryName = sc.nextLine();                              
+                territoryName = timeoutPrompt(executor, future, timeOut);   
+
+                if (territoryName == null) {
+                    timedOut = true;
+                    break;                        
+                }                               
                 
                 if (territories.containsKey(territoryName)) {                        
                     Territory currentTerritory = territories.get(territoryName);
@@ -267,6 +375,14 @@ public class Main {
                 
             } while(!territoryName.isEmpty());
                     
+            // If timed out, move on to next player
+            if (timedOut) {
+                playerIndex = getNextPlayer(playerIndex);            
+                currentPlayer = playerMap.get(playerList.get(playerIndex));
+                isPlaying = checkIfStillPlaying(isPlaying);
+                continue;
+            }
+
             // Fortifying procedure
             do {
                 String territoryFrom = "";
@@ -275,8 +391,13 @@ public class Main {
                 //until player enters valid territory fromm
                 do {                
                     System.out.print("Territory from: "); //prompts user input                                            
-                    String territoryInput = sc.nextLine();
-                                                    
+                    String territoryInput = timeoutPrompt(executor, future, timeOut);   
+                                     
+                    if (territoryInput == null) {
+                        timedOut = true;
+                        break;                        
+                    }
+
                     if(territoryInput.equals("end")) {
                         break;
                     }
@@ -310,11 +431,20 @@ public class Main {
                     
                 } while (territoryFrom.equals(""));
                    
+                if (timedOut) {
+                    break;
+                }
+
                 if (!territoryFrom.equals("")) {    //If territoryFrom is not empty, user entered a valid territory to fortify from, else end turn
                     //loops until player enters valid territory to
                     do {                           
                         System.out.print("Territory To: ");   //prompts user input
-                        String territoryInput = sc.nextLine();          
+                        String territoryInput = timeoutPrompt(executor, future, timeOut);   
+
+                        if (territoryInput == null) {
+                            timedOut = true;
+                            break;                        
+                        }            
 
                         if(territoryInput.equals("list-adjacent")) {
                             System.out.println("\n|| Adjacent territories to fortify ||");                            
@@ -339,12 +469,21 @@ public class Main {
 
                     } while (territoryTo.equals(""));
                 
+                    if (timedOut) {
+                        break;
+                    }
+
                     //fortifying the territory
                     commandManager.executeCommand(new MoveInArmiesCommand(territories.get(territoryFrom), territories.get(territoryTo)));  
                 }
 
                 System.out.println("Press any key to end your turn (type \"undo\" to  undo action)");
-                userInput = sc.nextLine();
+                userInput = timeoutPrompt(executor, future, timeOut);   
+
+                if (userInput == null) {
+                    timedOut = true;
+                    break;                        
+                }    
                                 
                 if (userInput.equals("undo")){
                     commandManager.undo();  
@@ -358,22 +497,11 @@ public class Main {
                 System.out.println("ERROR: Tweet didn't work");
             } 
                    
-            playerIndex--;
-            if (playerIndex == -1) {
-                playerIndex = playerList.size() - 1;                
-            }
-            
-            if (playerMap.get(playerList.get(playerIndex)).getPlayerName().equals("Neutral")) {
-                playerIndex--;
-            } 
-            
-            currentPlayer = playerMap.get(playerList.get(playerIndex));    
-            
-            if (playerList.size() == 2 && playerList.contains("Neutral") || playerList.size() == 1) {
-                isPlaying = false;
-            }
-            
+            // Moves on to next player weather timed out or not
+            playerIndex = getNextPlayer(playerIndex);            
             currentPlayer = playerMap.get(playerList.get(playerIndex));
+            isPlaying = checkIfStillPlaying(isPlaying); 
+
             replay.upload();
             //isPlaying will be false when playerList == 1   
         } //End while
@@ -384,6 +512,8 @@ public class Main {
         } catch (Exception e){
             System.out.println("ERROR: Tweet didn't work");
         }
+
+        executor.shutdownNow();
     } //End main
     
     private static void printOwnedTerritory(Player currentPlayer) {        
@@ -405,4 +535,74 @@ public class Main {
     public static String padRight(String s, int n) {
         return String.format("%1$-" + n + "s", s); 
     }
+
+    // int nextPlayerIndex = getNextPlayer(playerIndex)
+    // currentPlayer = playerMap.get(playerList.get(nextPlayerIndex))
+    // checkIfStillPlaying(isPlaying);
+    private static int getNextPlayer(int curPlayerIndex) { // return new player index
+        int playerIndex = --curPlayerIndex;
+        
+        if (playerIndex == -1) {
+            playerIndex = playerList.size() - 1;                
+        }
+
+        if (playerMap.get(playerList.get(playerIndex)).getPlayerName().equals("Neutral")) {
+            playerIndex--;
+        }    
+
+        return playerIndex;
+    }
+    
+    private static boolean checkIfStillPlaying(boolean isPlaying) {
+        if (playerList.size() == 2 && playerList.contains("Neutral") || playerList.size() == 1) {
+                isPlaying = false;
+        }      
+        
+        return isPlaying;
+    }
+
+    // Prompt waits 30 secs before timing out
+    // returns userInput
+    private static String timeoutPrompt(ExecutorService executor, Future<String> future, int timeOut) {
+        Task task = new Task();
+        future = executor.submit(task); // future is set to new task called Attack Task
+        String userInput = null;
+        
+        try {                                 
+            //System.out.printf("\n(Game will move on to next player within %d seconds)\n", timeOut);
+            System.out.println(future.get(timeOut, TimeUnit.SECONDS));             
+            userInput = task.response();                      
+        } catch (Exception e) {                    
+            future.cancel(true);                  
+        }
+              
+        return userInput;
+    }            
 }
+
+// Class used for timeout  
+// If user does not enter something within the timeout time, 
+// game will continue to the next player
+class Task implements Callable<String> {        
+    Scanner sc = new Scanner(System.in);          
+    String userInput = "";
+
+    @Override
+    public String call() throws Exception {            
+        //perform task                           
+        if (!Thread.interrupted()){                   
+            try {                                        
+                userInput = sc.nextLine();                                                   
+            } catch (Exception e) {                    
+                userInput = "";
+            }                
+        }                                                                        
+
+        return "";
+    }
+
+    public String response() {
+        return userInput;
+    }
+}
+
