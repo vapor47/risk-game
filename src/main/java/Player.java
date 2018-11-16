@@ -3,7 +3,7 @@ import java.util.Arrays;
 public class Player implements TerritoryObserver
 {
     private static int cardValue = 0; //keeps track of all cards traded in    
-
+    
     TerritoryList territories = new TerritoryList();
     
     //private boolean claimCheck = false; 
