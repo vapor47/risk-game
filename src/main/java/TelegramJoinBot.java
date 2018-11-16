@@ -34,6 +34,7 @@ public class TelegramJoinBot extends AbilityBot {
     }
 
     private int playerCount = 0;
+    private int maxPlayers = 3;
     public Ability join() {
         return Ability
                 .builder()
@@ -44,14 +45,15 @@ public class TelegramJoinBot extends AbilityBot {
                 .privacy(Privacy.PUBLIC)
                 .action(ctx -> {
                     if(ctx.firstArg().equals(gameId)){
-                        silent.send("You have joined the game!", ctx.chatId());
-                        playerChatIDs.put(Main.playerList.get(playerCount), ctx.chatId());
-                        //TODO: join game code
-                        /*
-                        match chat ID to player
-                        increment playerCount
-
-                         */
+                        if(playerCount < maxPlayers) {
+                            Player player = new Player(ctx.user().getFirstName());
+                            playerChatIDs.put(player, ctx.chatId());
+                            playerCount++;
+                            silent.send("You have joined the game!", ctx.chatId());
+                            silent.send("Number of players joined: " + playerCount, ctx.chatId());
+                        } else {
+                            silent.send("Sorry, this game is full.", ctx.chatId());
+                        }
                     } else {
                         silent.send("Sorry, that is not a valid game ID.", ctx.chatId());
                     }

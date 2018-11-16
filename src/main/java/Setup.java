@@ -1,18 +1,29 @@
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class Setup {
+
     private int numPlayers;
+    public int getNumPlayers() { return numPlayers; }
+
     private int startingPlayerIndex;
     private static Scanner input = new Scanner(System.in);
     Replay replay = new Replay();
+
+    private static final Setup INSTANCE = new Setup();
+
+    public static Setup getInstance() {
+        return INSTANCE;
+    }
+
     Setup(){
         boolean usingTelegram = isUsingTelegram();
         if(usingTelegram) {
             numPlayers = 3;
             createPlayers(numPlayers);
             setTelegramGameID();
+            for(Player player : TelegramJoinBot.getInstance().playerChatIDs.keySet()) {
+                Main.playerMapTest.put(player.getPlayerName(), player);
+            }
         } else {
             numPlayers = promptNumPlayers();
             createPlayers(numPlayers);
@@ -229,6 +240,29 @@ public class Setup {
         for(Map.Entry<String, Player> x: Main.playerMap.entrySet())
             x.getValue().updatePlaceableInfantry(numInfantry);
     }
+    private void addPlayer(String name) {
+        /*
+        find players by name
+        cycle through them in some order
+        have that order be randomized
+            collections.shuffle
+
+        LinkedHashMap
+         */
+
+        Main.playerMapTest.put(name, new Player(name));
+    }
+
+    public void addPlayer(Player player) {
+        Main.playerMapTest.put(player.getPlayerName(), player);
+    }
+
+    private Player chooseRandomPlayer() {
+        Random generator = new Random();
+        Object[] values = Main.playerMapTest.entrySet().toArray();
+        return (Player) values[generator.nextInt(values.length)];
+    }
+
     private void createTerritories(){
         // North America
         Main.territories.put("Alaska", new Territory(TerritoryName.ALASKA, Continent.NORTH_AMERICA,

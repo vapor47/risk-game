@@ -1,13 +1,11 @@
-import java.util.Scanner;
+import java.util.*;
 
 import org.telegram.telegrambots.ApiContextInitializer;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+
 public class Main {
     // Key = Player name; Value = Player object
     // Does not include neutral in 2 player games    
@@ -16,7 +14,9 @@ public class Main {
     // Holds Player names and maintains turn order
     static ArrayList<String> playerList = new ArrayList<String>();
     
-    static Map<String,Territory> territories = new HashMap();
+    static Map<String,Territory> territories = new HashMap<>();
+
+    static LinkedHashMap<String, Player> playerMapTest = new LinkedHashMap<>();
     
     static Deck deck = new Deck();
     
