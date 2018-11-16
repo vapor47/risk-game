@@ -11,15 +11,16 @@ public class Setup {
         boolean usingTelegram = isUsingTelegram();
         if(usingTelegram) {
             numPlayers = 3;
+            createPlayers(numPlayers);
             setTelegramGameID();
         } else {
             numPlayers = promptNumPlayers();
+            createPlayers(numPlayers);
         }
         startingPlayerIndex = chooseRandomPlayer(numPlayers);
 
         createTerritories();
         createCards();
-        createPlayers(numPlayers);
         giveStartingInfantry(numPlayers);
 
         if(numPlayers == 2){
