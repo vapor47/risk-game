@@ -52,6 +52,7 @@ public class Main {
         
         while(isPlaying){ //until only 1 player occupies territories(except for neutral in 2 player games)
             //------------------------------------------------CALCULATE ARMIES & PLACING INFANTRY--------------------------------------------------------//                        
+            //System.out.println("PlayeList.size = " + playerList.size());
             executor = Executors.newSingleThreadExecutor(); 
 
             if (timedOut) {                

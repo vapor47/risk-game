@@ -8,12 +8,15 @@ public class Setup {
     private int startingPlayerIndex;
     private static Scanner input = new Scanner(System.in);
     Replay replay = new Replay();
-
+    
+    //TODO: Calls setup twice in Main 
+    /*
     private static final Setup INSTANCE = new Setup();
 
     public static Setup getInstance() {
         return INSTANCE;
     }
+    */
 
     Setup(){
         boolean usingTelegram = isUsingTelegram();
