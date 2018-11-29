@@ -4,10 +4,10 @@ public class Store
 {   
 	private int serviceSelect()
 	{
-		String serviceMenu = "Please select what you want to buy(1-4)%n"
-				 + "1.Credits%n"
-				 + "2.Draw Card%n"
-				 + "3.Undo Action%n"
+		String serviceMenu = "Please select what you want to buy(1-4)\n"
+				 + "1.Credits\n"
+				 + "2.Draw Card\n"
+				 + "3.Undo Action\n"
 				 + "4.Player Credit Transfer";
 		
 		System.out.println(serviceMenu);
