@@ -32,10 +32,10 @@ public class Main {
 
 		TelegramBotsApi riskBot = new TelegramBotsApi();
 		try {
-			riskBot.registerBot(TelegramJoinBot.getInstance());
+                    riskBot.registerBot(TelegramJoinBot.getInstance());
 
 		} catch (TelegramApiException e) {
-     	  e.printStackTrace();
+                    e.printStackTrace();
 		}
     	
     	Replay replay = new Replay();
