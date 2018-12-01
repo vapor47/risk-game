@@ -17,9 +17,7 @@ public class StoreTest {
 		for(int i = 2; i <= 4; i++)
 		{
 			bank.addAccount(player.getPlayerName());
-			in = new ByteArrayInputStream(("1" + System.getProperty("line.separator") + "20" + System.getProperty("line.separator")).getBytes());
-			System.setIn(in);
-			store.purchaseService(player);
+			player.credits.addCredits(20);
 			in = new ByteArrayInputStream(Integer.toString(i).getBytes());
 			System.setIn(in);
 			store.purchaseService(player);
@@ -36,9 +34,7 @@ public class StoreTest {
 		Bank bank = new Bank();
 		bank.addAccount(player.getPlayerName());
 		ByteArrayInputStream in;
-		in = new ByteArrayInputStream(("1" + System.getProperty("line.separator") + "20" + System.getProperty("line.separator")).getBytes());
-		System.setIn(in);
-		store.purchaseService(player);
+		player.credits.addCredits(20);
 		for(int i = 0; i < 2; i++)
 		{
 			in = new ByteArrayInputStream("3".getBytes());

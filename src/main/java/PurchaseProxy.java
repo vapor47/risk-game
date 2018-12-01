@@ -11,7 +11,7 @@ public class PurchaseProxy
 		
 		int credits = 0;
 		if(bank.showMoney(user) > 0)
-		{	
+		{
 			Scanner input = new Scanner(System.in);
 			for(credits = input.nextInt();  credits > bank.showMoney(user); credits = input.nextInt())
 				System.out.printf("You currently only have $%d, please give a valid number (1-%d)%n%s%n", bank.showMoney(user), bank.showMoney(user), instructions);
