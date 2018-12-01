@@ -16,7 +16,7 @@ public class Store
 		
 		for(select = input.nextInt(); select < 1 && select > 4; select = input.nextInt())
 			System.out.printf("%d is not a valid option%n%s%n", select, serviceMenu);
-		
+
 		input.close();
 		return select;
 	}
