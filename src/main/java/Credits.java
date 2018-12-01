@@ -11,7 +11,6 @@ public class Credits
 	
 	public void addCredits(int cred)
 	{
-		if(cred > 0)
 			credits += cred;
 	}
 	

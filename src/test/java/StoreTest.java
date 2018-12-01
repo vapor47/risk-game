@@ -13,16 +13,17 @@ public class StoreTest {
 		Store store = new Store();
 		Player player = new Player("player0");
 		ByteArrayInputStream in;
+
 		for(int i = 2; i <= 4; i++)
 		{
 			bank.addAccount(player.getPlayerName());
-			in = new ByteArrayInputStream("1".getBytes());
-			in = new ByteArrayInputStream("20".getBytes());
+			in = new ByteArrayInputStream(("1" + System.getProperty("line.separator") + "20").getBytes());
+			System.setIn(in);
 			store.purchaseService(player);
 			in = new ByteArrayInputStream(Integer.toString(i).getBytes());
 			System.setIn(in);
 			store.purchaseService(player);
-			player = new Player("player" + Integer.toString(i));
+			player = new Player("player" + System.getProperty("line.separator") + Integer.toString(i));
 		}
 		
 	}
@@ -35,7 +36,8 @@ public class StoreTest {
 		Bank bank = new Bank();
 		bank.addAccount(player.getPlayerName());
 		ByteArrayInputStream in;
-		in = new ByteArrayInputStream("1 20".getBytes());
+		in = new ByteArrayInputStream(("1" + System.getProperty("line.separator") + "20").getBytes());
+		System.setIn(in);
 		store.purchaseService(player);
 		for(int i = 0; i < 2; i++)
 		{
