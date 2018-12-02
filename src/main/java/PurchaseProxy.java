@@ -21,7 +21,6 @@ public class PurchaseProxy
 		}
 		
 		return credits;
-		
-		
+	
 	}
 }

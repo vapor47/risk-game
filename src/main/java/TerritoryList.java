@@ -1,9 +1,9 @@
 public class TerritoryList
 {   
-    public class Continent
+    private class Continent
     {
             private final String name;
-            private String territories[];
+            private Territory territories[];
             private int pos;
             private final int value;
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -11,12 +11,12 @@ public class TerritoryList
             {
                     name = Name;
                     pos = 0;
-                    territories = new String[tNum];
-                    territories[0] = "";
+                    territories = new Territory[tNum];
+                    territories[0] = null;
                     value = val;
             }
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            public String[] getTer()
+            public Territory[] getTer()
             {
                 return territories;
             }
@@ -32,12 +32,13 @@ public class TerritoryList
                         return false;
                 return true;
             }
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             public int getValue()
             {
                 return value;
             }
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            public void add(String t)
+            public void add(Territory t)
             {
                     if(!full())
                             territories[pos] = t;
@@ -46,33 +47,34 @@ public class TerritoryList
                     pos++;
             }
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            public void remove(String t)
+            public void remove(Territory t)
             {
-                    if(!territories[0].equals(""))
+                    if(territories[0] != null)
                     {
                             int i;
-                            for(i = 0; i < pos && !territories[i].equals(t); i++){}
+                            for(i = 0; i < pos && territories[i] != t; i++){}
                             if( i < pos)
                             {
-                                    territories[i] = "";
+                                    territories[i] = null;
                                     territories[i] = territories[--pos];
                             }
                             else
-                                    System.out.printf("%s is not in %s%n", t, name);
+                                    System.out.printf("%s is not owned by you%n", t.getTerritoryName());
                     }
                     else
                             System.out.printf("%s is empty%n", name);
             }
-            
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
             public int getPos()
             {
                 return pos;
             }
-            public boolean has(String t)
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            public boolean has(Territory t)
             {
                 for(int i = 0; i < pos; i++)
                 {
-                    if(territories[i].equals(t))
+                    if(territories[i] == t)
                         return true;
                 }
                 return false;
@@ -119,15 +121,15 @@ public class TerritoryList
         continents[5] = new Continent("Australia", 4, 2);
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public void addTerritory(String c, String t)
+    public void addTerritory(Territory t)
     {
-        continents[getContinentIndex(c)].add(t);
+        continents[getContinentIndex(t.getContinent().toString())].add(t);
         territoryCount++;
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public void removeTerritory(String c, String t)
+    public void removeTerritory(Territory t)
     {
-        continents[getContinentIndex(c)].remove(t);
+        continents[getContinentIndex(t.getContinent().toString())].remove(t);
         territoryCount--;
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -142,7 +144,7 @@ public class TerritoryList
         return capt;
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public boolean hasTerritory(String t)
+    public boolean hasTerritory(Territory t)
     {
         for(int i = 0; i < 6; i++)
         {
@@ -170,7 +172,7 @@ public class TerritoryList
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public void printConts()
     {
-        String ters[];
+        Territory ters[];
         for(int i = 0, j = 1; i < 6; i++)
         {
             ters = continents[i].getTer();
@@ -179,7 +181,7 @@ public class TerritoryList
                 System.out.printf("%s:%n", continents[i].getCont());
                 for(int k = 0; k < continents[i].getPos(); k++)
                 {
-                    System.out.printf("%d: %s", j, ters[i]);
+                    System.out.printf("%d: %s", j, ters[i].getTerritoryName());
                 }
             }
         }

@@ -10,7 +10,8 @@ public class Credits
 	}
 	
 	public void addCredits(int cred)
-	{
+	{		
+		if(cred >= 0)
 			credits += cred;
 	}
 	
@@ -20,7 +21,7 @@ public class Credits
 			credits -= cred;
 	}
 
-	public void giveCredits(Credits otherCredits)
+	public void giveCredits(Player otherPlayer)
 	{
 		if(credits > 0)
 		{
@@ -35,7 +36,7 @@ public class Credits
 			input.close();
 			
 			credits -= transfer;
-			otherCredits.addCredits(credits);
+			otherPlayer.credits.addCredits(credits);
 		}
 	}
 }
