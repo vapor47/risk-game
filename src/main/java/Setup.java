@@ -9,14 +9,12 @@ public class Setup {
     private static Scanner input = new Scanner(System.in);
     Replay replay = new Replay();
     
-    //TODO: Calls setup twice in Main 
-    /*
+    //TODO: Calls setup twice in Main     
     private static final Setup INSTANCE = new Setup();
 
     public static Setup getInstance() {
         return INSTANCE;
-    }
-    */
+    }    
 
     Setup(){
         startSetup();
@@ -204,14 +202,17 @@ public class Setup {
     }
 
     private void createPlayers(int numPlayers){
-        for(int i = 0; i < numPlayers; i++){
+        for(int i = 0; i < numPlayers; i++){           
             String name = "Player " + (i+1);
+            Player player = new Player(name);
+            player.setIndex(i);
             Main.playerList.add(name);
-            Main.playerMap.put(name, new Player(name));
+            Main.playerMap.put(name, player);            
+            
         }
         
         if (numPlayers == 2) {
-            String neutral = "Neutral";
+            String neutral = "Neutral";           
             Main.playerList.add(neutral);
             Main.playerMap.put(neutral, new Player(neutral));
         }
