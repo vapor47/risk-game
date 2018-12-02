@@ -9,22 +9,16 @@ import java.io.IOException;
 
 public class Main {
     // Key = Player name; Value = Player object
-    // Does not include neutral in 2 player games    
-//    static HashMap<String, Player> playerMap = new HashMap<String, Player>();
-
-    // Holds Player names and maintains turn order
-//    static ArrayList<String> playerList = new ArrayList<String>();
-    
-    static Map<String,Territory> territories = new HashMap<>();
-
+    // Does not include neutral in 2 player games
     static LinkedHashMap<String, Player> playerMapTest = new LinkedHashMap<>();
-    static Iterator<Map.Entry<String, Player>> playerMapIterator = playerMapTest.entrySet().iterator();
+    private static Iterator<Map.Entry<String, Player>> playerMapIterator = playerMapTest.entrySet().iterator();
     static Player currentPlayer;
+
+    static Map<String,Territory> territories = new HashMap<>();
     
     static Deck deck = new Deck();
     
     static CommandManager commandManager = new CommandManager();
-
 
     public static void main(String[] args) throws IOException, InterruptedException, Exception {
         ExecutorService executor = null;
@@ -45,7 +39,7 @@ public class Main {
         Scanner sc = new Scanner(System.in);        
         //Setup setup = new Setup();
         //test.setPlayerName(playerMap);                
-        int playerIndex = Setup.getInstance().getStartingPlayerIndex();
+//        int playerIndex = Setup.getInstance().getStartingPlayerIndex();
         boolean isPlaying = true;  
         boolean timedOut = false;
         String territoryName;
@@ -73,7 +67,7 @@ public class Main {
 
 //            formattedMessage("Player " + (playerIndex + 1) + "'s turn");
             formattedMessage(currentPlayer.getPlayerName() + "'s turn");
-            replay.update("Player " + playerIndex + "'s turn");
+            replay.update(currentPlayer.getPlayerName() + "'s turn");
             currentPlayer.updatePlaceableInfantry(currentPlayer.calculateInfantry());                                  
             
             if (currentPlayer.getPlaceableInfantry() > 0) {       

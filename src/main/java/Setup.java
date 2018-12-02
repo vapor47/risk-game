@@ -5,7 +5,6 @@ public class Setup {
     private int numPlayers;
     public int getNumPlayers() { return numPlayers; }
 
-    private int startingPlayerIndex;
     private static Scanner input = new Scanner(System.in);
     Replay replay = new Replay();
     
@@ -48,7 +47,7 @@ public class Setup {
             twoPlayerStart();
         }
         else{
-            normalStart(startingPlayerIndex);
+            normalStart();
         }
         //prints map of territories as well as owners
         Main.formattedMessage("Current Map");
@@ -60,11 +59,6 @@ public class Setup {
         }
         replay.upload();
     }
-
-    public int getStartingPlayerIndex() {
-        return startingPlayerIndex;
-    }
-
 
     private void setTelegramGameID() {
         System.out.print("Create a game ID to join through Telegram: ");
@@ -121,8 +115,8 @@ public class Setup {
         }
     }
 
-    private void normalStart(int startingPlayerIndex){
-        int currPlayerIndex = setPrevPlayer(startingPlayerIndex);
+    private void normalStart(){
+//        int currPlayerIndex = setPrevPlayer(startingPlayerIndex);
 //        String currPlayerName = Main.playerList.get(currPlayerIndex);
 
 
@@ -144,7 +138,8 @@ public class Setup {
                         listUnclaimedTerritories();
                     else if (chosenTerritory.equals("undo") && i > 0) { 
                         Main.commandManager.undo();
-                        currPlayerIndex = setNextPlayer(currPlayerIndex);                       
+//                        currPlayerIndex = setNextPlayer(currPlayerIndex);
+                        Main.currentPlayer = Main.getNextPlayer();
                     }
                     else {
                         System.out.println("- That is an invalid option.\n" +
@@ -160,7 +155,8 @@ public class Setup {
 //            } while(!Main.territories.containsKey(chosenTerritory) || !Main.territories.get(chosenTerritory).getOwner().getPlayerName().equals(currPlayerName));
             } while(!Main.territories.containsKey(chosenTerritory) || !Main.territories.get(chosenTerritory).getOwner().getPlayerName().equals(Main.currentPlayer.getPlayerName()));
             // move to next player
-            currPlayerIndex = setPrevPlayer(currPlayerIndex);
+//            currPlayerIndex = setPrevPlayer(currPlayerIndex);
+            Main.currentPlayer = Main.getNextPlayer();
         }
 
         Main.formattedMessage("Fortifying Phase");
@@ -189,7 +185,8 @@ public class Setup {
                 }
 //            } while(!Main.territories.containsKey(chosenTerritory) || !Main.territories.get(chosenTerritory).getOwner().getPlayerName().equals(currPlayerName));
             } while(!Main.territories.containsKey(chosenTerritory) || !Main.territories.get(chosenTerritory).getOwner().getPlayerName().equals(Main.currentPlayer.getPlayerName()));
-            currPlayerIndex = setPrevPlayer(currPlayerIndex);
+//            currPlayerIndex = setPrevPlayer(currPlayerIndex);
+            Main.currentPlayer = Main.getNextPlayer();
         }
     }
 
