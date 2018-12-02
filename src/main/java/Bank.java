@@ -16,7 +16,9 @@ public class Bank
 		
 		public void withdrawMoney(String acctName, int amount)
 		{
+			System.out.println("here");
 			int current = accounts.get(acctName); 
+			
 			if(amount <= current)
 				accounts.replace(acctName, (current - amount));
 		}

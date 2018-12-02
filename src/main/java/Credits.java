@@ -11,7 +11,6 @@ public class Credits
 	
 	public void addCredits(int cred)
 	{
-		if(cred > 0)
 			credits += cred;
 	}
 	
@@ -20,7 +19,7 @@ public class Credits
 		if(credits > 0 && credits > cred && cred > 0)
 			credits -= cred;
 	}
-	
+
 	public void giveCredits(Credits otherCredits)
 	{
 		if(credits > 0)

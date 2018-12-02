@@ -1,11 +1,25 @@
 import org.telegram.abilitybots.api.bot.AbilityBot;
+import org.telegram.abilitybots.api.bot.BaseAbilityBot;
 import org.telegram.abilitybots.api.objects.Ability;
 import org.telegram.abilitybots.api.objects.Locality;
 import org.telegram.abilitybots.api.objects.Privacy;
+import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.objects.Update;
+import org.telegram.telegrambots.meta.api.objects.User;
+import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+import org.telegram.telegrambots.meta.logging.BotLogger;
 
 import java.util.HashMap;
 
 public class TelegramJoinBot extends AbilityBot {
+
+    private static TelegramJoinBot INSTANCE = null;
+    public static TelegramJoinBot getInstance() {
+        if(INSTANCE == null) {
+            INSTANCE = new TelegramJoinBot(BOT_TOKEN, BOT_USERNAME);
+        }
+        return INSTANCE;
+    }
 
     private static final String BOT_TOKEN = "629312074:AAGGaDuYr8LLAjWuKUREL3PtAB_dOC7qUqs";
     private static final String BOT_USERNAME = "RiskBot";
@@ -15,14 +29,7 @@ public class TelegramJoinBot extends AbilityBot {
     public void setGameId(String gameId) { this.gameId = gameId; }
 
     public HashMap<Player, Long> playerChatIDs = new HashMap<>();
-
-    private static TelegramJoinBot INSTANCE = null;
-    public static TelegramJoinBot getInstance() {
-        if(INSTANCE == null) {
-            INSTANCE = new TelegramJoinBot(BOT_TOKEN, BOT_USERNAME);
-        }
-        return INSTANCE;
-    }
+    private Player currentPlayer; //TODO set first current player
 
     private TelegramJoinBot(String token, String username) {
         super(token, username);
@@ -35,6 +42,55 @@ public class TelegramJoinBot extends AbilityBot {
 
     private int playerCount = 0;
     private int maxPlayers = 3;
+
+    public void sendMessage(Player player, String message) {
+        SendMessage snd = new SendMessage();
+        snd.setChatId(playerChatIDs.get(player));
+        snd.setText(message);
+
+        try {
+            execute(snd);
+        } catch (TelegramApiException e) {
+//            BotLogger.error("Could not send message", TAG, e);
+            System.err.println("Telegram bot could not send message");
+        }
+    }
+
+    // Gets the action response from the user.
+    @Override
+    public void onUpdateReceived(Update update) {
+        // We check if the update has a message and the message has text
+        if (update.hasMessage() && update.getMessage().hasText()) {
+            SendMessage message = new SendMessage().setChatId(update.getMessage().getChatId());
+
+            // Confirms that the message was sent by the correct player of the current turn.
+            if(update.getMessage().getChatId().equals(playerChatIDs.get(currentPlayer))) {
+                message.setText(update.getMessage().getText());
+                String action = update.getMessage().getText();
+            } else {
+                message.setText("It is not your turn");
+            }
+            try {
+                execute(message); // Call method to send the message
+            } catch (TelegramApiException e) {
+                e.printStackTrace();
+            }
+        }
+    }    
+
+    /*
+    TODO
+    game sends message
+
+    user sends back message
+        must be from correct user
+
+    game checks message
+        sends another message if not valid option
+    returns action to main somehow
+
+    move on to next message
+     */
     public Ability join() {
         return Ability
                 .builder()
