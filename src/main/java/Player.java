@@ -28,7 +28,7 @@ public class Player implements TerritoryObserver
         cardCount = 0;
         placeableInfantry = 0;
         playerName = name;
-        //index = Main.playerList.indexOf(playerName);
+//        index = Main.playerList.indexOf(playerName);
     }
 
     @Override
@@ -382,8 +382,10 @@ public class Player implements TerritoryObserver
         if(Defender.getNumArmies() == 0)
         {
             claimTerritory(Defender);
-            Main.playerMap.get(Defender.getOwner().getPlayerName()).loseTerritory(Defender);
+            
+            Main.playerMapTest.get(Defender.getOwner().getPlayerName()).loseTerritory(Defender);
             System.out.printf("Congratulations %s, you have conquered %s!%n", Attacker.getOwner().getPlayerName(), Defender.getTerritoryName().toString());
+            
             Defender.removeObserver();
             Defender.addObserver(Attacker.getOwner());
             moveInArmies(Attacker, Defender);
@@ -396,7 +398,8 @@ public class Player implements TerritoryObserver
         
        	if (defender.territories.getTerritoryCount() <= 0) {
             // Player's outta the game            
-            Main.playerList.remove(defender.getPlayerName());
+//            Main.playerList.remove(defender.getPlayerName());
+            Main.playerMapTest.remove(defender.getPlayerName());
             defender.isActive = false;
             System.out.printf("- %s has been defeated!\n", defender.getPlayerName());
         }
