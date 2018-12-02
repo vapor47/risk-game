@@ -18,12 +18,13 @@ public class Main {
     static Map<String,Territory> territories = new HashMap<>();
 
     static LinkedHashMap<String, Player> playerMapTest = new LinkedHashMap<>();
+    static Iterator<Map.Entry<String, Player>> playerMapIterator = playerMapTest.entrySet().iterator();
+    static Player currentPlayer;
     
     static Deck deck = new Deck();
     
     static CommandManager commandManager = new CommandManager();
 
-    static Player currentPlayer;
 
     public static void main(String[] args) throws IOException, InterruptedException, Exception {
         ExecutorService executor = null;
@@ -54,6 +55,10 @@ public class Main {
         currentPlayer = getNextPlayer();
         
         while(isPlaying){ //until only 1 player occupies territories(except for neutral in 2 player games)
+
+            // Skips Neutral turn
+            if(currentPlayer.getPlayerName().equals("Neutral"))
+                currentPlayer = getNextPlayer();
             //------------------------------------------------CALCULATE ARMIES & PLACING INFANTRY--------------------------------------------------------//                        
             //System.out.println("PlayeList.size = " + playerList.size());
             executor = Executors.newSingleThreadExecutor(); 
@@ -65,7 +70,8 @@ public class Main {
                 timedOut = false;                
             }
 
-            formattedMessage("Player " + (playerIndex + 1) + "'s turn");
+//            formattedMessage("Player " + (playerIndex + 1) + "'s turn");
+            formattedMessage(currentPlayer.getPlayerName() + "'s turn");
             replay.update("Player " + playerIndex + "'s turn");
             currentPlayer.updatePlaceableInfantry(currentPlayer.calculateInfantry());                                  
             
@@ -586,8 +592,12 @@ public class Main {
         return userInput;
     }
 
-    private static Player getNextPlayer() {
-        return playerMapTest.entrySet().iterator().next().getValue();
+    static Player getNextPlayer() {
+        // If iterator is on the last player, restart at first player
+        if(!playerMapIterator.hasNext())
+            playerMapIterator = playerMapTest.entrySet().iterator();
+        return playerMapIterator.next().getValue();
+
     }
 }
 

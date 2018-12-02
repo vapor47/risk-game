@@ -96,11 +96,11 @@ public class Setup {
     }
 
     private void twoPlayerStart(){
-        ArrayList<String> keys = new ArrayList<String>(Main.territories.keySet());
+        ArrayList<String> territoryKeys = new ArrayList<String>(Main.territories.keySet());
         int currPlayerIndex = 0;
         for(int i = 42; i > 14; i--){ // runs 28 times
             int index = (int)(Math.random()*i);
-            String key = keys.get(index);
+            String key = territoryKeys.get(index);
             Main.territories.get(key).incrementArmies(1);
 //            Main.playerMapTest.get(Main.playerList.get(currPlayerIndex)).claimTerritory(Main.territories.get(key));
             Main.currentPlayer.claimTerritory(Main.territories.get(key));
@@ -111,11 +111,13 @@ public class Setup {
 //            Main.territories.get(key).addObserver(Main.playerMapTest.get(Main.playerList.get(currPlayerIndex)));
             Main.territories.get(key).addObserver(Main.currentPlayer);
 
-            currPlayerIndex = (currPlayerIndex + 1) % 2; // goes from 0-1
-            keys.remove(index);
+//            currPlayerIndex = (currPlayerIndex + 1) % 2; // goes from 0-1
+            Main.currentPlayer = Main.getNextPlayer();
+            System.out.println(Main.getNextPlayer().getPlayerName());
+            territoryKeys.remove(index);
         }
         // set remaining Neutral Main.territories armies to 1
-        for(String territoryName : keys){            
+        for(String territoryName : territoryKeys){
             Main.territories.get(territoryName).incrementArmies(1);            
             Main.playerMapTest.get("Neutral").claimTerritory(Main.territories.get(territoryName));
         }
