@@ -16,6 +16,10 @@ public class Setup {
     }
 
     Setup(){
+        startSetup();
+    }
+
+    private void startSetup() {
         boolean usingTelegram = isUsingTelegram();
         if(usingTelegram) {
             numPlayers = 3;
@@ -28,6 +32,10 @@ public class Setup {
             numPlayers = promptNumPlayers();
             createPlayers(numPlayers);
         }
+
+        //separate chatbot setup from regular when playersjoined == 3
+
+
         startingPlayerIndex = chooseRandomPlayer(numPlayers);
 
         createTerritories();
@@ -83,15 +91,6 @@ public class Setup {
         return numPlayers;
     }
 
-    /* Two Player Set-up
-            give both players 14 random Main.territories and place 1 infantry on them
-                same for neutral
-            then:
-                go back and forth between both players
-                    1. place 2 infantry on any 1 or 2 Main.territories
-                        either 1 & 1, or 2 infantry on 1 territory
-                    2. place 1 infantry on any neutral territory
-    */
     private void twoPlayerStart(){
         ArrayList<String> keys = new ArrayList<String>(Main.territories.keySet());
         int currPlayerIndex = 0;
@@ -99,7 +98,6 @@ public class Setup {
             int index = (int)(Math.random()*i);
             String key = keys.get(index);
             Main.territories.get(key).incrementArmies(1);
-            //Main.territories.get(key).setOwner(Main.playerMap.get(Main.playerList.get(currPlayerIndex)));            
             Main.playerMap.get(Main.playerList.get(currPlayerIndex)).claimTerritory(Main.territories.get(key));
             Main.playerMap.get(Main.playerList.get(currPlayerIndex)).updatePlaceableInfantry(-1);
             Main.territories.get(key).addObserver(Main.playerMap.get(Main.playerList.get(currPlayerIndex)));
