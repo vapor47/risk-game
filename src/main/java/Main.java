@@ -10,49 +10,56 @@ import java.io.IOException;
 public class Main {
     // Key = Player name; Value = Player object
     // Does not include neutral in 2 player games    
-    static HashMap<String, Player> playerMap = new HashMap<String, Player>();
+//    static HashMap<String, Player> playerMap = new HashMap<String, Player>();
 
     // Holds Player names and maintains turn order
-    static ArrayList<String> playerList = new ArrayList<String>();
+//    static ArrayList<String> playerList = new ArrayList<String>();
     
     static Map<String,Territory> territories = new HashMap<>();
 
     static LinkedHashMap<String, Player> playerMapTest = new LinkedHashMap<>();
+    static Iterator<Map.Entry<String, Player>> playerMapIterator = playerMapTest.entrySet().iterator();
+    static Player currentPlayer;
     
     static Deck deck = new Deck();
     
     static CommandManager commandManager = new CommandManager();
 
     public static void main(String[] args) throws IOException, InterruptedException, Exception {
+        startGame();                
+    } 
+    
+    private static void startGame() throws IOException, InterruptedException, Exception {
         ExecutorService executor = null;
         Future<String> future = null;                
         int timeOut = 30;   // max wait time before game times out
 
-		ApiContextInitializer.init();
+        ApiContextInitializer.init();
 
-		TelegramBotsApi riskBot = new TelegramBotsApi();
-		try {
-			riskBot.registerBot(TelegramJoinBot.getInstance());
-
-		} catch (TelegramApiException e) {
-     	  e.printStackTrace();
-		}
+        TelegramBotsApi riskBot = new TelegramBotsApi();
+        try {
+            riskBot.registerBot(TelegramJoinBot.getInstance());
+        } catch (TelegramApiException e) {
+            e.printStackTrace();
+        }
     	
     	Replay replay = new Replay();
-        Scanner sc = new Scanner(System.in);        
-        Setup setup = new Setup();
-        //test.setPlayerName(playerMap);
-        int playerIndex = setup.getStartingPlayerIndex();
+        Scanner sc = new Scanner(System.in);                     
+        int playerIndex = Setup.getInstance().getStartingPlayerIndex();
         boolean isPlaying = true;  
         boolean timedOut = false;
         String territoryName;
         String userInput;
         
-        Player currentPlayer = playerMap.get(playerList.get(playerIndex));
+        currentPlayer = getNextPlayer();                
         
         while(isPlaying){ //until only 1 player occupies territories(except for neutral in 2 player games)
-            //------------------------------------------------CALCULATE ARMIES & PLACING INFANTRY--------------------------------------------------------//                        
-            //System.out.println("PlayeList.size = " + playerList.size());
+          
+            // Skips Neutral's turn
+            if(currentPlayer.getPlayerName().equals("Neutral"))
+                currentPlayer = getNextPlayer();
+            
+            //------------------------------------------------CALCULATE ARMIES & PLACING INFANTRY--------------------------------------------------------//                                  
             executor = Executors.newSingleThreadExecutor(); 
 
             if (timedOut) {                
@@ -62,7 +69,7 @@ public class Main {
                 timedOut = false;                
             }
 
-            formattedMessage("Player " + (playerIndex + 1) + "'s turn");
+            formattedMessage(currentPlayer.getPlayerName() + "'s turn");
             replay.update("Player " + playerIndex + "'s turn");
             currentPlayer.updatePlaceableInfantry(currentPlayer.calculateInfantry());                                  
             
@@ -146,8 +153,8 @@ public class Main {
                 } //end while
 
                 if (timedOut) {
-                    playerIndex = getNextPlayer(playerIndex);            
-                    currentPlayer = playerMap.get(playerList.get(playerIndex));
+//                    playerIndex = getNextPlayer(playerIndex);
+                    currentPlayer = getNextPlayer();
                     isPlaying = checkIfStillPlaying(isPlaying);
                     continue;
                 }
@@ -252,7 +259,7 @@ public class Main {
 
                         //Checks if player types "list-owned"
                         if(attackingTerritory.equals("list-owned")) {                            
-                            playerMap.get(currentPlayer.getPlayerName()).printOwnedTerritories();
+                            playerMapTest.get(currentPlayer.getPlayerName()).printOwnedTerritories();
                             System.out.println();
                             continue;                                
                         }
@@ -260,7 +267,7 @@ public class Main {
                         //Checks if territory is valid
                         if (territories.containsKey(attackingTerritory)) {
                             //checks to see if player is owner of the territory              
-                            if(playerMap.get(currentPlayer.getPlayerName()) == territories.get(attackingTerritory).getOwner()) {                            
+                            if(playerMapTest.get(currentPlayer.getPlayerName()) == territories.get(attackingTerritory).getOwner()) {
                                 validTerritoryFrom = true;
                             } 
                             else {
@@ -339,8 +346,8 @@ public class Main {
             currentPlayer.drawCards();  //draws card if player captures territory
                         
             if (timedOut) {
-                playerIndex = getNextPlayer(playerIndex);            
-                currentPlayer = playerMap.get(playerList.get(playerIndex));
+//                playerIndex = getNextPlayer(playerIndex);
+                currentPlayer = getNextPlayer();
                 isPlaying = checkIfStillPlaying(isPlaying);
                 continue;
             }
@@ -378,8 +385,8 @@ public class Main {
                     
             // If timed out, move on to next player
             if (timedOut) {
-                playerIndex = getNextPlayer(playerIndex);            
-                currentPlayer = playerMap.get(playerList.get(playerIndex));
+//                playerIndex = getNextPlayer(playerIndex);
+                currentPlayer = getNextPlayer();
                 isPlaying = checkIfStillPlaying(isPlaying);
                 continue;
             }
@@ -499,8 +506,8 @@ public class Main {
             } 
                    
             // Moves on to next player weather timed out or not
-            playerIndex = getNextPlayer(playerIndex);            
-            currentPlayer = playerMap.get(playerList.get(playerIndex));
+//            playerIndex = getNextPlayer(playerIndex);
+            currentPlayer = getNextPlayer();
             isPlaying = checkIfStillPlaying(isPlaying); 
 
             replay.upload();
@@ -509,14 +516,17 @@ public class Main {
 
         // Tweet number of territories conquered at the end of the game.
         try {
-            Tweeter.TweetEndOfGame(playerMap);
+            Tweeter.TweetEndOfGame(playerMapTest);
         } catch (Exception e){
             System.out.println("ERROR: Tweet didn't work");
         }
 
         executor.shutdownNow();
-    } //End main
+    }
     
+    
+    
+    // Function to print owned territories
     private static void printOwnedTerritory(Player currentPlayer) {        
         System.out.println("\n|| Your Territories ||");        
         for(Map.Entry<String, Territory> x: territories.entrySet()) {  //Prints out Player's territory and the num of troops on them           
@@ -527,12 +537,13 @@ public class Main {
         }
     }
     
+    // Function to format messages
     public static void formattedMessage(String gameMessage) {
         System.out.println("\n-----------------------------------------------");
         System.out.printf("\t\t%s\n", gameMessage);
         System.out.println("-----------------------------------------------\n");
     }
-    
+       
     public static String padRight(String s, int n) {
         return String.format("%1$-" + n + "s", s); 
     }
@@ -540,6 +551,8 @@ public class Main {
     // int nextPlayerIndex = getNextPlayer(playerIndex)
     // currentPlayer = playerMap.get(playerList.get(nextPlayerIndex))
     // checkIfStillPlaying(isPlaying);
+    /*
+    // Function to continue to next Player
     private static int getNextPlayer(int curPlayerIndex) { // return new player index
         int playerIndex = --curPlayerIndex;
         
@@ -553,17 +566,19 @@ public class Main {
 
         return playerIndex;
     }
-    
+    */
+
+    // Function to check if player is still playing
     private static boolean checkIfStillPlaying(boolean isPlaying) {
-        if (playerList.size() == 2 && playerList.contains("Neutral") || playerList.size() == 1) {
+//        if (playerList.size() == 2 && playerList.contains("Neutral") || playerList.size() == 1) {
+        if (playerMapTest.size() == 2 && playerMapTest.keySet().contains("Neutral") || playerMapTest.size() == 1) {
                 isPlaying = false;
         }      
         
         return isPlaying;
     }
 
-    // Prompt waits 30 secs before timing out
-    // returns userInput
+    // Prompt waits 30 secs before timing out. Returns user input    
     private static String timeoutPrompt(ExecutorService executor, Future<String> future, int timeOut) {
         Task task = new Task();
         future = executor.submit(task); // future is set to new task called Attack Task
@@ -578,7 +593,15 @@ public class Main {
         }
               
         return userInput;
-    }            
+    }
+
+    static Player getNextPlayer() {
+        // If iterator is on the last player, restart at first player
+        if(!playerMapIterator.hasNext())
+            playerMapIterator = playerMapTest.entrySet().iterator();
+        return playerMapIterator.next().getValue();
+
+    }
 }
 
 // Class used for timeout  
