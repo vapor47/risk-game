@@ -55,7 +55,7 @@ public class TelegramJoinBot extends AbilityBot {
             System.err.println("Telegram bot could not send message");
         }
     }
-
+    
     // Gets the action response from the user.
     @Override
     public void onUpdateReceived(Update update) {
@@ -76,8 +76,8 @@ public class TelegramJoinBot extends AbilityBot {
                 e.printStackTrace();
             }
         }
-    }
-
+    }       
+    
     /*
     TODO
     game sends message

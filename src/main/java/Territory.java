@@ -120,6 +120,10 @@ public class Territory {
         playerObserver = null;
     }
     
+    public TerritoryObserver getObserver() {
+        return playerObserver;
+    }
+    
     public void updateUnderAttackStatus(boolean isUnderAttack) {
         this.isUnderAttack = isUnderAttack;
     }
@@ -128,6 +132,10 @@ public class Territory {
         if (isUnderAttack) {
             playerObserver.update(isUnderAttack, name.toString());
         }
+    }
+    
+    public boolean isUnderAttack() {
+        return isUnderAttack;
     }
 
     public void incrementArmies(int increment){

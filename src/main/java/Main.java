@@ -35,17 +35,17 @@ public class Main {
 
 		TelegramBotsApi riskBot = new TelegramBotsApi();
 		try {
-			riskBot.registerBot(TelegramJoinBot.getInstance());
+                    riskBot.registerBot(TelegramJoinBot.getInstance());
 
 		} catch (TelegramApiException e) {
-     	  e.printStackTrace();
+                    e.printStackTrace();
 		}
     	
     	Replay replay = new Replay();
         Scanner sc = new Scanner(System.in);        
-        Setup setup = new Setup();
-        //test.setPlayerName(playerMap);
-        int playerIndex = setup.getStartingPlayerIndex();
+        //Setup setup = new Setup();
+        //test.setPlayerName(playerMap);                
+        int playerIndex = Setup.getInstance().getStartingPlayerIndex();
         boolean isPlaying = true;  
         boolean timedOut = false;
         String territoryName;
@@ -55,12 +55,13 @@ public class Main {
         currentPlayer = getNextPlayer();
         
         while(isPlaying){ //until only 1 player occupies territories(except for neutral in 2 player games)
-
-            // Skips Neutral turn
+          
+            // Skips Neutral's turn
             if(currentPlayer.getPlayerName().equals("Neutral"))
                 currentPlayer = getNextPlayer();
             //------------------------------------------------CALCULATE ARMIES & PLACING INFANTRY--------------------------------------------------------//                        
             //System.out.println("PlayeList.size = " + playerList.size());
+          
             executor = Executors.newSingleThreadExecutor(); 
 
             if (timedOut) {                
@@ -526,6 +527,7 @@ public class Main {
         executor.shutdownNow();
     } //End main
     
+    // Function to print owned territories
     private static void printOwnedTerritory(Player currentPlayer) {        
         System.out.println("\n|| Your Territories ||");        
         for(Map.Entry<String, Territory> x: territories.entrySet()) {  //Prints out Player's territory and the num of troops on them           
@@ -536,12 +538,13 @@ public class Main {
         }
     }
     
+    // Function to format messages
     public static void formattedMessage(String gameMessage) {
         System.out.println("\n-----------------------------------------------");
         System.out.printf("\t\t%s\n", gameMessage);
         System.out.println("-----------------------------------------------\n");
     }
-    
+       
     public static String padRight(String s, int n) {
         return String.format("%1$-" + n + "s", s); 
     }
@@ -550,6 +553,7 @@ public class Main {
     // currentPlayer = playerMap.get(playerList.get(nextPlayerIndex))
     // checkIfStillPlaying(isPlaying);
     /*
+    // Function to continue to next Player
     private static int getNextPlayer(int curPlayerIndex) { // return new player index
         int playerIndex = --curPlayerIndex;
         
@@ -565,6 +569,7 @@ public class Main {
     }
     */
 
+    // Function to check if player is still playing
     private static boolean checkIfStillPlaying(boolean isPlaying) {
 //        if (playerList.size() == 2 && playerList.contains("Neutral") || playerList.size() == 1) {
         if (playerMapTest.size() == 2 && playerMapTest.keySet().contains("Neutral") || playerMapTest.size() == 1) {
@@ -574,8 +579,7 @@ public class Main {
         return isPlaying;
     }
 
-    // Prompt waits 30 secs before timing out
-    // returns userInput
+    // Prompt waits 30 secs before timing out. Returns user input    
     private static String timeoutPrompt(ExecutorService executor, Future<String> future, int timeOut) {
         Task task = new Task();
         future = executor.submit(task); // future is set to new task called Attack Task

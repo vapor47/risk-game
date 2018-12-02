@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 public class Deck {
-    private final int CARDS_IN_DECK = 44;
+    // private final int CARDS_IN_DECK = 44;
     private int numCardsInMainDeck, numCardsDiscarded;
     private int numNormalCards = 42;
     private int numWildCards = 2; 
