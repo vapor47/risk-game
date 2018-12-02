@@ -141,4 +141,144 @@ public class TerritoryTest {
         // Assert        
         Assert.assertArrayEquals(actual, expected);
     }
+    
+    @Test
+    public void addObserver() {
+        
+        System.out.println("addObserver");
+        
+        // Arrange
+        TerritoryObserver obs = new Player("Test Player");
+        Territory test = new Territory(TerritoryName.SIAM,Continent.ASIA, new String[]{"Adjacent Territory"});        
+        final TerritoryObserver expected = obs;
+        
+        // Act
+        test.addObserver(obs);
+        final TerritoryObserver actual = test.getObserver();
+        
+        // Assert
+        Assert.assertEquals(actual, expected);
+    }
+    
+    @Test
+    public void removeObserver() {
+        
+        System.out.println("removeObserver");
+        
+        // Arrange
+        Territory test = new Territory(TerritoryName.SIAM,Continent.ASIA, new String[]{"Adjacent Territory"});        
+        final TerritoryObserver expected = null;
+        
+        // Act
+        test.removeObserver();
+        final TerritoryObserver actual = test.getObserver();
+        
+        // Assert
+        Assert.assertEquals(actual, expected);
+    }
+    
+    @Test
+    public void updateUnderAttackStatus() {
+                
+        System.out.println("updateUnderAttackStatus");
+                        
+        // Arrange
+        Territory test = new Territory(TerritoryName.SIAM,Continent.ASIA, new String[]{"Adjacent Territory"});   
+        final boolean expected = true;
+                
+        // Act  
+        test.updateUnderAttackStatus(true);
+        final boolean actual = test.isUnderAttack();
+        
+        // Assert
+        Assert.assertEquals(actual, expected);
+    }
+    
+    @Test 
+    public void isUnderAttack() {
+        
+        System.out.println("isUnderAttack");
+        
+        // Arrange
+        Territory test = new Territory(TerritoryName.SIAM,Continent.ASIA, new String[]{"Adjacent Territory"});   
+        final boolean expected = false;
+        
+        // Act
+        test.updateUnderAttackStatus(expected);
+        final boolean actual = test.isUnderAttack();
+        
+        // Assert
+        Assert.assertEquals(actual, expected);
+    }
+    
+    @Test
+    public void getObserver() {
+        
+        System.out.println("getObserver");
+        
+        // Arrange
+        Territory test = new Territory(TerritoryName.SIAM,Continent.ASIA, new String[]{"Adjacent Territory"});   
+        final TerritoryObserver expected = new Player("Observer");
+        
+        // Act
+        test.addObserver(expected);
+        final TerritoryObserver actual = test.getObserver();
+        
+        // Assert
+        Assert.assertEquals(actual, expected);
+    }
+    
+    @Test
+    public void notifyObservers() {
+        
+        System.out.println("notifyObservers");
+        
+        // Arrange
+        Territory test = new Territory(TerritoryName.SIAM,Continent.ASIA, new String[]{"Adjacent Territory"});   
+        final TerritoryObserver observer = new Player("Observer");
+        
+        // Act
+        test.addObserver(observer);
+        test.updateUnderAttackStatus(true);
+        test.notifyObservers();                                
+    }
+    
+    @Test
+    public void printAdjacentTerritories() {     
+        
+        System.out.println("printAdjacentTerritories");
+                
+        // Arrange
+        Territory test = new Territory(TerritoryName.AFGHANISTAN, Continent.ASIA,
+                new String[]{"China","India","Middle East","Ukraine","Ural"});        
+        
+        // Act
+        test.printAdjacentTerritories();
+    }
+    
+    @Test
+    public void listTerritoryInfo(){   
+        
+        System.out.println("listTerritoryInfo");        
+        
+        // Arrange
+        Territory test = new Territory(TerritoryName.AFGHANISTAN, Continent.ASIA,
+                new String[]{"China","India","Middle East","Ukraine","Ural"});    
+        
+        // Act
+        test.listTerritoryInfo();       
+    }
+    
+    @Test
+    public void getTerritoryInfo() {
+        
+        System.out.println("getTerritoryInfo");        
+        
+        // Arrange
+        Territory test = new Territory(TerritoryName.AFGHANISTAN, Continent.ASIA,
+                new String[]{"China","India","Middle East","Ukraine","Ural"});    
+        
+        // Act
+        test.getTerritoryInfo();            
+    }
 }
