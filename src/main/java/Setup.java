@@ -39,7 +39,8 @@ public class Setup {
         //separate chatbot setup from regular when playersjoined == 3
 
 
-        startingPlayerIndex = chooseRandomPlayer(numPlayers);
+//        startingPlayerIndex = chooseRandomPlayer(numPlayers);
+        Main.currentPlayer = Main.playerMapTest.entrySet().iterator().next().getValue();
 
         createTerritories();
         createCards();
@@ -101,22 +102,30 @@ public class Setup {
             int index = (int)(Math.random()*i);
             String key = keys.get(index);
             Main.territories.get(key).incrementArmies(1);
-            Main.playerMap.get(Main.playerList.get(currPlayerIndex)).claimTerritory(Main.territories.get(key));
-            Main.playerMap.get(Main.playerList.get(currPlayerIndex)).updatePlaceableInfantry(-1);
-            Main.territories.get(key).addObserver(Main.playerMap.get(Main.playerList.get(currPlayerIndex)));
+//            Main.playerMapTest.get(Main.playerList.get(currPlayerIndex)).claimTerritory(Main.territories.get(key));
+            Main.currentPlayer.claimTerritory(Main.territories.get(key));
+
+//            Main.playerMap.get(Main.playerList.get(currPlayerIndex)).updatePlaceableInfantry(-1);
+            Main.currentPlayer.updatePlaceableInfantry(-1);
+
+//            Main.territories.get(key).addObserver(Main.playerMapTest.get(Main.playerList.get(currPlayerIndex)));
+            Main.territories.get(key).addObserver(Main.currentPlayer);
+
             currPlayerIndex = (currPlayerIndex + 1) % 2; // goes from 0-1
             keys.remove(index);
         }
         // set remaining Neutral Main.territories armies to 1
         for(String territoryName : keys){            
             Main.territories.get(territoryName).incrementArmies(1);            
-            Main.playerMap.get("Neutral").claimTerritory(Main.territories.get(territoryName));            
+            Main.playerMapTest.get("Neutral").claimTerritory(Main.territories.get(territoryName));
         }
     }
 
     private void normalStart(int startingPlayerIndex){
         int currPlayerIndex = setPrevPlayer(startingPlayerIndex);
-        String currPlayerName = Main.playerList.get(currPlayerIndex);
+//        String currPlayerName = Main.playerList.get(currPlayerIndex);
+
+
         Scanner input = new Scanner(System.in);
         String chosenTerritory;
         listUnclaimedTerritories();
@@ -124,8 +133,11 @@ public class Setup {
         // Each player goes around placing 1 army onto an unclaimed territory (42 total)
         for(int i = 0; i < 42; i++){            
             do {
-                currPlayerName = Main.playerList.get(currPlayerIndex);
-                System.out.print("\n" + currPlayerName + ", claim a territory: ");
+//                currPlayerName = Main.playerList.get(currPlayerIndex);
+
+//                System.out.print("\n" + currPlayerName + ", claim a territory: ");
+                System.out.print("\n" + Main.currentPlayer.getPlayerName() + ", claim a territory: ");
+
                 chosenTerritory = input.nextLine();
                 if(!Main.territories.containsKey(chosenTerritory) || !Main.territories.get(chosenTerritory).getOwner().getPlayerName().equals("Neutral")) {
                     if(chosenTerritory.equals("list-unclaimed"))
@@ -139,29 +151,35 @@ public class Setup {
                                 "- For a list of unclaimed territories, type 'list-unclaimed'");
                     }
                 } else { // claim territory for current player                    
-                    Player player = Main.playerMap.get(currPlayerName);
-                    player.placeInfantry(chosenTerritory, 1);                    
-                    Main.commandManager.executeCommand(new ClaimTerritoryCommand(player, Main.territories.get(chosenTerritory))); //Command manager executes cmd and places cmd in stack 
-                    Main.territories.get(chosenTerritory).addObserver(player);
+//                    Player player = Main.playerMap.get(currPlayerName);
+
+                    Main.currentPlayer.placeInfantry(chosenTerritory, 1);
+                    Main.commandManager.executeCommand(new ClaimTerritoryCommand(Main.currentPlayer, Main.territories.get(chosenTerritory))); //Command manager executes cmd and places cmd in stack
+                    Main.territories.get(chosenTerritory).addObserver(Main.currentPlayer);
                 }
-            } while(!Main.territories.containsKey(chosenTerritory) || !Main.territories.get(chosenTerritory).getOwner().getPlayerName().equals(currPlayerName));
+//            } while(!Main.territories.containsKey(chosenTerritory) || !Main.territories.get(chosenTerritory).getOwner().getPlayerName().equals(currPlayerName));
+            } while(!Main.territories.containsKey(chosenTerritory) || !Main.territories.get(chosenTerritory).getOwner().getPlayerName().equals(Main.currentPlayer.getPlayerName()));
             // move to next player
             currPlayerIndex = setPrevPlayer(currPlayerIndex);
         }
 
         Main.formattedMessage("Fortifying Phase");
         // Now each player places 1 additional army onto any territory they occupy until everyone runs out
-        int armiesLeft = Main.playerMap.get(currPlayerName).getPlaceableInfantry();
+//        int armiesLeft = Main.playerMap.get(currPlayerName).getPlaceableInfantry();
+        int armiesLeft = Main.currentPlayer.getPlaceableInfantry();
         for(int i = 0; i < armiesLeft; i++){
-            currPlayerName = Main.playerList.get(currPlayerIndex);
+//            currPlayerName = Main.playerList.get(currPlayerIndex);
             do {
-                System.out.print("\n" + currPlayerName + ", choose a territory: ");
+//                System.out.print("\n" + currPlayerName + ", choose a territory: ");
+                System.out.print("\n" + Main.currentPlayer.getPlayerName() + ", choose a territory: ");
                 chosenTerritory = input.nextLine();
 
                 // checks to see if player is owner of the territory
-                if(!Main.territories.containsKey(chosenTerritory) || Main.playerMap.get(currPlayerName) != Main.territories.get(chosenTerritory).getOwner()) {
+//                if(!Main.territories.containsKey(chosenTerritory) || Main.playerMap.get(currPlayerName) != Main.territories.get(chosenTerritory).getOwner()) {
+                if(!Main.territories.containsKey(chosenTerritory) || Main.currentPlayer != Main.territories.get(chosenTerritory).getOwner()) {
                     if(chosenTerritory.equals("list-owned"))
-                        Main.playerMap.get(currPlayerName).printOwnedTerritories();
+//                        Main.playerMap.get(currPlayerName).printOwnedTerritories();
+                        Main.currentPlayer.printOwnedTerritories();
                     else {
                         System.out.println("- That is an invalid option.\n" +
                                 "- For a list of owned territories, type 'list-owned'");
@@ -169,7 +187,8 @@ public class Setup {
                 } else { // increment territory infantry for current player
                     Main.territories.get(chosenTerritory).incrementArmies(1);
                 }
-            } while(!Main.territories.containsKey(chosenTerritory) || !Main.territories.get(chosenTerritory).getOwner().getPlayerName().equals(currPlayerName));
+//            } while(!Main.territories.containsKey(chosenTerritory) || !Main.territories.get(chosenTerritory).getOwner().getPlayerName().equals(currPlayerName));
+            } while(!Main.territories.containsKey(chosenTerritory) || !Main.territories.get(chosenTerritory).getOwner().getPlayerName().equals(Main.currentPlayer.getPlayerName()));
             currPlayerIndex = setPrevPlayer(currPlayerIndex);
         }
     }
@@ -206,14 +225,16 @@ public class Setup {
     private void createPlayers(int numPlayers){
         for(int i = 0; i < numPlayers; i++){
             String name = "Player " + (i+1);
-            Main.playerList.add(name);
-            Main.playerMap.put(name, new Player(name));
+//            Main.playerList.add(name);
+//            Main.playerMap.put(name, new Player(name));
+            Main.playerMapTest.put(name, new Player(name));
         }
         
         if (numPlayers == 2) {
             String neutral = "Neutral";
-            Main.playerList.add(neutral);
-            Main.playerMap.put(neutral, new Player(neutral));
+//            Main.playerList.add(neutral);
+//            Main.playerMap.put(neutral, new Player(neutral));
+            Main.playerMapTest.put("Neutral", new Player("Neutral"));
         }
     }
 
@@ -238,7 +259,7 @@ public class Setup {
             default:
                 break;
         }
-        for(Map.Entry<String, Player> x: Main.playerMap.entrySet())
+        for(Map.Entry<String, Player> x: Main.playerMapTest.entrySet())
             x.getValue().updatePlaceableInfantry(numInfantry);
     }
     private void addPlayer(String name) {
