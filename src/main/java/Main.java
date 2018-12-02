@@ -25,43 +25,41 @@ public class Main {
     
     static CommandManager commandManager = new CommandManager();
 
-
     public static void main(String[] args) throws IOException, InterruptedException, Exception {
+        startGame();                
+    } 
+    
+    private static void startGame() throws IOException, InterruptedException, Exception {
         ExecutorService executor = null;
         Future<String> future = null;                
         int timeOut = 30;   // max wait time before game times out
 
-		ApiContextInitializer.init();
+        ApiContextInitializer.init();
 
-		TelegramBotsApi riskBot = new TelegramBotsApi();
-		try {
-                    riskBot.registerBot(TelegramJoinBot.getInstance());
-
-		} catch (TelegramApiException e) {
-                    e.printStackTrace();
-		}
+        TelegramBotsApi riskBot = new TelegramBotsApi();
+        try {
+            riskBot.registerBot(TelegramJoinBot.getInstance());
+        } catch (TelegramApiException e) {
+            e.printStackTrace();
+        }
     	
     	Replay replay = new Replay();
-        Scanner sc = new Scanner(System.in);        
-        //Setup setup = new Setup();
-        //test.setPlayerName(playerMap);                
+        Scanner sc = new Scanner(System.in);                     
         int playerIndex = Setup.getInstance().getStartingPlayerIndex();
         boolean isPlaying = true;  
         boolean timedOut = false;
         String territoryName;
         String userInput;
         
-//        Player currentPlayer = playerMap.get(playerList.get(playerIndex));
-        currentPlayer = getNextPlayer();
+        currentPlayer = getNextPlayer();                
         
         while(isPlaying){ //until only 1 player occupies territories(except for neutral in 2 player games)
           
             // Skips Neutral's turn
             if(currentPlayer.getPlayerName().equals("Neutral"))
                 currentPlayer = getNextPlayer();
-            //------------------------------------------------CALCULATE ARMIES & PLACING INFANTRY--------------------------------------------------------//                        
-            //System.out.println("PlayeList.size = " + playerList.size());
-          
+            
+            //------------------------------------------------CALCULATE ARMIES & PLACING INFANTRY--------------------------------------------------------//                                  
             executor = Executors.newSingleThreadExecutor(); 
 
             if (timedOut) {                
@@ -71,7 +69,6 @@ public class Main {
                 timedOut = false;                
             }
 
-//            formattedMessage("Player " + (playerIndex + 1) + "'s turn");
             formattedMessage(currentPlayer.getPlayerName() + "'s turn");
             replay.update("Player " + playerIndex + "'s turn");
             currentPlayer.updatePlaceableInfantry(currentPlayer.calculateInfantry());                                  
@@ -525,7 +522,9 @@ public class Main {
         }
 
         executor.shutdownNow();
-    } //End main
+    }
+    
+    
     
     // Function to print owned territories
     private static void printOwnedTerritory(Player currentPlayer) {        

@@ -37,7 +37,7 @@ public class Setup {
         //separate chatbot setup from regular when playersjoined == 3
 
 
-//        startingPlayerIndex = chooseRandomPlayer(numPlayers);
+//       startingPlayerIndex = chooseRandomPlayer(numPlayers);
         Main.currentPlayer = Main.playerMapTest.entrySet().iterator().next().getValue();
 
         createTerritories();
@@ -109,8 +109,9 @@ public class Setup {
 //            Main.territories.get(key).addObserver(Main.playerMapTest.get(Main.playerList.get(currPlayerIndex)));
             Main.territories.get(key).addObserver(Main.currentPlayer);
 
-//            currPlayerIndex = (currPlayerIndex + 1) % 2; // goes from 0-1
-            Main.currentPlayer = Main.getNextPlayer();
+//            currPlayerIndex = (currPlayerIndex + 1) % 2; // goes from 0-1             
+            Main.currentPlayer = Main.getNextPlayer();       
+            
             System.out.println(Main.getNextPlayer().getPlayerName());
             territoryKeys.remove(index);
         }
