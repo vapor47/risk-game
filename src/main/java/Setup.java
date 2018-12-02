@@ -37,7 +37,7 @@ public class Setup {
         //separate chatbot setup from regular when playersjoined == 3
 
 
-//        startingPlayerIndex = chooseRandomPlayer(numPlayers);
+//       startingPlayerIndex = chooseRandomPlayer(numPlayers);
         Main.currentPlayer = Main.playerMapTest.entrySet().iterator().next().getValue();
 
         createTerritories();
