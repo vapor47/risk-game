@@ -35,7 +35,7 @@ public class Credits
 			input.close();
 			
 			credits -= transfer;
-			otherCredits.addCredits(credits);
+			otherCredits.addCredits(transfer);
 		}
 	}
 }

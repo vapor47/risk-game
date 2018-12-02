@@ -21,6 +21,5 @@ public class Bank
 			
 			if(amount <= current)
 				accounts.replace(acctName, (current - amount));
-		}
-		
+		}		
 	}
