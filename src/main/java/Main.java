@@ -154,9 +154,9 @@ public class Main {
                         commandManager.undo();                            
                         continue;
                     } 
-                     
-                    boolean isValidTerritory = territories.containsKey(territoryName);  // Checks if territory is valid             
-                                                                                
+                                                           
+                    boolean isValidTerritory = territories.containsKey(territoryName);  // Checks if territory is valid                                                                
+                    
                     if (!isValidTerritory) {                                            // Invalid territory
                         System.out.println("Enter in a valid territory");
                     } else {                                                            // Valid territory 
