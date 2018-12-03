@@ -9,7 +9,7 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import java.io.IOException;
 
 public class Main {
-    
+
     //........Data Structures........//
     static Map<String,Territory> territories = new HashMap<>();
     static LinkedHashMap<String, Player> playerMapTest = new LinkedHashMap<>();
@@ -41,13 +41,13 @@ public class Main {
     }         
     
     // Start game function
-    protected static void startGame() throws IOException, InterruptedException, Exception {               
+    protected static void startGame() throws IOException, InterruptedException, Exception { 
         
         // 3 Phases:
         // 1) Calculate Armies & place infantry
         // 2) Attack
         // 3) Fortify 
-    
+
         ApiContextInitializer.init();
                 
         TelegramBotsApi riskBot = new TelegramBotsApi();
@@ -57,9 +57,9 @@ public class Main {
             e.printStackTrace();
         
         }  
-        
+        Setup.getInstance().startSetup();
+
         Scanner sc = new Scanner(System.in);
-        int playerIndex = Setup.getInstance().getStartingPlayerIndex();                             
         executor = Executors.newSingleThreadExecutor();        
         currentPlayer = getNextPlayer();                
         
@@ -79,7 +79,7 @@ public class Main {
             
             //--------------------------------------------------------ANNOUNCING ROUND-------------------------------------------------------------------//
             formattedMessage(currentPlayer.getPlayerName() + "'s turn");
-            replay.update("Player " + playerIndex + "'s turn");
+            replay.update(currentPlayer.getPlayerName() + "'s turn");
             
             //------------------------------------------------CALCULATE ARMIES & PLACING INFANTRY--------------------------------------------------------//                                              
             formattedMessage("PLACING INFANTRY PHASE");            
