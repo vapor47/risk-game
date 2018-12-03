@@ -1,3 +1,4 @@
+import java.io.ByteArrayInputStream;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -47,33 +48,7 @@ public class PlayerTest {
         final int actual = testPlayer.territoriesConquered();
         
         assertEquals(actual, expected);       
-    }
-    
-    /*@Test
-    public void setIndex() {
-        System.out.println("setIndex");
-        
-        Player testPlayer = new Player("Player Name");          
-        final int expected = 3;
-        
-        testPlayer.setIndex(3);
-        final int actual = testPlayer.getIndex();
-        
-        assertEquals(actual, expected);
-    }
-    
-    @Test
-    public void getIndex() {
-        System.out.println("getIndex");
-        
-        Player testPlayer = new Player("Player Name");          
-        final int expected = 3;
-        
-        testPlayer.setIndex(3);
-        final int actual = testPlayer.getIndex();
-        
-        assertEquals(actual, expected);
-    } */   
+    }        
     
     @Test
     public void getActive() {
@@ -308,7 +283,37 @@ public class PlayerTest {
         // Assert
         Assert.assertEquals(actual, expected);
     }
+    
+     @Test
+    public void useCards() {
         
+        System.out.println("useCards");
+        
+        ByteArrayInputStream in;
+                
+        Player testPlayer = new Player("Player Name");
+        
+        Card China = new Card(Type.CAVALRY, "China");
+        Card Alberta = new Card(Type.CAVALRY, "Alberta");
+        Card Irkutsk = new Card(Type.CAVALRY, "Irkutsk");
+        Territory tChina = new Territory(TerritoryName.CHINA, Continent.ASIA,
+                new String[]{"Afghanistan","India","Mongolia","Siam","Siberia","Ural"});       
+        
+        testPlayer.addCards(China);
+        testPlayer.addCards(Alberta);
+        testPlayer.addCards(Irkutsk);
+
+        Main.territories.put("China", tChina);
+        testPlayer.claimTerritory(tChina);
+                
+        int cardIndex[] = {0,1,2};
+        
+        in = new ByteArrayInputStream("1".getBytes());
+        System.setIn(in);
+        
+        testPlayer.useCards(cardIndex); 
+    }
+                
     // TODO
     @Test
     public void playHand() {
@@ -316,6 +321,7 @@ public class PlayerTest {
         System.out.println("playHand");
         
         // Arrange
+        ByteArrayInputStream in;
         final int expectedInvalid = 0;
         final int expectedValid = 4;
         
@@ -324,26 +330,29 @@ public class PlayerTest {
         Card Irkutsk = new Card(Type.CAVALRY, "Irkutsk");
                        
         Player testPlayer = new Player("Player Name");  
-        
+                        
         // Act
         Deck deck = new Deck();
+        
+        deck.addCards(China);
+        deck.addCards(Alberta);
+        deck.addCards(Irkutsk);
+               
         testPlayer.addCards(China);
-        testPlayer.addCards(Alberta);                              
-        final int actualInvalid = testPlayer.playHand(deck);
+        testPlayer.addCards(Alberta);                    
+        testPlayer.addCards(Irkutsk);
+               
+        Main.territories.put("China", new Territory(TerritoryName.CHINA, Continent.ASIA,
+                new String[]{"Afghanistan","India","Mongolia","Siam","Siberia","Ural"}));
+        Main.territories.put("Alberta", new Territory(TerritoryName.ALBERTA, Continent.NORTH_AMERICA,
+                new String[]{"Alaska","North West Territory","Ontario","Western United States"}));
+        Main.territories.put("Irkutsk", new Territory(TerritoryName.IRKUTSK, Continent.ASIA,
+                new String[]{"Kamchatka","Mongolia","Siberia","Yakutsk"}));
+        //final int actualInvalid = testPlayer.playHand(deck);
         
-        // Assert
-        Assert.assertEquals(actualInvalid, expectedInvalid);    // Player has less than 3 cards
-        
-        //testPlayer.addCards(Irkutsk);
-        
-        //testPlayer.playHand();
-                
-        /* Test for:
-        1) player has less than 3 cards
-        2) player has >= 3 cards
-            - Player plays valid cards
-            - Player enters 0
-        */                           
+        in = new ByteArrayInputStream("0\n1\n2".getBytes());
+        System.setIn(in);
+        testPlayer.playHand(deck);                                        
     }   
     
     @Test    
@@ -407,9 +416,70 @@ public class PlayerTest {
         Assert.assertNotEquals(actual, expected);
     }
 
+    @Test
+    public void moveInArmies() {         
+        
+        System.out.println("moveInArmies");
+        
+        Player testPlayer = new Player("Player Name");
+        Territory China = new Territory(TerritoryName.CHINA, Continent.ASIA,
+                new String[]{"Afghanistan","India","Mongolia","Siam","Siberia","Ural"});
+        Territory India = new Territory(TerritoryName.INDIA, Continent.ASIA,
+                new String[]{"Afghanistan","China","Middle East","Siam"});
+        
+        China.incrementArmies(15);
+        India.incrementArmies(1);
+        
+        final int expected = 10;        
+        
+        ByteArrayInputStream in;        
+        in = new ByteArrayInputStream("10".getBytes());
+        System.setIn(in);                
+        final int actual = testPlayer.moveInArmies(China, India);
+        
+        assertEquals(actual, expected);        
+    }
+    
+    @Test 
+    public void drawCards() {       
+        
+        System.out.println("drawCards");
+        
+        Player testPlayer = new Player("Player Name");
+        
+        Deck deck = new Deck();
+        deck.addCards(new Card(Type.ARTILLERY, "China"));
+        testPlayer.updateTerritoriesClaimed(1);
+        testPlayer.drawCards(deck);        
+    }
+    
     //TODO
     @Test
-    public void attack() {
+    public void attack() {      
         
+        System.out.println("attack");        
+        
+        Player attacker = new Player("attacker");
+        Player defender = new Player("defender");
+        ByteArrayInputStream in; 
+        
+        Territory China = new Territory(TerritoryName.CHINA, Continent.ASIA,
+                new String[]{"Afghanistan","India","Mongolia","Siam","Siberia","Ural"});
+        Territory India = new Territory(TerritoryName.INDIA, Continent.ASIA,
+                new String[]{"Afghanistan","China","Middle East","Siam"});
+        
+        Main.territories.put("China", China);
+        Main.territories.put("India", India);
+        
+        China.incrementArmies(10);
+        India.incrementArmies(4);
+        
+        attacker.claimTerritory(China);
+        defender.claimTerritory(India);               
+        
+        in = new ByteArrayInputStream("3\n1".getBytes());  // using 3 troops to attack
+        System.setIn(in);    
+        attacker.attack(China, India);        
     }
-}
+} 
+    
