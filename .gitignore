@@ -28,6 +28,4 @@ workspace.xml
 # misc
 desktop.ini
 /nbproject/
-/target/
-
-dir_to_ignore*/target
+*/target/*

@@ -8,7 +8,7 @@ public class StoreTest {
 
 	@Test
 	public void testPurchaseService() 
-	{
+	{            
 		Bank bank = new Bank();
 		Store store = new Store();
 		Player player = new Player("player0");

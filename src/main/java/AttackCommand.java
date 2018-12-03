@@ -28,7 +28,7 @@ public class AttackCommand extends UndoableCommand {
     public void undo() {
         if (prevOwner.getActive() == false) {
             prevOwner.setActive(true);
-//            Main.playerList.add(prevOwner.getIndex(), prevOwner.getPlayerName());  //Adds player back into list if he ded
+//           Main.playerList.add(prevOwner.getIndex(), prevOwner.getPlayerName());  //Adds player back into list if he ded
             Main.playerMapTest.put(prevOwner.getPlayerName(), prevOwner);  //Adds player back into list if he ded
         }
         

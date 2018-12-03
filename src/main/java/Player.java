@@ -26,6 +26,7 @@ public class Player implements TerritoryObserver
         cardCount = 0;
         placeableInfantry = 0;
         playerName = name;
+//      index = Main.playerList.indexOf(playerName);
     }
 
     @Override
@@ -34,11 +35,22 @@ public class Player implements TerritoryObserver
             System.out.printf("- %s: Your territory \'%s\', is under attack!\n\n", this.getPlayerName(), territoryName);
         } 
     }
+    
+    public int getCardCount() {
+        return cardCount;
+    }
+        
+    public void setIndex(int index) {
+        this.index = index;
+    }    
+    public int getIndex() {
+        return index;
+    }    
     public boolean getActive() {
         return isActive;
     }
     public void setActive(boolean active) {
-        isActive = true;
+        isActive = active;
     }    
     public int getNumTerritoriesClaimed() {
         return claimCheck;
@@ -56,6 +68,7 @@ public class Player implements TerritoryObserver
     public void printOwnedTerritories()
     {
         territories.printConts();
+        System.out.println();
     }
 
     public String getPlayerName() 
@@ -81,7 +94,7 @@ public class Player implements TerritoryObserver
             System.out.printf(printFormat, ("Card " + (i+1)), "Territory:", hand[i].getTerritory(), "Army:", hand[i].getType());
     }
 
-    private void updateCardValue() //used to calculate the amount of troops awarded for cards turned in
+    protected void updateCardValue() //used to calculate the amount of troops awarded for cards turned in
     {
         if(cardValue == 0)
             cardValue = 4;
@@ -283,7 +296,7 @@ public class Player implements TerritoryObserver
         
         replay.update(to.getNumArmies() + "troops moved from " + from.getTerritoryName().toString() + "to" + to.getTerritoryName().toString() + "\n");
    		
-   		return armiesMoving;
+   	return armiesMoving;
     }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public void drawCards(Deck deck)
@@ -382,8 +395,8 @@ private int canAttack(Territory Attacker)
         
         if(Defender.getNumArmies() == 0)
         {
-            claimTerritory(Defender);
             Defender.getOwner().loseTerritory(Defender);
+            claimTerritory(Defender);
             System.out.printf("Congratulations player %s, you have conquered %s!%n", Attacker.getOwner().getPlayerName(), Defender.getTerritoryName().toString());
             Defender.removeObserver();
             Defender.addObserver(Attacker.getOwner());
