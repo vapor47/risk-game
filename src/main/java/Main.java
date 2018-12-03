@@ -83,7 +83,7 @@ public class Main {
             
             //------------------------------------------------CALCULATE ARMIES & PLACING INFANTRY--------------------------------------------------------//                                              
             formattedMessage("PLACING INFANTRY PHASE");            
-            currentPlayer.updatePlaceableInfantry(currentPlayer.calculateInfantry());                                                                                  
+            currentPlayer.updatePlaceableInfantry(currentPlayer.calculateInfantry(deck));                                                                                  
             calculateAndPlaceInfantry();
             replay.upload();           
                         
@@ -96,7 +96,7 @@ public class Main {
             //-------------------------------------------------------------ATTACK------------------------------------------------------------------------//
             formattedMessage("ATTACKING PHASE");             
             attackPhase();            
-            currentPlayer.drawCards();  //draws card if player captures territory
+            currentPlayer.drawCards(deck);  //draws card if player captures territory
             replay.upload();
                         
             // if timed out, move on to next player

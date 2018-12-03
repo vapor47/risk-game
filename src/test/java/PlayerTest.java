@@ -44,12 +44,12 @@ public class PlayerTest {
         Player testPlayer = new Player("Player Name");                
         
         final int expected = 0;        
-        final int actual = testPlayer.territoriesConqueredThisTurn();
+        final int actual = testPlayer.territoriesConquered();
         
         assertEquals(actual, expected);       
     }
     
-    @Test
+    /*@Test
     public void setIndex() {
         System.out.println("setIndex");
         
@@ -73,7 +73,7 @@ public class PlayerTest {
         final int actual = testPlayer.getIndex();
         
         assertEquals(actual, expected);
-    }    
+    } */   
     
     @Test
     public void getActive() {
@@ -236,7 +236,7 @@ public class PlayerTest {
         
     @Test
     public void calculateInfantry() {
-        
+       
         System.out.println("calculateInfantry");        
         
         // Arrange
@@ -249,9 +249,12 @@ public class PlayerTest {
                 new String[]{"Afghanistan","India","Mongolia","Siam","Siberia","Ural"});        
         
         // Act
+        Deck deck = new Deck();
+        deck.addCards(new Card(Type.CAVALRY, "Afghanistan"));
+        deck.addCards(new Card(Type.INFANTRY, "China"));
         testPlayer.claimTerritory(Afghanistan);
         testPlayer.claimTerritory(China);
-        final int actual = testPlayer.calculateInfantry();
+        final int actual = testPlayer.calculateInfantry(deck);
 
         // Assert
         Assert.assertEquals(actual, expected);       
@@ -323,9 +326,10 @@ public class PlayerTest {
         Player testPlayer = new Player("Player Name");  
         
         // Act
+        Deck deck = new Deck();
         testPlayer.addCards(China);
         testPlayer.addCards(Alberta);                              
-        final int actualInvalid = testPlayer.playHand();
+        final int actualInvalid = testPlayer.playHand(deck);
         
         // Assert
         Assert.assertEquals(actualInvalid, expectedInvalid);    // Player has less than 3 cards

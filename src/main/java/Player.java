@@ -40,12 +40,12 @@ public class Player implements TerritoryObserver
         return cardCount;
     }
         
-    public void setIndex(int index) {
+   /* public void setIndex(int index) {
         this.index = index;
     }    
     public int getIndex() {
         return index;
-    }    
+    }    */
     public boolean getActive() {
         return isActive;
     }
@@ -134,6 +134,10 @@ public class Player implements TerritoryObserver
             return true;
 
         return false;
+    }
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public void addCards(Card card) {
+        hand[cardCount++] = card;
     }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     private void useCards(int cardIndex[]) //Function will calculate number of infantry from cards
