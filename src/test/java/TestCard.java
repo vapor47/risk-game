@@ -52,7 +52,7 @@ public class TestCard {
         System.out.println("getTerritory");
         Card instance = new Card();
         String expResult = "";
-        String result = instance.getTerritory();
+        Territory result = instance.getTerritory();
         assertEquals(expResult, result);
     }
 

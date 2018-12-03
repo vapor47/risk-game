@@ -33,7 +33,6 @@ public class Store
 					
 			case 2: service = "Draw Card";
 					player.credits.removeCredits(5);
-					player.drawCards();
 					break;
 					
 			case 3: service = "Undo Action"; //Currently unsure how to implement this.

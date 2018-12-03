@@ -10,7 +10,8 @@ public class Credits
 	}
 	
 	public void addCredits(int cred)
-	{
+	{		
+		if(cred >= 0)
 			credits += cred;
 	}
 	
@@ -35,7 +36,7 @@ public class Credits
 			input.close();
 			
 			credits -= transfer;
-			otherCredits.addCredits(credits);
+			otherCredits.addCredits(transfer);
 		}
 	}
 }

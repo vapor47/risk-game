@@ -4,12 +4,12 @@ public class Card {
     
     public Card() {
         cardType = null;
-        cardTerritory = "";
+        cardTerritory = null;
     }
     
-    public Card(Type cardType, String territoryName) {
+    public Card(Type cardType, String territory) {
         setType(cardType);
-        setTerritory(territoryName);
+        setTerritory(territory);
     }
     
     public void setType(Type cardType) {
@@ -18,11 +18,11 @@ public class Card {
     public Type getType() {
         return cardType;
     }
-    public void setTerritory(String TerritoryName) {
-        cardTerritory = TerritoryName;
+    public void setTerritory(String territory) {
+        cardTerritory = territory;
     }
-    public String getTerritory() {
-        return cardTerritory;
+    public Territory getTerritory() {
+        return Main.territories.get(cardTerritory);
     }
      
     @Override

@@ -10,6 +10,189 @@ public class PlayerTest {
     //static Card[] testHand = new Card[]{ new Card(Type.INFANTRY, "Iceland"), new Card(Type.CAVALRY, "Japan"),
     //        new Card(Type.WILD, "Peru")};    
     
+    public PlayerTest() {
+        
+    }
+    
+    @Test
+    public void update() {
+        System.out.println("update");
+        
+        Player testPlayer = new Player("Player Name");        
+        String China = "China";
+        
+        testPlayer.update(true, China);        
+    }
+    
+    @Test
+    public void getCardCount() {
+        System.out.println("getCardCount");
+        
+        Player testPlayer = new Player("Player Name");        
+        testPlayer.addCards(new Card(Type.ARTILLERY, "China"));
+        
+        final int expected = 1;        
+        final int actual = testPlayer.getCardCount();
+        
+        assertEquals(actual, expected);        
+    }
+    
+    @Test
+    public void territoriesConqueredThisTurn() {
+        System.out.println("territoriesConqueredThisTurn");
+        
+        Player testPlayer = new Player("Player Name");                
+        
+        final int expected = 0;        
+        final int actual = testPlayer.territoriesConquered();
+        
+        assertEquals(actual, expected);       
+    }
+    
+    /*@Test
+    public void setIndex() {
+        System.out.println("setIndex");
+        
+        Player testPlayer = new Player("Player Name");          
+        final int expected = 3;
+        
+        testPlayer.setIndex(3);
+        final int actual = testPlayer.getIndex();
+        
+        assertEquals(actual, expected);
+    }
+    
+    @Test
+    public void getIndex() {
+        System.out.println("getIndex");
+        
+        Player testPlayer = new Player("Player Name");          
+        final int expected = 3;
+        
+        testPlayer.setIndex(3);
+        final int actual = testPlayer.getIndex();
+        
+        assertEquals(actual, expected);
+    } */   
+    
+    @Test
+    public void getActive() {
+        System.out.println("getActive");
+
+        Player testPlayer = new Player("Player Name");          
+        
+        final boolean expected = true;        
+        final boolean actual = testPlayer.getActive();
+
+        assertEquals(actual, expected);
+    }
+    
+    @Test
+    public void setActive() {
+        System.out.println("setActive");
+
+        Player testPlayer = new Player("Player Name");          
+        
+        final boolean expected = false;
+        testPlayer.setActive(false);
+        
+        final boolean actual = testPlayer.getActive();
+
+        assertEquals(actual, expected);
+    }    
+    
+    @Test
+    public void getNumTerritoriesClaimed() {
+        System.out.println("getNumTerritoriesClaimed");
+
+        Player testPlayer = new Player("Player Name");          
+        
+        final int expected = 0;        
+        
+        final int actual = testPlayer.getNumTerritoriesClaimed();
+
+        assertEquals(actual, expected);
+    }
+    
+    @Test
+    public void updateTerritoriesClaimed() {
+        System.out.println("updateTerritoriesClaimed");
+
+        Player testPlayer = new Player("Player Name");          
+        
+        final int expected = 5;        
+        testPlayer.updateTerritoriesClaimed(5);
+        
+        final int actual = testPlayer.getNumTerritoriesClaimed();
+
+        assertEquals(actual, expected);
+    }
+    
+    @Test
+    public void getTerritoryList() {
+       System.out.println("getTerritoryList");
+
+       Player testPlayer = new Player("Player Name");          
+        
+       final TerritoryList expected = new TerritoryList();                     
+       testPlayer.setTerritoryList(expected);
+      
+       final TerritoryList actual = testPlayer.getTerritoryList();
+
+       assertEquals(actual, expected);
+    }
+    
+    @Test
+    public void setTerritoryList() {
+       System.out.println("setTerritoryList");
+
+       Player testPlayer = new Player("Player Name");          
+        
+       final TerritoryList expected = null;        
+              
+       testPlayer.setTerritoryList(null);
+       
+       final TerritoryList actual = testPlayer.getTerritoryList();
+
+       assertEquals(actual, expected);
+    } 
+         
+    @Test
+    public void printOwnedTerritories() {    
+       System.out.println("printOwnedTerritories");
+
+       Player testPlayer = new Player("Player Name");          
+        
+       testPlayer.printOwnedTerritories();
+    }
+
+    @Test
+    public void getPlayerName() {
+       System.out.println("getPlayerName");
+
+       Player testPlayer = new Player("Player Name");          
+        
+       final TerritoryList expected = null;                      
+       testPlayer.setTerritoryList(null);
+       
+       final TerritoryList actual = testPlayer.getTerritoryList();
+
+       assertEquals(actual, expected);
+    }
+    
+    public void testGetPlaceableInfantry() {
+        System.out.println("testGetPlaceableInfantry");
+
+        Player testPlayer = new Player("Player Name");          
+        
+        final int expected = 5;                      
+        testPlayer.updatePlaceableInfantry(expected);
+       
+        final int actual = testPlayer.getPlaceableInfantry();
+        
+        assertEquals(actual, expected);        
+    }
+    
     @Test
     public void TestUpdatePlaceableInfantry() {
         
@@ -28,8 +211,32 @@ public class PlayerTest {
     }
 
     @Test
-    public void calculateInfantry() {
+    public void viewHand() {
+        Card China = new Card(Type.CAVALRY, "China");
+        Card Alberta = new Card(Type.CAVALRY, "Alberta");
+        Card Irkutsk = new Card(Type.CAVALRY, "Irkutsk");
         
+        Player testPlayer = new Player("Player Name");   
+        
+        testPlayer.addCards(China);
+        testPlayer.addCards(Alberta);
+        testPlayer.addCards(Irkutsk);    
+        
+        testPlayer.viewHand();
+    }
+    
+    @Test 
+    public void updateCardValue() {
+        Player testPlayer = new Player("Player Name");   
+        
+        for (int i = 0; i < 7;i++) {
+            testPlayer.updateCardValue();
+        }        
+    }
+        
+    @Test
+    public void calculateInfantry() {
+       
         System.out.println("calculateInfantry");        
         
         // Arrange
@@ -42,9 +249,12 @@ public class PlayerTest {
                 new String[]{"Afghanistan","India","Mongolia","Siam","Siberia","Ural"});        
         
         // Act
+        Deck deck = new Deck();
+        deck.addCards(new Card(Type.CAVALRY, "Afghanistan"));
+        deck.addCards(new Card(Type.INFANTRY, "China"));
         testPlayer.claimTerritory(Afghanistan);
         testPlayer.claimTerritory(China);
-        final int actual = testPlayer.calculateInfantry();
+        final int actual = testPlayer.calculateInfantry(deck);
 
         // Assert
         Assert.assertEquals(actual, expected);       
@@ -116,9 +326,10 @@ public class PlayerTest {
         Player testPlayer = new Player("Player Name");  
         
         // Act
+        Deck deck = new Deck();
         testPlayer.addCards(China);
         testPlayer.addCards(Alberta);                              
-        final int actualInvalid = testPlayer.playHand();
+        final int actualInvalid = testPlayer.playHand(deck);
         
         // Assert
         Assert.assertEquals(actualInvalid, expectedInvalid);    // Player has less than 3 cards

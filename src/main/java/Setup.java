@@ -1,21 +1,6 @@
 import java.io.InputStream;
 import java.util.*;
-/*
-Setup steps:
-    1. Give armies
-    2. Claim territories
-    3. Fortify territories
-    4. Shuffle cards
-    5. Start Game
- */
 
-/*
-problem: setup tries to get next player when telegram players havent been created yet
-
-sol A:
-    create players
-    once telegram is finished joining,
- */
 public class Setup {
 
     public int numPlayers;
@@ -36,25 +21,6 @@ public class Setup {
         // General setup
         createTerritories();
         createCards();
-
-        // If game is being played through Telegram
-//        if(isUsingTelegram()) {
-//            telegramSetup();
-//        } else {
-//            numPlayers = promptNumPlayers();
-//            createPlayers(numPlayers);
-//        }
-        /*
-        create players
-        create territories/continents
-        create cards/deck
-        */
-//        startSetup();
-//        giveInitialArmies();
-//    2. Claim territories
-//            choose starting player
-//    3. Fortify territories
-//    4. Shuffle cards
     }
 
     private void startSetup() {
@@ -249,24 +215,7 @@ public class Setup {
                 return 0;
         }
     }
-
-//    private void addPlayer(String name) {
-//        /*
-//        find players by name
-//        cycle through them in some order
-//        have that order be randomized
-//            collections.shuffle
-//
-//        LinkedHashMap
-//         */
-//
-//        Main.playerMapTest.put(name, new Player(name));
-//    }
-
-//    public void addPlayer(Player player) {
-//        Main.playerMapTest.put(player.getPlayerName(), player);
-//    }
-
+  
     private void createTerritories(){
         // North America
         Main.territories.put("Alaska", new Territory(TerritoryName.ALASKA, Continent.NORTH_AMERICA,
