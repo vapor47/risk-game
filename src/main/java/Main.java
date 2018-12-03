@@ -9,7 +9,6 @@ import java.io.IOException;
 
 public class Main {
     // Key = Player name; Value = Player object
-    // Does not include neutral in 2 player games
     static LinkedHashMap<String, Player> playerMapTest = new LinkedHashMap<>();
     private static Iterator<Map.Entry<String, Player>> playerMapIterator = playerMapTest.entrySet().iterator();
     static Player currentPlayer;
@@ -21,6 +20,8 @@ public class Main {
     static CommandManager commandManager = new CommandManager();
 
     public static void main(String[] args) throws IOException, InterruptedException, Exception {
+        Setup.getInstance();
+
         ExecutorService executor = null;
         Future<String> future = null;                
         int timeOut = 30;   // max wait time before game times out
@@ -36,7 +37,7 @@ public class Main {
 		}
     	
     	Replay replay = new Replay();
-        Scanner sc = new Scanner(System.in);        
+        Scanner sc = new Scanner(System.in);
         //Setup setup = new Setup();
         //test.setPlayerName(playerMap);                
 //        int playerIndex = Setup.getInstance().getStartingPlayerIndex();

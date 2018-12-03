@@ -25,11 +25,10 @@ public class TelegramJoinBot extends AbilityBot {
     private static final String BOT_USERNAME = "RiskBot";
 
     private String gameId;
-    public String getGameId() { return gameId; }
     public void setGameId(String gameId) { this.gameId = gameId; }
 
     public HashMap<Player, Long> playerChatIDs = new HashMap<>();
-    private Player currentPlayer; //TODO set first current player
+    public boolean allPlayersJoined = false;
 
     private TelegramJoinBot(String token, String username) {
         super(token, username);
@@ -40,9 +39,10 @@ public class TelegramJoinBot extends AbilityBot {
         return 743262915;
     }
 
-    private int playerCount = 0;
+    public int playerCount = 0;
     private int maxPlayers = 3;
 
+    /*
     public void sendMessage(Player player, String message) {
         SendMessage snd = new SendMessage();
         snd.setChatId(playerChatIDs.get(player));
@@ -55,7 +55,8 @@ public class TelegramJoinBot extends AbilityBot {
             System.err.println("Telegram bot could not send message");
         }
     }
-    
+    */
+    /*
     // Gets the action response from the user.
     @Override
     public void onUpdateReceived(Update update) {
@@ -77,7 +78,7 @@ public class TelegramJoinBot extends AbilityBot {
             }
         }
     }       
-    
+    */
     /*
     TODO
     game sends message
