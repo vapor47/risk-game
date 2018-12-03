@@ -173,13 +173,13 @@ public class TerritoryList
         String ters[];
         for(int i = 0, j = 1; i < 6; i++)
         {
-            ters = continents[i].getTer();
-            if(continents[i].getPos() > 0)
+            ters = continents[i].getTer();  // territory array = territory array in the player's controlled continent
+            if(continents[i].getPos() > 0)  
             {
                 System.out.printf("%s:%n", continents[i].getCont());
                 for(int k = 0; k < continents[i].getPos(); k++)
                 {
-                    System.out.printf("%d: %s", j, ters[i]);
+                    System.out.printf("%d: %s", j, ters[i]);                    
                 }
             }
         }
