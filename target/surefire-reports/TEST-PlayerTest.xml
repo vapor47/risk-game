@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="24" failures="0" name="PlayerTest" time="0.036" errors="0" skipped="0">
+<testsuite tests="24" failures="0" name="PlayerTest" time="0.028" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.8.0_161\jre\bin"/>
@@ -63,28 +63,28 @@
     <property name="sun.desktop" value="windows"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase classname="PlayerTest" name="getTerritoryList" time="0"/>
+  <testcase classname="PlayerTest" name="getTerritoryList" time="0.003"/>
   <testcase classname="PlayerTest" name="printOwnedTerritories" time="0"/>
   <testcase classname="PlayerTest" name="attack" time="0"/>
   <testcase classname="PlayerTest" name="addCards" time="0.001"/>
-  <testcase classname="PlayerTest" name="validPlay" time="0.005"/>
-  <testcase classname="PlayerTest" name="update" time="0.001"/>
+  <testcase classname="PlayerTest" name="validPlay" time="0.001"/>
+  <testcase classname="PlayerTest" name="update" time="0"/>
   <testcase classname="PlayerTest" name="calculateInfantry" time="0.003"/>
   <testcase classname="PlayerTest" name="getCardCount" time="0"/>
-  <testcase classname="PlayerTest" name="claimTerritory" time="0.001"/>
+  <testcase classname="PlayerTest" name="claimTerritory" time="0"/>
   <testcase classname="PlayerTest" name="territoriesConqueredThisTurn" time="0"/>
   <testcase classname="PlayerTest" name="getNumTerritoriesClaimed" time="0"/>
   <testcase classname="PlayerTest" name="setActive" time="0"/>
   <testcase classname="PlayerTest" name="getActive" time="0"/>
   <testcase classname="PlayerTest" name="setTerritoryList" time="0"/>
-  <testcase classname="PlayerTest" name="updateTerritoriesClaimed" time="0.001"/>
-  <testcase classname="PlayerTest" name="loseTerritory" time="0.001"/>
+  <testcase classname="PlayerTest" name="updateTerritoriesClaimed" time="0"/>
+  <testcase classname="PlayerTest" name="loseTerritory" time="0"/>
   <testcase classname="PlayerTest" name="updateCardValue" time="0"/>
-  <testcase classname="PlayerTest" name="viewHand" time="0.003"/>
-  <testcase classname="PlayerTest" name="setIndex" time="0.001"/>
-  <testcase classname="PlayerTest" name="TestPlaceInfantry" time="0.018"/>
-  <testcase classname="PlayerTest" name="TestUpdatePlaceableInfantry" time="0"/>
-  <testcase classname="PlayerTest" name="getPlayerName" time="0.001"/>
+  <testcase classname="PlayerTest" name="viewHand" time="0.002"/>
+  <testcase classname="PlayerTest" name="setIndex" time="0"/>
+  <testcase classname="PlayerTest" name="TestPlaceInfantry" time="0.017"/>
+  <testcase classname="PlayerTest" name="TestUpdatePlaceableInfantry" time="0.001"/>
+  <testcase classname="PlayerTest" name="getPlayerName" time="0"/>
   <testcase classname="PlayerTest" name="playHand" time="0"/>
   <testcase classname="PlayerTest" name="getIndex" time="0"/>
 </testsuite>
