@@ -26,6 +26,8 @@ public class Player implements TerritoryObserver
         cardCount = 0;
         placeableInfantry = 0;
         playerName = name;
+        Bank bank = new Bank();
+        bank.addAccount(name);
 //      index = Main.playerList.indexOf(playerName);
     }
 

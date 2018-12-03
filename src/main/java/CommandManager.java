@@ -1,7 +1,7 @@
 import java.util.Stack;
 
 public class CommandManager {
-    private Stack commandStack = new Stack();
+    private static Stack commandStack = new Stack();
     
     public void executeCommand(Command cmd) {
         cmd.execute();

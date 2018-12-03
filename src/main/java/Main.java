@@ -18,6 +18,7 @@ public class Main {
     //........Objects........//
     static Player currentPlayer;    
     static Deck deck = new Deck();
+    static Store store = new Store();
     
     //........Timeout/Undo/Replay objects........//
     static CommandManager commandManager = new CommandManager();    
@@ -81,6 +82,8 @@ public class Main {
             formattedMessage(currentPlayer.getPlayerName() + "'s turn");
             replay.update(currentPlayer.getPlayerName() + "'s turn");
             
+           
+ 
             //------------------------------------------------CALCULATE ARMIES & PLACING INFANTRY--------------------------------------------------------//                                              
             formattedMessage("PLACING INFANTRY PHASE");            
             currentPlayer.updatePlaceableInfantry(currentPlayer.calculateInfantry(deck));                                                                                  
@@ -92,7 +95,29 @@ public class Main {
                 nextRound();         
                 continue;
             }
-                                                     
+            
+            //---------------------------------------------------------------STORE-----------------------------------------------------------------------//
+        	switch(store.purchaseService(currentPlayer))
+        	{
+				case "Draw Card":
+						currentPlayer.drawCards(deck);;
+						break;
+						
+				case "Undo Action": //Currently unsure how to implement this.
+						commandManager.undo();
+						break;
+				
+				case "Player Credit Transfer":
+						System.out.println("Select a player to transfer credit to");
+						int choice;
+						for(choice = sc.nextInt(); choice < 1 && choice > Setup.getInstance().numPlayers; choice = sc.nextInt())
+						{
+							System.out.printf("%d is not a valid input, please give a number 1-%d", choice, Setup.getInstance().numPlayers);
+						}
+						currentPlayer.credits.giveCredits(playerMapTest.get("Player" + choice).credits);
+						break;
+        	}
+            
             //-------------------------------------------------------------ATTACK------------------------------------------------------------------------//
             formattedMessage("ATTACKING PHASE");             
             attackPhase();            
