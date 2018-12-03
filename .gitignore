@@ -29,3 +29,5 @@ workspace.xml
 desktop.ini
 /nbproject/
 /target/
+
+dir_to_ignore*/target
