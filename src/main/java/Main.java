@@ -58,6 +58,7 @@ public class Main {
         
         }  
         Setup.getInstance().startSetup();
+
         Scanner sc = new Scanner(System.in);
         executor = Executors.newSingleThreadExecutor();        
         currentPlayer = getNextPlayer();                
@@ -79,7 +80,6 @@ public class Main {
             //--------------------------------------------------------ANNOUNCING ROUND-------------------------------------------------------------------//
             formattedMessage(currentPlayer.getPlayerName() + "'s turn");
             replay.update(currentPlayer.getPlayerName() + "'s turn");
-            currentPlayer.updatePlaceableInfantry(currentPlayer.calculateInfantry());
             
             //------------------------------------------------CALCULATE ARMIES & PLACING INFANTRY--------------------------------------------------------//                                              
             formattedMessage("PLACING INFANTRY PHASE");            
