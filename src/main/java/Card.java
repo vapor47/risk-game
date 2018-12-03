@@ -24,6 +24,10 @@ public class Card {
     public Territory getTerritory() {
         return Main.territories.get(cardTerritory);
     }
+    
+    public String getTerritoryName() {
+        return cardTerritory;
+    }
      
     @Override
     public String toString() {
