@@ -96,8 +96,8 @@ public class Main {
                 continue;
             }
             
-            //---------------------------------------------------------------STORE-----------------------------------------------------------------------//
-        	switch(store.purchaseService(currentPlayer))
+           //---------------------------------------------------------------STORE-----------------------------------------------------------------------//
+            switch(store.purchaseService(currentPlayer))
         	{
 				case "Draw Card":
 						currentPlayer.drawCards(deck);;
@@ -114,7 +114,7 @@ public class Main {
 						{
 							System.out.printf("%d is not a valid input, please give a number 1-%d", choice, Setup.getInstance().numPlayers);
 						}
-						currentPlayer.credits.giveCredits(playerMapTest.get("Player" + choice).credits);
+						currentPlayer.credits.giveCredits(playerMapTest.get("Player " + Integer.toString(choice)).credits);
 						break;
         	}
             
