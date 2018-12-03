@@ -28,7 +28,7 @@ public class Player implements TerritoryObserver
         cardCount = 0;
         placeableInfantry = 0;
         playerName = name;
-//        index = Main.playerList.indexOf(playerName);
+//      index = Main.playerList.indexOf(playerName);
     }
 
     @Override
@@ -75,6 +75,7 @@ public class Player implements TerritoryObserver
     public void printOwnedTerritories()
     {
         territories.printConts();
+        System.out.println();
     }
 
     public String getPlayerName() 
@@ -285,7 +286,7 @@ public class Player implements TerritoryObserver
         
         replay.update(Main.territories.get(to.getTerritoryName().toString()).getNumArmies() + "troops moved from " + from.getTerritoryName().toString() + "to" + to.getTerritoryName().toString() + "\n");
    		
-   		return armiesMoving;
+   	return armiesMoving;
     }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public void drawCards()
@@ -380,10 +381,9 @@ public class Player implements TerritoryObserver
         
         
         if(Defender.getNumArmies() == 0)
-        {
-            claimTerritory(Defender);
-            
+        {                       
             Main.playerMapTest.get(Defender.getOwner().getPlayerName()).loseTerritory(Defender);
+            claimTerritory(Defender);
             System.out.printf("Congratulations %s, you have conquered %s!%n", Attacker.getOwner().getPlayerName(), Defender.getTerritoryName().toString());
             
             Defender.removeObserver();
@@ -398,7 +398,7 @@ public class Player implements TerritoryObserver
         
        	if (defender.territories.getTerritoryCount() <= 0) {
             // Player's outta the game            
-//            Main.playerList.remove(defender.getPlayerName());
+//          Main.playerList.remove(defender.getPlayerName());
             Main.playerMapTest.remove(defender.getPlayerName());
             defender.isActive = false;
             System.out.printf("- %s has been defeated!\n", defender.getPlayerName());

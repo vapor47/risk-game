@@ -153,12 +153,13 @@ public class Territory {
     Player getOwner(){return owner;}
     public String[] getAdjacentTerritories(){return adjacentTerritories;}
     public void printAdjacentTerritories(){
+        System.out.println("\n|| Adjacent territories ||");
         String divider = "";
         for (String x : adjacentTerritories) {
             System.out.print(divider + x);
             divider = " | ";
         }
-        System.out.println("\n------------------------------------");
+        System.out.println("\n------------------------------------\n");
     }
     public void listTerritoryInfo(){
 //        cleaner format testing
