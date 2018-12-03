@@ -26,7 +26,6 @@ public class Player implements TerritoryObserver
         cardCount = 0;
         placeableInfantry = 0;
         playerName = name;
-//      index = Main.playerList.indexOf(playerName);
     }
 
     @Override
@@ -40,12 +39,6 @@ public class Player implements TerritoryObserver
         return cardCount;
     }
         
-   /* public void setIndex(int index) {
-        this.index = index;
-    }    
-    public int getIndex() {
-        return index;
-    }    */
     public boolean getActive() {
         return isActive;
     }
@@ -91,7 +84,7 @@ public class Player implements TerritoryObserver
         
         System.out.println("Cards Currently In Hand:");
         for(int i = 0; i < cardCount; i++)
-            System.out.printf(printFormat, ("Card " + (i+1)), "Territory:", hand[i].getTerritory(), "Army:", hand[i].getType());
+            System.out.printf(printFormat, ("Card " + (i+1)), "Territory:", hand[i].getTerritoryName(), "Army:", hand[i].getType());
     }
 
     protected void updateCardValue() //used to calculate the amount of troops awarded for cards turned in
@@ -140,7 +133,7 @@ public class Player implements TerritoryObserver
         hand[cardCount++] = card;
     }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    private void useCards(int cardIndex[]) //Function will calculate number of infantry from cards
+    public void useCards(int cardIndex[]) //Function will calculate number of infantry from cards
     {
         Scanner input = new Scanner(System.in); 
         
@@ -155,7 +148,7 @@ public class Player implements TerritoryObserver
             }
         }
         
-        input.close();
+        //input.close();
         
         if(numSpecial > 0)
         {
@@ -164,10 +157,10 @@ public class Player implements TerritoryObserver
             printSpecialCards(specialCards, numSpecial);
             for(tIndex = input.nextInt(); tIndex <= 0 || tIndex > numSpecial; tIndex = input.nextInt())
             {
-                System.out.printf("Please give a valid number(0-%d)%n", numSpecial);
+                System.out.printf("Please give a valid number(1-%d)%n", numSpecial);
                 printSpecialCards(specialCards, numSpecial);
             }
-            placeInfantry(hand[specialCards[tIndex]].getTerritory() ,2);
+            placeInfantry(hand[specialCards[tIndex + 1]].getTerritory() ,2);
         }
         updateCardValue();
     }
@@ -199,7 +192,7 @@ public class Player implements TerritoryObserver
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public int playHand(Deck deck)
     {
-        if(cardCount >=3 ) 
+        if(cardCount >=3) 
         {
             Scanner input = new Scanner(System.in);
     
@@ -207,7 +200,7 @@ public class Player implements TerritoryObserver
             
             viewHand();
             
-            for(int i = 0; i < 3 && cardIndex[i] != 0; i++) //grabs the card number from the user and then determines if the selected cards are playable
+            for(int i = 0; i < 3 && cardIndex[i] != -1; i++) //grabs the card number from the user and then determines if the selected cards are playable
             {   
                 System.out.println("Select card " + (i+1) + ":");
                 
@@ -215,12 +208,12 @@ public class Player implements TerritoryObserver
                 {
                     System.out.println("Please give a valid card number");
                     viewHand();
-                    System.out.println("0 for exit");
+                    System.out.println("-1 for exit");
                 }
                 
-                input.close();
+                //input.close();
                 
-                if (cardIndex[i] == 0)
+                if (cardIndex[i] == -1)
                     return 0;
             }
             useCards(cardIndex);
@@ -255,6 +248,7 @@ public class Player implements TerritoryObserver
     public void loseTerritory(Territory t)
     {
         territories.removeTerritory(t);
+        t.setOwner(new Player("Neutral"));
     }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     private static int[] orderedRolls(int arraySize)
@@ -293,7 +287,7 @@ public class Player implements TerritoryObserver
         for(armiesMoving = input.nextInt(); armiesMoving > (from.getNumArmies()-1) || armiesMoving < 1; armiesMoving = input.nextInt())
             System.out.printf("Please give a valid number of movable armies (1 - %d)%n", from.getNumArmies()-1);
         
-        input.close();
+        //input.close();
 	    
         from.decrementArmies(armiesMoving);
         to.incrementArmies(armiesMoving);
