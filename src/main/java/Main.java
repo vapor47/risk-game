@@ -47,7 +47,7 @@ public class Main {
         // 1) Calculate Armies & place infantry
         // 2) Attack
         // 3) Fortify 
-    
+
         ApiContextInitializer.init();
                 
         TelegramBotsApi riskBot = new TelegramBotsApi();
@@ -57,9 +57,8 @@ public class Main {
             e.printStackTrace();
         
         }  
-        
+        Setup.getInstance().startSetup();
         Scanner sc = new Scanner(System.in);
-        int playerIndex = Setup.getInstance().getStartingPlayerIndex();                             
         executor = Executors.newSingleThreadExecutor();        
         currentPlayer = getNextPlayer();                
         

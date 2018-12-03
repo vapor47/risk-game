@@ -23,7 +23,7 @@ public class Setup {
         createCards();
     }
 
-    private void startSetup() {
+    public void startSetup() {
         boolean usingTelegram = isUsingTelegram(System.in);
         if(usingTelegram) {
             telegramSetup(System.in);

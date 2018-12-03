@@ -60,9 +60,41 @@ public class SetupTest {
     }
 
     @Test
+    public void TwoPlayersShouldHave40ArmiesEach() {
+        final int actual = Setup.getInstance().setInitialArmies(2);
+        final int expected = 40;
+
+        Assert.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void ThreePlayersShouldHave35ArmiesEach() {
+        final int actual = Setup.getInstance().setInitialArmies(3);
+        final int expected = 35;
+
+        Assert.assertEquals(expected, actual);
+    }
+
+    @Test
     public void FourPlayersShouldHave30ArmiesEach() {
         final int actual = Setup.getInstance().setInitialArmies(4);
         final int expected = 30;
+
+        Assert.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void FivePlayersShouldHave25ArmiesEach() {
+        final int actual = Setup.getInstance().setInitialArmies(5);
+        final int expected = 25;
+
+        Assert.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void SixPlayersShouldHave20ArmiesEach() {
+        final int actual = Setup.getInstance().setInitialArmies(6);
+        final int expected = 20;
 
         Assert.assertEquals(expected, actual);
     }
