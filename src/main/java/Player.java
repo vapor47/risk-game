@@ -48,8 +48,7 @@ public class Player implements TerritoryObserver
         
     public void setIndex(int index) {
         this.index = index;
-    }
-    
+    }    
     public int getIndex() {
         return index;
     }    
@@ -57,7 +56,7 @@ public class Player implements TerritoryObserver
         return isActive;
     }
     public void setActive(boolean active) {
-        isActive = true;
+        isActive = active;
     }    
     public int getNumTerritoriesClaimed() {
         return claimCheck;
@@ -101,7 +100,7 @@ public class Player implements TerritoryObserver
             System.out.printf(printFormat, ("Card " + (i+1)), "Territory:", hand[i].getTerritory(), "Army:", hand[i].getType());
     }
 
-    private void updateCardValue() //used to calculate the amount of troops awarded for cards turned in
+    protected void updateCardValue() //used to calculate the amount of troops awarded for cards turned in
     {
         if(cardValue == 0)
             cardValue = 4;
