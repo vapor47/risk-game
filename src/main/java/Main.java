@@ -71,7 +71,7 @@ public class Main {
 
             formattedMessage(currentPlayer.getPlayerName() + "'s turn");
             replay.update("Player " + playerIndex + "'s turn");
-            currentPlayer.updatePlaceableInfantry(currentPlayer.calculateInfantry());                                  
+            currentPlayer.updatePlaceableInfantry(currentPlayer.calculateInfantry(deck));                                  
             
             if (currentPlayer.getPlaceableInfantry() > 0) {       
                 System.out.printf("- Place your remaining armies on your territories\n", currentPlayer.getPlaceableInfantry());
@@ -343,7 +343,7 @@ public class Main {
                 replay.upload();
             } while(userInput.equalsIgnoreCase("y"));
                        
-            currentPlayer.drawCards();  //draws card if player captures territory
+            currentPlayer.drawCards(deck);  //draws card if player captures territory
                         
             if (timedOut) {
 //                playerIndex = getNextPlayer(playerIndex);

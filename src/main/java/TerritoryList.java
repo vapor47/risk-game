@@ -133,7 +133,7 @@ public class TerritoryList
         territoryCount--;
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public int numTerritoriesCaptured()
+    public int numContinentsCaptured()
     {
         int capt = 0;
         for(int i = 0; i < 6; i++)
@@ -159,7 +159,7 @@ public class TerritoryList
         return territoryCount;
     }
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public int coninentValues()
+    public int continentValues()
     {
         int v = 0;
         for(int i = 0; i < 6; i++)

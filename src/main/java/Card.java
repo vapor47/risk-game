@@ -1,13 +1,13 @@
 public class Card {      
     private Type cardType;    
-    private Territory cardTerritory;
+    private String cardTerritory;
     
     public Card() {
         cardType = null;
         cardTerritory = null;
     }
     
-    public Card(Type cardType, Territory territory) {
+    public Card(Type cardType, String territory) {
         setType(cardType);
         setTerritory(territory);
     }
@@ -18,17 +18,17 @@ public class Card {
     public Type getType() {
         return cardType;
     }
-    public void setTerritory(Territory territory) {
+    public void setTerritory(String territory) {
         cardTerritory = territory;
     }
     public Territory getTerritory() {
-        return cardTerritory;
+        return Main.territories.get(cardTerritory);
     }
      
     @Override
     public String toString() {
         String cardTypeInfo = cardType.toString();
-        return cardTerritory.getTerritoryName() + ", " + cardTypeInfo;
+        return cardTerritory + ", " + cardTypeInfo;
     }
 }
 

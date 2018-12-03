@@ -12,7 +12,7 @@ public class FortifyingTerritoriesCommand extends UndoableCommand {
     
     @Override
     public void execute() {
-        player.placeInfantry(territory, troops); 
+        player.placeInfantry(Main.territories.get(territory), troops); 
     }
     
     @Override

@@ -36,7 +36,7 @@ public class Credits
 			input.close();
 			
 			credits -= transfer;
-			otherCredits.addCredits(transfer);
+			otherPlayer.credits.addCredits(transfer);
 		}
 	}
 }

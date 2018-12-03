@@ -22,7 +22,7 @@ public class Tweeter {
             AccessToken accessToken = new AccessToken(apiKeys.getProperty("accessTokenStr"), apiKeys.getProperty("accessTokenSecretStr"));
 
             twitter.setOAuthAccessToken(accessToken);
-            twitter.updateStatus(player.getPlayerName() + " has conquered " + player.territoriesConqueredThisTurn() + " territories this turn!");
+            twitter.updateStatus(player.getPlayerName() + " has conquered " + player.territoriesConquered() + " territories this turn!");
 
             System.out.println("Successfully updated the status in Twitter.");
         } catch (TwitterException te) {

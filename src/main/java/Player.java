@@ -92,6 +92,10 @@ public class Player implements TerritoryObserver
         else
            cardValue+=5;
     }
+    public int territoriesConquered()
+    {
+    	return territories.getTerritoryCount();
+    }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public int calculateInfantry(Deck deck)
     {
@@ -215,6 +219,12 @@ public class Player implements TerritoryObserver
     public void placeInfantry(Territory territory, int inf)
     {
         territory.incrementArmies(inf);
+        placeableInfantry -= inf;
+    }
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public void placeInfantry(String territory, int inf)
+    {
+        Main.territories.get(territory).incrementArmies(inf);
         placeableInfantry -= inf;
     }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
